@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 20151226104938) do
   create_table "artists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.string   "country"
+    t.integer  "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_artists_on_genre_id", using: :btree
+  end
+
+  create_table "genres", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,8 +41,10 @@ ActiveRecord::Schema.define(version: 20151226104938) do
     t.string   "title"
     t.integer  "user_id"
     t.integer  "track_id"
+    t.integer  "album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_playlists_on_album_id", using: :btree
     t.index ["track_id"], name: "index_playlists_on_track_id", using: :btree
     t.index ["user_id"], name: "index_playlists_on_user_id", using: :btree
   end
@@ -42,7 +52,6 @@ ActiveRecord::Schema.define(version: 20151226104938) do
   create_table "tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.string   "time"
-    t.string   "integer"
     t.integer  "album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,6 +68,8 @@ ActiveRecord::Schema.define(version: 20151226104938) do
   end
 
   add_foreign_key "albums", "artists"
+  add_foreign_key "artists", "genres"
+  add_foreign_key "playlists", "albums"
   add_foreign_key "playlists", "tracks"
   add_foreign_key "playlists", "users"
   add_foreign_key "tracks", "albums"
