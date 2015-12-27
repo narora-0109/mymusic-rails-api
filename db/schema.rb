@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151226104938) do
+ActiveRecord::Schema.define(version: 20151227212120) do
 
   create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
@@ -37,15 +37,25 @@ ActiveRecord::Schema.define(version: 20151226104938) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "playlist_albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "playlist_id"
+    t.integer "album_id"
+    t.index ["album_id"], name: "index_playlist_albums_on_album_id", using: :btree
+    t.index ["playlist_id"], name: "index_playlist_albums_on_playlist_id", using: :btree
+  end
+
+  create_table "playlist_tracks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "playlist_id"
+    t.integer "track_id"
+    t.index ["playlist_id"], name: "index_playlist_tracks_on_playlist_id", using: :btree
+    t.index ["track_id"], name: "index_playlist_tracks_on_track_id", using: :btree
+  end
+
   create_table "playlists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.integer  "user_id"
-    t.integer  "track_id"
-    t.integer  "album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["album_id"], name: "index_playlists_on_album_id", using: :btree
-    t.index ["track_id"], name: "index_playlists_on_track_id", using: :btree
     t.index ["user_id"], name: "index_playlists_on_user_id", using: :btree
   end
 
@@ -69,8 +79,10 @@ ActiveRecord::Schema.define(version: 20151226104938) do
 
   add_foreign_key "albums", "artists"
   add_foreign_key "artists", "genres"
-  add_foreign_key "playlists", "albums"
-  add_foreign_key "playlists", "tracks"
+  add_foreign_key "playlist_albums", "albums"
+  add_foreign_key "playlist_albums", "playlists"
+  add_foreign_key "playlist_tracks", "playlists"
+  add_foreign_key "playlist_tracks", "tracks"
   add_foreign_key "playlists", "users"
   add_foreign_key "tracks", "albums"
 end

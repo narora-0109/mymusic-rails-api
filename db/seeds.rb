@@ -29,7 +29,7 @@ artists_list = [
   ["King Diamond","Denmark",@metal ],
   ["Annihilator","Canada", @metal ],
   ["Kip Winger","USA", @rock ],
-  ["Kate Perry", "USA", @pop ],
+  ["Katy Perry", "USA", @pop ],
   ["Fleur East","UK", @pop ],
   ["Snarky Puppy","USA", @fusion ],
   ["Brian Tyler", "USA",@soundtrack],
@@ -62,7 +62,7 @@ end
   ["Iron Man 3", 2013, @brian_tyler ],
   ["The Expendables 3", 2014, @brian_tyler ],
 
-  ["Love, Sax and Flashbacks", 2015, @fleur_east ],
+  ["Love,Sax and Flashbacks", 2015, @fleur_east ],
 
   ["We Like It Here", 2014, @snarky_puppy ],
   ["Family Dinner - Volume 2 ",2016, @snarky_puppy ],
@@ -77,6 +77,7 @@ end
 
 tracks_list= [
 
+  #King Diamond -Abigail
   ["Funeral", '1:30', @abigail ],
   ["Arrival", '5:26', @abigail ],
   ["A Mansion in Darkness", '4:34', @abigail ],
@@ -85,8 +86,23 @@ tracks_list= [
   ["Omens", '3:56', @abigail ],
   ["The Possession", '3:26', @abigail ],
   ["Abigail", '4:50', @abigail ],
-  ["Black Horsemen", '4:50', @abigail ]
+  ["Black Horsemen", '4:50', @abigail ],
+
+  #Katy Perry - Prism
+  ["Roar", '13:43', @prism ],
+  ["Legendary Lovers", '3:44', @prism ],
+  ["Walking on Air", '3:42', @prism ],
+  ["Unconditionally", '3:48', @prism ],
+  ["Dark Horse", '3:53', @prism ],
+  ["This Is How We Do", '3:24', @prism ],
+  ["International Smile", '3:47', @prism ],
+  ["Ghost", '3:23', @prism ],
+  ["Love Me", '3:52', @prism ],
+  ["This Moment", '3:46', @prism ],
+  ["Double Rainbow", '3:51', @prism ],
+  ["By The Grace of God", '4:27', @prism ],
 ]
+
 
 tracks_list.each do |track|
   instance_variable_set "@#{track[0].tableize.singularize.singularize.gsub(' ','_')}".to_sym, Track.create( title: track[0], time: track[1], album: track[2] )
@@ -106,43 +122,12 @@ users_list.each do |user|
 end
 
 
-
-
-playlist=Playlist.new(
-  title: 'Spiros Playlist'
+#Create A Playlist For Drumaddict User
+drumaddict_playlist=@drumaddict.playlists.create(
+  title: 'My weird mix'
 )
 
-playlist2=Playlist.new(
-  title: 'Spiros Playlist2'
-)
+drumaddict_playlist.tracks = [@roar,@this_is_how_we_do,@ghost,@this_moment,@oman,@black_horseman,@arrival]
 
-playlist.user=@drumaddict
-playlist.track=@funeral
-playlist.save
-
-playlist2.user=@drumaddict
-playlist2.album=@the_eye
-playlist2.save
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+drumaddict_playlist.albums =[@love_sax_and_flashback,@furious_7,@teenage_dream,@we_like_it_here,@them,@conspiracy]
+drumaddict_playlist.save
