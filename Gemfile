@@ -9,6 +9,14 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # gem 'jbuilder', '~> 2.0'
 
  gem 'active_model_serializers', '~> 0.10.0.rc3'
+ gem 'oat'
+ gem "responders"
+     #   create  lib/application_responder.rb
+     #  insert  config/application.rb
+     # prepend  app/controllers/application_controller.rb
+     #  insert  app/controllers/application_controller.rb
+     #  create  config/locales/responders.en.yml
+
 # Use Puma as the app server
  gem 'puma'
 

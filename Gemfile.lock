@@ -162,6 +162,8 @@ GEM
     net-ssh (3.0.1)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
+    oat (0.4.6)
+      activesupport
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -205,6 +207,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     redis (3.2.2)
+    responders (2.1.1)
+      railties (>= 4.2.0, < 5.1)
     rspec-core (3.1.7)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.2)
@@ -287,11 +291,13 @@ DEPENDENCIES
   fakeweb
   mocha
   mysql2 (>= 0.3.18, < 0.5)
+  oat
   pry-byebug
   puma
   rack-cors
   rails (>= 5.0.0.beta1, < 5.1)
   rails-controller-testing
+  responders
   rspec-rails
   seed_dump
   shoulda-matchers

@@ -1,16 +1,30 @@
 class ArtistsController < ApplicationController
   before_action :set_artist, only: [:show, :update, :destroy]
 
+
   # GET /artists
   def index
     @artists = Artist.all
 
-    render json: @artists
+    #render json: @artists
+     #render json: ArtistSerializer.new(@artists)
+
+      respond_with(@artists) do |format|
+        format.siren { render siren:  ArtistsSerializer.new(@artists) }
+        format.json { render  json: @artist,  each_serializer:  Ams::ArtistSerializer }
+     end
   end
 
   # GET /artists/1
   def show
-    render json: @artist
+    #render json: @artist
+    #render json:
+    #respond_with  json: @artist
+    #render siren:  ArtistSerializer.new(@artist)
+
+     respond_with(@artist) do |format|
+        format.siren { render  json: @artist }
+     end
   end
 
   # POST /artists
