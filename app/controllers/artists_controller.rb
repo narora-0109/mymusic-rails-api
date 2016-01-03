@@ -11,8 +11,8 @@ class ArtistsController < ApplicationController
 
 
       respond_with(@artists) do |format|
-        format.siren { render siren:  ArtistsSerializer.new(@artists,{meta: {test: 'koko'}}) }
-        format.json { render  json: @artist,  each_serializer:  Ams::ArtistSerializer }
+        format.siren { render  json: @artists}
+        format.json { render  json: @artists }
      end
   end
 
@@ -25,7 +25,7 @@ class ArtistsController < ApplicationController
 
 
      respond_with(@artist) do |format|
-      format.siren { render  json: @artist, test: 'kokojambo' }
+      format.siren { render  json: @artist}
       #format.siren { render  json: ActiveModel::SerializableResource.new(@artist) }
 
      end

@@ -63,9 +63,14 @@ class Siren < ActiveModel::Serializer::Adapter
           hash[:class] << resource_identifier_type_for(serializer).singularize
           hash[:properties] =primary_data
           hash[:links]=[]
-          hash[:links]<< Hash[:rel,:self,:href, url_for(serializer.options[:context].env['action_dispatch.request.parameters']) ]
+          #raise
+
+          hash[:links]<< Hash[:rel,[:self],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :show, id: serializer.object.id ) ]
+          hash[:links]<< Hash[:rel,[:collection],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :index )]
+
+
           hash[:entities] = relationships if relationships.any?
-          hash[:included] = included if included.any?
+          #hash[:included] = included if included.any?
 
 
 
@@ -73,11 +78,8 @@ class Siren < ActiveModel::Serializer::Adapter
         end
 
         def resource_identifier_type_for(serializer)
-          if ActiveModel::Serializer.config.jsonapi_resource_type == :singular
-            serializer.object.class.model_name.singular
-          else
-            serializer.object.class.model_name.plural
-          end
+          serializer.object.class.model_name.singular
+
         end
 
         def resource_identifier_id_for(serializer)
@@ -132,9 +134,10 @@ class Siren < ActiveModel::Serializer::Adapter
         def relationships_for(serializer)
           #Hash[serializer.associations.map { |association| [association.key, { data: relationship_value_for(association.serializer, association.options) }] }]
           #raise
-          Hash[serializer.associations.map { |association| [association.key, { data: relationship_value_for(association.serializer, association.options) }] }]
+          #Hash[serializer.associations.map { |association| [association.key, { data: relationship_value_for(association.serializer, association.options) }] }]
 
           entities_array=[]
+          raise
           serializer.associations.each do |association|
             if association.serializer.respond_to?(:each)
               association.serializer.each do |serializer|
@@ -145,6 +148,7 @@ class Siren < ActiveModel::Serializer::Adapter
             end
           end
            entities_array
+           #raise
         end
 
 
@@ -155,6 +159,15 @@ class Siren < ActiveModel::Serializer::Adapter
           related_resource_hash[:class]=[association.key.to_s.singularize]
           related_resource_hash[:rel] = [association.key.to_s.singularize, 'item']
           related_resource_hash[:properties]=resource_object_for(serializer, serializer.options)
+          #related_resource_hash[:links]=resource_object_for(serializer, serializer.options)
+          #raise
+          related_resource_hash[:links]=[]
+
+          #raise
+
+          related_resource_hash[:links]<< Hash[:rel,[:self],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :show ,id: serializer.object.id) ]
+          related_resource_hash[:links]<< Hash[:rel,[:collection],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :index )]
+
           related_resource_hash
         end
 

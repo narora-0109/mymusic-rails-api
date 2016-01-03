@@ -10,7 +10,15 @@ class AlbumsController < ApplicationController
 
   # GET /albums/1
   def show
-    render json: @album
+    #render json: @album
+
+    respond_with(@album) do |format|
+     format.siren { render  json: @album }
+     #format.siren { render  json: ActiveModel::SerializableResource.new(@artist) }
+
+    end
+
+
   end
 
   # POST /albums

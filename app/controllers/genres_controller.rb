@@ -10,7 +10,13 @@ class GenresController < ApplicationController
 
   # GET /genres/1
   def show
-    render json: @genre
+    #render json: @genre
+
+    respond_with(@genre) do |format|
+     format.siren { render  json: @genre}
+     #format.siren { render  json: ActiveModel::SerializableResource.new(@artist) }
+
+    end
   end
 
   # POST /genres
