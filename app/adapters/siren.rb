@@ -52,16 +52,22 @@ class Siren < ActiveModel::Serializer::Adapter
         end
 
         def serializable_hash_for_single_resource(serializer, options)
+          #raise
           primary_data = primary_data_for(serializer, options)
           relationships = relationships_for(serializer)
           included = included_for(serializer)
           #hash = { data: primary_data }
+          #raise
           hash={}
           hash[:class]=[]
           hash[:class] << resource_identifier_type_for(serializer).singularize
           hash[:properties] =primary_data
+          hash[:links]=[]
+          hash[:links]<< Hash[:rel,:self,:href, url_for(serializer.options[:context].env['action_dispatch.request.parameters']) ]
           hash[:entities] = relationships if relationships.any?
           hash[:included] = included if included.any?
+
+
 
           hash
         end
@@ -103,6 +109,7 @@ class Siren < ActiveModel::Serializer::Adapter
         end
 
         def primary_data_for(serializer, options)
+          #raise
           if serializer.respond_to?(:each)
             serializer.map { |s| resource_object_for(s, options) }
           else
@@ -129,24 +136,29 @@ class Siren < ActiveModel::Serializer::Adapter
 
           entities_array=[]
           serializer.associations.each do |association|
-            related_serializer=association.serializer.first
-            #raise
-            related_collection=related_serializer.object
-
-            if related_collection.respond_to?(:each)
-              related_collection.each do |related_resource|
-                related_resource_hash={}
-                related_resource_hash[:rel] = [association.name.to_s.singularize, 'item']
-                related_resource_hash[:properies]=resource_object_for(related_serializer, related_serializer.options)
-                entities_array << related_resource_hash
+            if association.serializer.respond_to?(:each)
+              association.serializer.each do |serializer|
+              entities_array << related_resource_hash(association,serializer)
               end
+            else
+              entities_array << related_resource_hash(association,association.serializer)
             end
-
-
           end
-
            entities_array
         end
+
+
+
+        def related_resource_hash(association,serializer)
+          related_resource_hash={}
+
+          related_resource_hash[:class]=[association.key.to_s.singularize]
+          related_resource_hash[:rel] = [association.key.to_s.singularize, 'item']
+          related_resource_hash[:properties]=resource_object_for(serializer, serializer.options)
+          related_resource_hash
+        end
+
+
 
         def included_for(serializer)
           included = @included.flat_map do |inc|
@@ -182,6 +194,6 @@ class Siren < ActiveModel::Serializer::Adapter
         end
 
         def links_for(serializer, options)
-          JsonApi::PaginationLinks.new(serializer.object, options[:context]).serializable_hash(options)
+          Siren::PaginationLinks.new(serializer.object, options[:context]).serializable_hash(options)
         end
 end

@@ -5,7 +5,6 @@ class ArtistSerializer < ActiveModel::Serializer
   belongs_to :genre
 
 
-
   def to_siren
     to_json
   end
