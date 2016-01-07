@@ -137,8 +137,11 @@ class Siren < ActiveModel::Serializer::Adapter
           #Hash[serializer.associations.map { |association| [association.key, { data: relationship_value_for(association.serializer, association.options) }] }]
 
           entities_array=[]
-          raise
-          serializer.associations.each do |association|
+          unique_associations=[]
+          associations=serializer.associations.each_with_object(unique_associations){|s,arr | unique_associations << s if arr.none?{|ser| ser.name == s.name } }
+
+          #raise
+          unique_associations.each do |association|
             if association.serializer.respond_to?(:each)
               association.serializer.each do |serializer|
               entities_array << related_resource_hash(association,serializer)
