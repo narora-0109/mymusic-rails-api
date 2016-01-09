@@ -53,9 +53,9 @@ end
   ["Conspiracy", 1989, @king_diamond ],
   ["The Eye", 1990, @king_diamond ],
 
-  ["One of the Boys", 2008, @kate_perry ],
-  ["Teenage Dream", 2010, @kate_perry ],
-  ["Prism", 2013, @kate_perry ],
+  ["One of the Boys", 2008, @katy_perry ],
+  ["Teenage Dream", 2010, @katy_perry ],
+  ["Prism", 2013, @katy_perry ],
 
   ["Furious 7", 2015, @brian_tyler ],
   ["Avengers Age of Ultron", 2015, @brian_tyler ],

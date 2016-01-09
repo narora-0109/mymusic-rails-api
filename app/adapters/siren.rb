@@ -32,24 +32,80 @@ class Siren < ActiveModel::Serializer::Adapter
         private
 
         def serializable_hash_for_collection(serializer, options)
-          hash = { data: [] }
+          #raise
+          hash = { }
+          hash[:class]=[]
+          hash[:rel]=[]
+          hash[:class] << resource_identifier_type_for(serializer.first).pluralize
+          hash[:entities]=[]
+          hash[:rel]=['collection']
           serializer.each do |s|
-            result = self.class.new(s, @options.merge(fieldset: @fieldset)).serializable_hash(options)
-            hash[:data] << result[:data]
 
-            if result[:included]
-              hash[:included] ||= []
-              hash[:included] |= result[:included]
-            end
+             #primary_data = primary_data_for(serializer, options)
+            # relationships = relationships_for(serializer)
+            # included = included_for(serializer)
+            #result = self.class.new(s, @options.merge(fieldset: @fieldset)).serializable_hash(options)
+            hash[:entities] << embedded_representation_for_collection(s, options)
           end
 
-          if serializer.paginated?
-            hash[:links] ||= {}
-            hash[:links].update(links_for(serializer, options))
-          end
+
+
+          #   if result[:included]
+          #     hash[:included] ||= []
+          #     hash[:included] |= result[:included]
+          #   end
+          # end
+
+          # if serializer.paginated?
+          #   hash[:links] ||= {}
+          #   hash[:links].update(links_for(serializer, options))
+          # end
 
           hash
         end
+
+        def embedded_representation_for_collection(serializer, options)
+            embedded_entity_hash={}
+            embedded_entity_hash[:class] = []
+            embedded_entity_hash[:rel] = []
+            embedded_entity_hash[:properties] = []
+            embedded_entity_hash[:links] = []
+            embedded_entity_hash[:entities] = []
+            embedded_entity_hash[:class] << resource_identifier_type_for(serializer).singularize
+            embedded_entity_hash[:rel] << 'item'
+            embedded_entity_hash[:properties] = primary_data_for(serializer, options)
+            embedded_entity_hash[:links] <<  Hash[:rel,[:self],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :show, id: serializer.object.id ) ]
+
+
+            #We could implement Embedded links for subentities (see https://github.com/kevinswiber/siren)
+            # if we inluded fully nested or shallow nested routes in our app.
+            if (options[:related] && options[:related] == 'links')
+              embedded_entity_hash[:entities] << link_relationships_for(serializer)
+            else
+              #raise if serializer.class.to_s=='ArtistSerializer'
+              #gets representations for related subentities`
+              embedded_entity_hash[:entities] << relationships_for(serializer) if relationships_for(serializer).present?
+            end
+            #raise if serializer.object.id==2
+            embedded_entity_hash.delete(:entities) if embedded_entity_hash[:entities].empty?
+            embedded_entity_hash
+
+
+
+        end
+
+        def embedded_link_for_collection(serializer,plural_or_singular = nil)
+            #return {} if serializer.nil?
+            embedded_link_hash={}
+            embedded_link_hash[:class] = []
+            #http://tools.ietf.org/html/rfc6573
+            embedded_link_hash[:href] = []
+            embedded_link_hash[:class] << resource_identifier_type_for(serializer).send(plural_or_singular)
+            #You should implement shallow nested routes for the href value
+            embedded_link_hash[:href]= "Nested route that fetches all related records"
+            embedded_link_hash
+        end
+
 
         def serializable_hash_for_single_resource(serializer, options)
           #raise
@@ -71,13 +127,31 @@ class Siren < ActiveModel::Serializer::Adapter
 
           hash[:entities] = relationships if relationships.any?
           #hash[:included] = included if included.any?
-
-
-
+          hash.delete(:entities) if hash[:entities].nil?
           hash
         end
 
+        def get_relation_for_serializers(parent_serializer,serializer,association)
+            reflections=parent_serializer.object.class.reflect_on_all_associations
+            reflection=reflections.detect{|r| r.name == association.name }
+            name=reflection.class.to_s.demodulize.gsub('Reflection','').underscore.to_sym
+            type= [:belongs_to,:has_one].member?(name) ?  :singularize : :pluralize
+            {name: name, type: type }
+            #raise
+
+        end
+
         def resource_identifier_type_for(serializer)
+          #raise if serializer.class.to_s=='ArtistSerializer'
+
+
+          #serializer.class.to_s.demodulize =='ArraySerializer' ?
+
+          serializer = serializer.first if serializer.class.to_s.demodulize == 'ArraySerializer'
+          #plural_or_singular = serializer.object.respond_to?(:each) ? :plural : :singular
+
+          #serializer.first.object.class.model_name.plural :
+          #raise  if serializer.class.to_s=='TrackSerializer'
           serializer.object.class.model_name.singular
 
         end
@@ -99,6 +173,7 @@ class Siren < ActiveModel::Serializer::Adapter
         end
 
         def resource_object_for(serializer, options = {})
+          return {} if serializer.nil?
           options[:fields] = @fieldset && @fieldset.fields_for(serializer)
           #raise
           cache_check(serializer) do
@@ -135,30 +210,49 @@ class Siren < ActiveModel::Serializer::Adapter
           #Hash[serializer.associations.map { |association| [association.key, { data: relationship_value_for(association.serializer, association.options) }] }]
           #raise
           #Hash[serializer.associations.map { |association| [association.key, { data: relationship_value_for(association.serializer, association.options) }] }]
-
+          return {} if serializer.class.to_s.demodulize=='ArraySerializer'
           entities_array=[]
 
           serializer.associations.each do |association|
+
             if association.serializer.respond_to?(:each)
               association.serializer.each do |serializer|
-              entities_array << related_resource_hash(association,serializer)
+              entities_array << related_resource_hash(association,serializer) if serializer
               end
             else
-              entities_array << related_resource_hash(association,association.serializer)
+              #raise if association.name==:artist && association.serializer.nil?
+              entities_array << related_resource_hash(association, association.serializer) if association.serializer
             end
           end
            entities_array
            #raise
         end
 
+        def link_relationships_for(serializer)
+          return {} if serializer.nil?
+          #raise
+          entities_array=[]
+          serializer.associations.each do |association|
+            related_serializer = association.serializer.class.to_s.demodulize=='ArraySerializer' ?
+            association.serializer.first :
+            association.serializer
+
+
+            plural_or_singular=get_relation_for_serializers(serializer,related_serializer,association)[:type]
+            entities_array << embedded_link_for_collection(related_serializer,plural_or_singular) if related_serializer
+          end
+           entities_array
+        end
+
 
 
         def related_resource_hash(association,serializer)
+          return {} if serializer.nil?
           related_resource_hash={}
 
           related_resource_hash[:class]=[association.key.to_s.singularize]
-          related_resource_hash[:rel] = [association.key.to_s.singularize, 'item']
-          related_resource_hash[:properties]=resource_object_for(serializer, serializer.options)
+          related_resource_hash[:rel] = ['item']
+          related_resource_hash[:properties]=resource_object_for(serializer, serializer.try(:options).to_h)
           #related_resource_hash[:links]=resource_object_for(serializer, serializer.options)
           #raise
           related_resource_hash[:links]=[]

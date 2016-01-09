@@ -5,7 +5,7 @@ class PlaylistsController < ApplicationController
   def index
     @playlists = Playlist.all
 
-    render json: @playlists
+    render json: @playlists,related: 'links'
   end
 
   # GET /playlists/1
