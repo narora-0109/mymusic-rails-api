@@ -3,7 +3,7 @@ class AlbumsController < ApplicationController
 
   # GET /albums
   def index
-    @albums = Album.all
+    @albums = Album.all.page(get_page).per(get_per)
 
     render json: @albums
   end

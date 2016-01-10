@@ -1,50 +1,59 @@
+include Rails.application.routes.url_helpers
 class Siren::PaginationLinks
-          FIRST_PAGE = 1
+  FIRST_PAGE = 1
 
-          attr_reader :collection, :context
+  attr_reader :collection, :context
 
-          def initialize(collection, context)
-            @collection = collection
-            @context = context
-          end
+  def initialize(collection, context)
+    @collection = collection
+    @context = context
+  end
 
-          def serializable_hash(options = {})
-            pages_from.each_with_object({}) do |(key, value), hash|
-              params = query_parameters.merge(page: { number: value, size: collection.size }).to_query
+  def serializable_hash(options = {})
+    pages_from.each_with_object({}) do |(key, value), hash|
+       params=query_parameters.to_query
+       controller_instance = context.env['action_controller.instance']
+       controller_name = context.params['controller']
+       page_url=instance_eval("controller_instance.paged_#{controller_name}_url(page: #{value},per:  #{controller_instance.get_per})")
+       page_url += ("?" + query_parameters.to_query) if !query_parameters.empty?
+       hash[key] = page_url
+    end
+  end
 
-              hash[key] = "#{url(options)}?#{params}"
-            end
-          end
+  private
 
-          private
+  def pages_from
+    #raise
+    return {} if collection.total_pages == FIRST_PAGE
 
-          def pages_from
-            return {} if collection.total_pages == FIRST_PAGE
+    {}.tap do |pages|
+      pages[:self] = collection.current_page
 
-            {}.tap do |pages|
-              pages[:self] = collection.current_page
+      unless collection.current_page == FIRST_PAGE
+        pages[:first] = FIRST_PAGE
+        pages[:prev]  = collection.current_page - FIRST_PAGE
+      end
 
-              unless collection.current_page == FIRST_PAGE
-                pages[:first] = FIRST_PAGE
-                pages[:prev]  = collection.current_page - FIRST_PAGE
-              end
+      unless collection.current_page == collection.total_pages
+        pages[:next] = collection.current_page + FIRST_PAGE
+        pages[:last] = collection.total_pages
+      end
+    end
+  end
 
-              unless collection.current_page == collection.total_pages
-                pages[:next] = collection.current_page + FIRST_PAGE
-                pages[:last] = collection.total_pages
-              end
-            end
-          end
+  def url(options)
+    @url ||= options.fetch(:links, {}).fetch(:self, nil) || original_url
+  end
 
-          def url(options)
-            @url ||= options.fetch(:links, {}).fetch(:self, nil) || original_url
-          end
+  def original_url
+    @original_url ||= context.original_url[/\A[^?]+/]
+  end
 
-          def original_url
-            @original_url ||= context.original_url[/\A[^?]+/]
-          end
+  def base_url
+    @base_url ||= context.base_url
+  end
 
-          def query_parameters
-            @query_parameters ||= context.query_parameters
-          end
+  def query_parameters
+    @query_parameters ||= context.query_parameters
+  end
 end

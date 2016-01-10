@@ -3,8 +3,7 @@ class GenresController < ApplicationController
 
   # GET /genres
   def index
-    @genres = Genre.all
-
+    @genres = Genre.all.page(get_page).per(get_per)
     render json: @genres
   end
 

@@ -11,6 +11,7 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
  gem 'active_model_serializers', '~> 0.10.0.rc3'
  gem 'oat'
  gem "responders"
+ gem  'kaminari'
      #   create  lib/application_responder.rb
      #  insert  config/application.rb
      # prepend  app/controllers/application_controller.rb

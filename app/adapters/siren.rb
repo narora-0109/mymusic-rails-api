@@ -1,8 +1,8 @@
 require 'active_model/serializer/adapter'
 class Siren < ActiveModel::Serializer::Adapter
         extend ActiveSupport::Autoload
-        autoload :PaginationLinks
-        autoload :FragmentCache
+        #autoload PaginationLinks
+        #autoload FragmentCache
 
         def initialize(serializer, options = {})
           super
@@ -47,8 +47,12 @@ class Siren < ActiveModel::Serializer::Adapter
             #result = self.class.new(s, @options.merge(fieldset: @fieldset)).serializable_hash(options)
             hash[:entities] << embedded_representation_for_collection(s, options)
           end
-
-
+           #raise
+          if serializer.paginated?
+            hash[:links] ||= {}
+           # hash[:links].update(links_for(serializer, options))
+            hash[:links]=links_for(serializer, options)
+          end
 
           #   if result[:included]
           #     hash[:included] ||= []
@@ -301,6 +305,7 @@ class Siren < ActiveModel::Serializer::Adapter
         end
 
         def links_for(serializer, options)
+          #raise
           Siren::PaginationLinks.new(serializer.object, options[:context]).serializable_hash(options)
         end
 end

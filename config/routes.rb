@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
-  resources :genres
-  resources :playlists
-  resources :tracks
-  resources :users
-  resources :albums
-  resources :artists
+
+  concern :paginatable do
+    get '(page/:page/per/:per)', :action => :index, :on => :collection, :as => 'paged'
+  end
+
+  resources :genres, concerns: :paginatable
+  resources :playlists, concerns: :paginatable
+  resources :tracks , concerns: :paginatable
+  resources :users, concerns: :paginatable
+  resources :albums, concerns: :paginatable
+  resources :artists, concerns: :paginatable
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # Serve websocket cable requests in-process
