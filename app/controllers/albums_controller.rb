@@ -1,6 +1,8 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :update, :destroy]
 
+  PERMITTED_PARAMETERS= %W(title year artist_id).map(&:to_sym)
+
   # GET /albums
   def index
     if params[:ids]
@@ -10,6 +12,7 @@ class AlbumsController < ApplicationController
     @albums = Album.all.page(get_page).per(get_per)
   end
     render json: @albums, related: 'links'
+    #fields: fields_for_actions
   end
 
   # GET /albums/1
@@ -58,6 +61,7 @@ class AlbumsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def album_params
-      params.require(:album).permit(:title, :year, :artist_id)
+      #params.require(:album).permit(:title, :year, :artist_id)
+      params.require(:album).permit(*PERMITTED_PARAMETERS)
     end
 end

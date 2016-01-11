@@ -26,4 +26,54 @@ class ApplicationController < ActionController::API
     params[:page] ||  1
   end
 
+
+  def fields_for_actions
+    get_fields_for_actions = {}
+    raw_fields_hash = model_class.columns_hash
+
+    #permitted_params = instance_eval("#{model_class.model_name.singular}_params")
+
+    raw_fields_hash.keys.each do |attribute_name|
+
+      if self.class::PERMITTED_PARAMETERS.member?(attribute_name.to_sym)
+
+        get_fields_for_actions[attribute_name]= Hash.new
+        get_fields_for_actions[attribute_name][:name] = attribute_name
+        get_fields_for_actions[attribute_name][:type] = raw_fields_hash[attribute_name].type
+
+      end
+    end
+
+    get_fields_for_actions
+  end
+
+  def column_type_to_html_input
+    {
+      boolean:          :checkbox,
+      string:           :text,
+      email:            :email,
+      url:              :url,
+      tel:              :tel,
+      password:         :password,
+      search:           :search,
+      uuid:             :text,
+      text:             :textarea,
+      file:             :file,
+      hidden:           :hidden,
+      integer:          :number,
+      float:            :number,
+      decimal:          :number,
+      range:            :range,
+      datetime:         :select,
+      date:             :select,
+      time:             :select,
+      select:           :select,
+      radio_buttons:    :radio_collection,
+      check_boxes:      :checkbox_collection,
+      country:          :select,
+      time_zone:        :select
+    }
+
+  end
+
 end

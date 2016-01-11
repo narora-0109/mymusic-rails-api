@@ -59,6 +59,7 @@ class Siren < ActiveModel::Serializer::Adapter
     hash[:entities]=[]
     hash[:rel]=['collection']
     hash[:actions]=[]
+    hash[:actions]<< post_action_hash(serializer)
     serializer.each do |s|
       #primary_data = primary_data_for(serializer, options)
       # relationships = relationships_for(serializer)
@@ -147,20 +148,74 @@ class Siren < ActiveModel::Serializer::Adapter
     end
   end
 
-  # def resource_identifier_for(serializer)
-  #   id   = resource_identifier_id_for(serializer)
-  #   { id: id.to_s}
+  # def relationship_value_for(serializer, options = {})
+  #   if serializer.respond_to?(:each)
+  #     serializer.map { |s| resource_identifier_for(s) }
+  #   else
+  #     if options[:virtual_value]
+  #       options[:virtual_value]
+  #     elsif serializer && serializer.object
+  #       resource_identifier_for(serializer)
+  #     end
+  #   end
   # end
 
   def resource_identifier_for(serializer)
-    type = resource_identifier_type_for(serializer)
     id   = resource_identifier_id_for(serializer)
-    { id: id.to_s, type: type }
+    { id: id.to_s}
+  end
+
+  # def resource_identifier_for(serializer)
+  #   type = resource_identifier_type_for(serializer)
+  #   id   = resource_identifier_id_for(serializer)
+  #   { id: id.to_s, type: type }
+  # end
+
+  def post_action_hash(serializer)
+
+    # if serializer.respond_to?(:each)
+    #   serializer.map { |s| resource_object_for(s, options) }
+    # else
+    #   resource_object_for(serializer, options)
+    # end
+
+
+    serializer=serializer.first if serializer.respond_to?(:each)
+
+    context = serializer.options[:context]
+    controller_instance = context.env['action_controller.instance']
+    controller_name = context.params['controller']
+
+    #raise
+       #raise
+
+
+    post_action_hash={}
+    post_action_hash['name'] = "add-#{resource_identifier_type_for(serializer)}"
+    post_action_hash['title'] = "Add #{resource_identifier_type_for(serializer).humanize}"
+    post_action_hash['method'] = "POST"
+    post_action_hash['type'] = "application/x-www-form-urlencoded"
+    post_action_hash['href'] = url_for(controller: controller_name, action: :index)
+    post_action_hash[:fields] = []
+
+    controller_instance.fields_for_actions.values.each do |field_info|
+
+      field_hash={}
+      field_hash[:name] = "#{resource_identifier_type_for(serializer)}[#{field_info[:name]}]"
+      field_hash[:type] = controller_instance.column_type_to_html_input[  field_info[:type]].to_s
+    post_action_hash[:fields]<< field_hash
+    end
+
+
+    post_action_hash
+
+
+
   end
 
   def resource_object_for(serializer, options = {})
     return {} if serializer.nil?
-    options[:fields] = @fieldset && @fieldset.fields_for(serializer)
+    #options[:fields] = @fieldset && @fieldset.fields_for(serializer)
     #raise
     cache_check(serializer) do
       result = resource_identifier_for(serializer)
@@ -180,17 +235,6 @@ class Siren < ActiveModel::Serializer::Adapter
     end
   end
 
-  def relationship_value_for(serializer, options = {})
-    if serializer.respond_to?(:each)
-      serializer.map { |s| resource_identifier_for(s) }
-    else
-      if options[:virtual_value]
-        options[:virtual_value]
-      elsif serializer && serializer.object
-        resource_identifier_for(serializer)
-      end
-    end
-  end
 
   def relationships_for(serializer)
     return {} if serializer.class.to_s.demodulize=='ArraySerializer'
