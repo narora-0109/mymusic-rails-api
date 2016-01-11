@@ -2,7 +2,7 @@ require "application_responder"
 
 class ApplicationController < ActionController::API
 
-  KAMINARI_RECORDS_PER_PAGE = 1
+  KAMINARI_RECORDS_PER_PAGE = 4
 
   self.responder = ApplicationResponder
   respond_to :siren, :json, :html
