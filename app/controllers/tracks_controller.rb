@@ -2,11 +2,23 @@ class TracksController < ApplicationController
   before_action :set_track, only: [:show, :update, :destroy]
 
   # GET /tracks
-  def index
-    @tracks = Track.all
+  # def index
+  #   @tracks = Track.all
 
-    render json: @tracks
+  #   render json: @tracks
+  # end
+
+  def index
+    if params[:ids]
+       @tracks = Track.find(params[:ids].split(','))
+       @tracks = Kaminari.paginate_array(@tracks).page(get_page).per(get_per)
+    else
+     @tracks = Track.all.page(get_page).per(get_per)
   end
+    render json:  @tracks, related: 'links'
+  end
+
+
 
   # GET /tracks/1
   def show

@@ -98,15 +98,37 @@ class Siren < ActiveModel::Serializer::Adapter
 
         end
 
-        def embedded_link_for_collection(serializer,plural_or_singular = nil)
+        def embedded_link_for_collection(parent_serializer,serializer,association_info = nil)
             #return {} if serializer.nil?
+
+            # params=query_parameters.to_query
+            # controller_instance = context.env['action_controller.instance']
+            # controller_name = context.params['controller']
+            # page_url=instance_eval("controller_instance.paged_#{controller_name}_url(page: #{value},per:  #{controller_instance.get_per})")
+            # page_url += ("?" + query_parameters.to_query) if !query_parameters.empty?
+            # hash[key] = page_url
+            context = serializer.options[:context]
+            controller_instance= context.env['action_controller.instance']
+            controller_name = context.params['controller']
+
+            if association_info[:type] == :pluralize
+                ids=parent_serializer.object.send(association_info[:association_name]).map(&:id).join(',')
+                link_url = instance_eval("controller_instance.paged_#{association_info[:association_name].to_s}_url(ids: '#{ids}', page:1,per:2)")
+            else
+                id=parent_serializer.object.send(association_info[:association_name]).id
+                link_url=  instance_eval("#{association_info[:association_name].to_s}_url(id: #{id})")
+            end
+
+            #options[:context]
+            #raise
+
             embedded_link_hash={}
             embedded_link_hash[:class] = []
             #http://tools.ietf.org/html/rfc6573
             embedded_link_hash[:href] = []
-            embedded_link_hash[:class] << resource_identifier_type_for(serializer).send(plural_or_singular)
+            embedded_link_hash[:class] << resource_identifier_type_for(serializer).send(association_info[:type])
             #You should implement shallow nested routes for the href value
-            embedded_link_hash[:href]= "Nested route that fetches all related records"
+            embedded_link_hash[:href]= link_url
             embedded_link_hash
         end
 
@@ -140,7 +162,7 @@ class Siren < ActiveModel::Serializer::Adapter
             reflection=reflections.detect{|r| r.name == association.name }
             name=reflection.class.to_s.demodulize.gsub('Reflection','').underscore.to_sym
             type= [:belongs_to,:has_one].member?(name) ?  :singularize : :pluralize
-            {name: name, type: type }
+            {name: name, type: type, association_name: association.name }
             #raise
 
         end
@@ -152,7 +174,7 @@ class Siren < ActiveModel::Serializer::Adapter
           #serializer.class.to_s.demodulize =='ArraySerializer' ?
 
           serializer = serializer.first if serializer.class.to_s.demodulize == 'ArraySerializer'
-          #plural_or_singular = serializer.object.respond_to?(:each) ? :plural : :singular
+          #association_info = serializer.object.respond_to?(:each) ? :plural : :singular
 
           #serializer.first.object.class.model_name.plural :
           #raise  if serializer.class.to_s=='TrackSerializer'
@@ -242,8 +264,8 @@ class Siren < ActiveModel::Serializer::Adapter
             association.serializer
 
 
-            plural_or_singular=get_relation_for_serializers(serializer,related_serializer,association)[:type]
-            entities_array << embedded_link_for_collection(related_serializer,plural_or_singular) if related_serializer
+            association_info=get_relation_for_serializers(serializer,related_serializer,association)
+            entities_array << embedded_link_for_collection(serializer,related_serializer,association_info) if related_serializer
           end
            entities_array
         end

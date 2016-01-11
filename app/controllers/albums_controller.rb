@@ -3,9 +3,13 @@ class AlbumsController < ApplicationController
 
   # GET /albums
   def index
+    if params[:ids]
+      @albums = Album.find(params[:ids].split(','))
+      @albums = Kaminari.paginate_array(@albums).page(get_page).per(get_per)
+    else
     @albums = Album.all.page(get_page).per(get_per)
-
-    render json: @albums
+  end
+    render json: @albums, related: 'links'
   end
 
   # GET /albums/1

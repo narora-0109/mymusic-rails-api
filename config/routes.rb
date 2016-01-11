@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
   concern :paginatable do
-    get '(page/:page/per/:per)', :action => :index, :on => :collection, :as => 'paged'
+    get '(/ids/:ids)/page/:page/per/:per', :action => :index, :on => :collection, :as => 'paged'
   end
+
+
 
   resources :genres, concerns: :paginatable
   resources :playlists, concerns: :paginatable
