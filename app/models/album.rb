@@ -1,6 +1,6 @@
 class Album < ApplicationRecord
 
-  KAMINARI_RECORDS_PER_PAGE = 1
+  KAMINARI_RECORDS_PER_PAGE = 3
 
 
   belongs_to :artist

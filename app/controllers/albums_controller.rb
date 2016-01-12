@@ -1,6 +1,7 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :update, :destroy]
 
+
   PERMITTED_PARAMETERS= %W(title year artist_id).map(&:to_sym)
 
   # GET /albums
@@ -12,20 +13,14 @@ class AlbumsController < ApplicationController
     @albums = Album.all.page(get_page).per(get_per)
   end
     render json: @albums, related: 'links'
-    #fields: fields_for_actions
   end
 
   # GET /albums/1
   def show
-    #render json: @album
-
     respond_with(@album) do |format|
-     format.siren { render  json: @album }
-     #format.siren { render  json: ActiveModel::SerializableResource.new(@artist) }
-
+      format.json  { render json:  @album ,related: 'links' }
+      format.siren { render  json: @album ,related: 'links'}
     end
-
-
   end
 
   # POST /albums
@@ -33,7 +28,10 @@ class AlbumsController < ApplicationController
     @album = Album.new(album_params)
 
     if @album.save
-      render json: @album, status: :created, location: @album
+       respond_with(@album) do |format|
+         format.json  { render json:  @album ,status: :created,location: @album.to_json}
+         format.siren { render  json: @album ,status: :created, location: @album.to_json}
+       end
     else
       render json: @album.errors, status: :unprocessable_entity
     end
@@ -42,15 +40,23 @@ class AlbumsController < ApplicationController
   # PATCH/PUT /albums/1
   def update
     if @album.update(album_params)
-      render json: @album
+      respond_with(@album) do |format|
+        format.json  { render json:  @album  }
+        format.siren { render  json: @album }
+      end
     else
-      render json: @album.errors, status: :unprocessable_entity
+      respond_with(@album) do |format|
+        format.json  { render json: @album.errors, status: :unprocessable_entity  }
+        format.siren { render json: @album.errors, status: :unprocessable_entity }
+      end
+      render
     end
   end
 
   # DELETE /albums/1
   def destroy
     @album.destroy
+    head :no_content
   end
 
   private

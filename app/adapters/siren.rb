@@ -34,13 +34,14 @@ class Siren < ActiveModel::Serializer::Adapter
   def serializable_hash_for_single_resource(serializer, options)
     primary_data = primary_data_for(serializer, options)
     relationships = relationships_for(serializer)
-    included = included_for(serializer)
     hash={}
     hash[:class]=[]
     hash[:class] << resource_identifier_type_for(serializer).singularize
     hash[:properties] =primary_data
     hash[:links]=[]
     hash[:actions]=[]
+    hash[:actions]<< action_hash(serializer,'PATCH')
+    hash[:actions]<< action_hash(serializer,'DELETE')
     #raise
 
     hash[:links]<< Hash[:rel,[:self],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :show, id: serializer.object.id ) ]
@@ -59,7 +60,7 @@ class Siren < ActiveModel::Serializer::Adapter
     hash[:entities]=[]
     hash[:rel]=['collection']
     hash[:actions]=[]
-    hash[:actions]<< post_action_hash(serializer)
+    hash[:actions]<< action_hash(serializer,'POST')
     serializer.each do |s|
       #primary_data = primary_data_for(serializer, options)
       # relationships = relationships_for(serializer)
@@ -92,6 +93,7 @@ class Siren < ActiveModel::Serializer::Adapter
     embedded_entity_hash[:properties] = primary_data_for(serializer, options)
     embedded_entity_hash[:links] <<  Hash[:rel,[:self],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :show, id: serializer.object.id ) ]
     #Optional Embedded links for subentities (see https://github.com/kevinswiber/siren)
+
     if (options[:related] && options[:related] == 'links')
       embedded_entity_hash[:entities] << link_relationships_for(serializer)
     else
@@ -171,7 +173,7 @@ class Siren < ActiveModel::Serializer::Adapter
   #   { id: id.to_s, type: type }
   # end
 
-  def post_action_hash(serializer)
+  def action_hash(serializer, action = nil)
 
     # if serializer.respond_to?(:each)
     #   serializer.map { |s| resource_object_for(s, options) }
@@ -179,37 +181,56 @@ class Siren < ActiveModel::Serializer::Adapter
     #   resource_object_for(serializer, options)
     # end
 
-
     serializer=serializer.first if serializer.respond_to?(:each)
 
     context = serializer.options[:context]
     controller_instance = context.env['action_controller.instance']
     controller_name = context.params['controller']
+    resource_id = resource_identifier_type_for(serializer)
+    human_resource_id = resource_id.humanize
 
-    #raise
-       #raise
+    case action
 
+    when  'POST'
+      name = "add-#{resource_id}"
+      title = "Add #{human_resource_id}"
+      method = action
+      href = url_for(controller: controller_name, action: :index)
 
-    post_action_hash={}
-    post_action_hash['name'] = "add-#{resource_identifier_type_for(serializer)}"
-    post_action_hash['title'] = "Add #{resource_identifier_type_for(serializer).humanize}"
-    post_action_hash['method'] = "POST"
-    post_action_hash['type'] = "application/x-www-form-urlencoded"
-    post_action_hash['href'] = url_for(controller: controller_name, action: :index)
-    post_action_hash[:fields] = []
+    when  'PATCH'
 
-    controller_instance.fields_for_actions.values.each do |field_info|
+      name = "update-#{resource_id}"
+      title = "Update #{human_resource_id}"
+      method = action
+      href = url_for(controller: controller_name, action: :update, id: serializer.object.id)
 
-      field_hash={}
-      field_hash[:name] = "#{resource_identifier_type_for(serializer)}[#{field_info[:name]}]"
-      field_hash[:type] = controller_instance.column_type_to_html_input[  field_info[:type]].to_s
-    post_action_hash[:fields]<< field_hash
+    when 'DELETE'
+      name = "delete-#{resource_id}"
+      title = "Delete #{human_resource_id}"
+      method = action
+      href = url_for(controller: controller_name, action: :destroy, id: serializer.object.id)
+    end
+
+    action_hash={}
+
+    action_hash['name'] = name
+    action_hash['title'] = title
+    action_hash['method'] = method
+    action_hash['type'] = "application/x-www-form-urlencoded"
+    action_hash['href'] = href
+    action_hash[:fields] = [] unless action == 'DELETE'
+
+    unless action == 'DELETE'
+      controller_instance.fields_for_actions.values.each do |field_info|
+        field_hash={}
+        field_hash[:name] = "#{resource_identifier_type_for(serializer)}[#{field_info[:name]}]"
+        field_hash[:type] = controller_instance.column_type_to_html_input[  field_info[:type]].to_s
+      action_hash[:fields] << field_hash
+      end
     end
 
 
-    post_action_hash
-
-
+    action_hash
 
   end
 
