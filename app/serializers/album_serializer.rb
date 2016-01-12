@@ -7,8 +7,6 @@ class AlbumSerializer < ActiveModel::Serializer
   #has_many :playlist_albums
 
   has_many :playlists, through: :playlist_albums
-    def to_siren
-    to_json
-  end
+
 
 end

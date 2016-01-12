@@ -6,13 +6,6 @@ class Siren < ActiveModel::Serializer::Adapter
 
   def initialize(serializer, options = {})
     super
-    @included = ActiveModel::Serializer::Utils.include_args_to_hash(@options[:include])
-    fields = options.delete(:fields)
-    if fields
-      @fieldset = ActiveModel::Serializer::Fieldset.new(fields, serializer.json_key)
-    else
-      @fieldset = options[:fieldset]
-    end
   end
 
   def serializable_hash(options = nil)
@@ -38,16 +31,22 @@ class Siren < ActiveModel::Serializer::Adapter
     hash[:class]=[]
     hash[:class] << resource_identifier_type_for(serializer).singularize
     hash[:properties] =primary_data
-    hash[:links]=[]
-    hash[:actions]=[]
-    hash[:actions]<< action_hash(serializer,'PATCH')
-    hash[:actions]<< action_hash(serializer,'DELETE')
+    hash[:links] = []
+    hash[:actions] = []
+    hash[:actions] << action_hash(serializer,'PATCH')
+    hash[:actions] << action_hash(serializer,'DELETE')
     #raise
 
     hash[:links]<< Hash[:rel,[:self],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :show, id: serializer.object.id ) ]
     hash[:links]<< Hash[:rel,[:collection],:href,url_for(controller: resource_identifier_type_for(serializer).tableize, action: :index )]
-    hash[:entities] = relationships if relationships.any?
-    #hash[:included] = included if included.any?
+
+    if (options[:related] && options[:related] == 'links')
+      hash[:entities] = link_relationships_for(serializer)
+    else
+      #gets representations for related subentities
+      hash[:entities]=[]
+      hash[:entities] << relationships_for(serializer) if relationships_for(serializer).present?
+    end
     hash.delete(:entities) if hash[:entities].nil?
     hash
   end
@@ -62,10 +61,6 @@ class Siren < ActiveModel::Serializer::Adapter
     hash[:actions]=[]
     hash[:actions]<< action_hash(serializer,'POST')
     serializer.each do |s|
-      #primary_data = primary_data_for(serializer, options)
-      # relationships = relationships_for(serializer)
-      # included = included_for(serializer)
-      #result = self.class.new(s, @options.merge(fieldset: @fieldset)).serializable_hash(options)
       hash[:entities] << embedded_representation_for_collection(s, options)
     end
 
@@ -104,7 +99,7 @@ class Siren < ActiveModel::Serializer::Adapter
     embedded_entity_hash
   end
 
-  def embedded_link_for_collection(parent_serializer,serializer,association_info = {})
+  def embedded_link(parent_serializer,serializer,association_info = {})
 
     return {} if serializer.nil?
 
@@ -115,15 +110,22 @@ class Siren < ActiveModel::Serializer::Adapter
     if association_info[:type] == :pluralize
         ids = parent_serializer.object.send(association_info[:association_name]).map(&:id).join(',')
         link_url = instance_eval("controller_instance.paged_#{association_info[:association_name].to_s}_url(ids: '#{ids}', page: controller_instance.get_page ,per: controller_instance.get_per)")
-    else
-        id=parent_serializer.object.send(association_info[:association_name]).id
-        link_url=  instance_eval("#{association_info[:association_name].to_s}_url(id: #{id})")
+    else #if the association is singular we render  a representation.
+      association=parent_serializer.associations.find{|a|a.name == association_info[:association_name] }
+      related_resource_hash=related_resource_hash(association,serializer)
+      related_resource_hash['rel'] = 'related'
+      return related_resource_hash
+      # or an embedded link, optionally.Representation is fine,as it's only one.
+      # id=parent_serializer.object.send(association_info[:association_name]).id
+      # link_url=  instance_eval("#{association_info[:association_name].to_s}_url(id: #{id})")
     end
 
     embedded_link_hash={}
     embedded_link_hash[:class] = []
     #http://tools.ietf.org/html/rfc6573
     embedded_link_hash[:href] = []
+    embedded_link_hash[:rel] = []
+    embedded_link_hash[:rel] << 'related'
     embedded_link_hash[:class] << resource_identifier_type_for(serializer).send(association_info[:type])
     embedded_link_hash[:href]= link_url
     embedded_link_hash
@@ -150,36 +152,12 @@ class Siren < ActiveModel::Serializer::Adapter
     end
   end
 
-  # def relationship_value_for(serializer, options = {})
-  #   if serializer.respond_to?(:each)
-  #     serializer.map { |s| resource_identifier_for(s) }
-  #   else
-  #     if options[:virtual_value]
-  #       options[:virtual_value]
-  #     elsif serializer && serializer.object
-  #       resource_identifier_for(serializer)
-  #     end
-  #   end
-  # end
-
   def resource_identifier_for(serializer)
     id   = resource_identifier_id_for(serializer)
     { id: id.to_s}
   end
 
-  # def resource_identifier_for(serializer)
-  #   type = resource_identifier_type_for(serializer)
-  #   id   = resource_identifier_id_for(serializer)
-  #   { id: id.to_s, type: type }
-  # end
-
   def action_hash(serializer, action = nil)
-
-    # if serializer.respond_to?(:each)
-    #   serializer.map { |s| resource_object_for(s, options) }
-    # else
-    #   resource_object_for(serializer, options)
-    # end
 
     serializer=serializer.first if serializer.respond_to?(:each)
 
@@ -190,25 +168,21 @@ class Siren < ActiveModel::Serializer::Adapter
     human_resource_id = resource_id.humanize
 
     case action
-
-    when  'POST'
-      name = "add-#{resource_id}"
-      title = "Add #{human_resource_id}"
-      method = action
-      href = url_for(controller: controller_name, action: :index)
-
-    when  'PATCH'
-
-      name = "update-#{resource_id}"
-      title = "Update #{human_resource_id}"
-      method = action
-      href = url_for(controller: controller_name, action: :update, id: serializer.object.id)
-
-    when 'DELETE'
-      name = "delete-#{resource_id}"
-      title = "Delete #{human_resource_id}"
-      method = action
-      href = url_for(controller: controller_name, action: :destroy, id: serializer.object.id)
+      when  'POST'
+        name = "add-#{resource_id}"
+        title = "Add #{human_resource_id}"
+        method = action
+        href = url_for(controller: controller_name, action: :index)
+      when  'PATCH'
+        name = "update-#{resource_id}"
+        title = "Update #{human_resource_id}"
+        method = action
+        href = url_for(controller: controller_name, action: :update, id: serializer.object.id)
+      when 'DELETE'
+        name = "delete-#{resource_id}"
+        title = "Delete #{human_resource_id}"
+        method = action
+        href = url_for(controller: controller_name, action: :destroy, id: serializer.object.id)
     end
 
     action_hash={}
@@ -236,8 +210,6 @@ class Siren < ActiveModel::Serializer::Adapter
 
   def resource_object_for(serializer, options = {})
     return {} if serializer.nil?
-    #options[:fields] = @fieldset && @fieldset.fields_for(serializer)
-    #raise
     cache_check(serializer) do
       result = resource_identifier_for(serializer)
       attributes = serializer.attributes(options).except(:id)
@@ -248,7 +220,6 @@ class Siren < ActiveModel::Serializer::Adapter
   end
 
   def primary_data_for(serializer, options)
-    #raise
     if serializer.respond_to?(:each)
       serializer.map { |s| resource_object_for(s, options) }
     else
@@ -280,7 +251,7 @@ class Siren < ActiveModel::Serializer::Adapter
       association.serializer.first :
       association.serializer
       association_info = get_relation_for_serializers(serializer,related_serializer,association)
-      entities_array << embedded_link_for_collection(serializer,related_serializer,association_info) if related_serializer
+      entities_array << embedded_link(serializer,related_serializer,association_info) if related_serializer
     end
      entities_array
   end
@@ -298,41 +269,6 @@ class Siren < ActiveModel::Serializer::Adapter
 
     related_resource_hash
   end
-
-
-
-  # def included_for(serializer)
-  #   included = @included.flat_map do |inc|
-  #     association = serializer.associations.find { |assoc| assoc.key == inc.first }
-  #     _included_for(association.serializer, inc.second) if association
-  #   end
-
-  #   included.uniq
-  # end
-
-  # def _included_for(serializer, includes)
-  #   if serializer.respond_to?(:each)
-  #     serializer.flat_map { |s| _included_for(s, includes) }.uniq
-  #   else
-  #     return [] unless serializer && serializer.object
-
-  #     primary_data = primary_data_for(serializer, @options)
-  #     relationships = relationships_for(serializer)
-  #     primary_data[:relationships] = relationships if relationships.any?
-
-  #     included = [primary_data]
-
-  #     includes.each do |inc|
-  #       association = serializer.associations.find { |assoc| assoc.key == inc.first }
-  #       if association
-  #         included.concat(_included_for(association.serializer, inc.second))
-  #         included.uniq!
-  #       end
-  #     end
-
-  #     included
-  #   end
-  # end
 
 
 end

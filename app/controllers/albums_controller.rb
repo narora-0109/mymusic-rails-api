@@ -17,9 +17,10 @@ class AlbumsController < ApplicationController
 
   # GET /albums/1
   def show
+
     respond_with(@album) do |format|
       format.json  { render json:  @album ,related: 'links' }
-      format.siren { render  json: @album ,related: 'links'}
+      format.siren { render json: @album ,related: 'links'}
     end
   end
 
