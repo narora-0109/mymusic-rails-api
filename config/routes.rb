@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   concern :paginatable do
-    get '(/ids/:ids)(/page/:page)(/per/:per)', :action => :index, :on => :collection, :as => 'paged'
+    get '(/id/:id)(/page/:page)(/per/:per)', :action => :index, :on => :collection, :as => 'paged'
   end
 
 

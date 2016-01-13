@@ -109,7 +109,7 @@ class Siren < ActiveModel::Serializer::Adapter
 
     if association_info[:type] == :pluralize
         ids = parent_serializer.object.send(association_info[:association_name]).map(&:id).join(',')
-        link_url = instance_eval("controller_instance.paged_#{association_info[:association_name].to_s}_url(ids: '#{ids}', page: controller_instance.get_page ,per: controller_instance.get_per)")
+        link_url = instance_eval("controller_instance.paged_#{association_info[:association_name].to_s}_url(id: '#{ids}', page: controller_instance.get_page ,per: controller_instance.get_per)")
     else #if the association is singular we render  a representation.
       association=parent_serializer.associations.find{|a|a.name == association_info[:association_name] }
       related_resource_hash=related_resource_hash(association,serializer)
