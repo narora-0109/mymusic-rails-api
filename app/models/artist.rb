@@ -1,4 +1,7 @@
 class Artist < ApplicationRecord
+
+  KAMINARI_RECORDS_PER_PAGE = 10
+
   has_many :albums
   belongs_to :genre
 

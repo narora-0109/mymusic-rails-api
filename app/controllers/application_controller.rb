@@ -70,13 +70,12 @@ class ApplicationController < ActionController::API
     # GET /{plural_resource_name}
     def index
       plural_resource_name = "@#{resource_name.pluralize}"
-      query_params[:id] = query_params[:id].split(',') if query_params[:id]
-      resources = resource_class.where(query_params)
+      ids = params[:id].split(',') if params[:id]
+      resources = resource_class.where(query_params).find(ids)
 
       #pagination with Kaminari
       resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
       instance_variable_set(plural_resource_name, resources)
-
 
       resource_collection = instance_variable_get(plural_resource_name)
 
@@ -151,6 +150,7 @@ class ApplicationController < ActionController::API
 
 
     def get_per
+
       begin
         model_per = resource_class::KAMINARI_RECORDS_PER_PAGE
       rescue NameError
