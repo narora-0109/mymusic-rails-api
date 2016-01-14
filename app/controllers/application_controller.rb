@@ -22,14 +22,14 @@ class ApplicationController < ActionController::API
     # Override this method in each API controller
     # to permit additional parameters to search on
     # @return [Hash]
-    def query_params
-      params.permit(:ids)
-    end
+    # def query_params
+    #   {}
+    # end
 
     # Returns the allowed parameters for pagination
     # @return [Hash]
     def page_params
-      params.permit(:page, :per)
+      params.permit(:page, :per, :format)
     end
 
     # The resource class based on the controller
@@ -72,34 +72,32 @@ class ApplicationController < ActionController::API
       plural_resource_name = "@#{resource_name.pluralize}"
       ids = params[:id].split(',') if params[:id]
       if ids
-        resources = resource_class.where(query_params).find(ids)
+        resources = resource_class.find(ids)
       else
-        resources = resource_class.where(query_params).all
+        resources = resource_class.all
       end
 
-      #pagination with Kaminari
-      resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
-      instance_variable_set(plural_resource_name, resources)
-
-      resource_collection = instance_variable_get(plural_resource_name)
-
-      respond_with(resource_collection ) do |format|
-        format.json  { render json:  resource_collection ,related: 'links' }
-        format.siren { render json: resource_collection ,related: 'links'}
+      if stale?(resources, last_modified: resources.maximum(:updated_at))
+        resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
+        instance_variable_set(plural_resource_name, resources)
+        resource_collection = instance_variable_get(plural_resource_name)
+          respond_with(resource_collection ) do |format|
+            format.json  { render json:  resource_collection ,related: 'links' }
+            format.siren { render json: resource_collection ,related: 'links'}
+          end
       end
-      fresh_when(resource_collection)
+
     end
-
 
 
     # GET /{plural_resource_name}/1
     def show
-      respond_with(get_resource) do |format|
-        format.json  { render json:  get_resource ,related: 'links' }
-        format.siren { render json:  get_resource ,related: 'links'}
-        fresh_when(get_resource)
+      if stale?(get_resource)
+        respond_with(get_resource) do |format|
+          format.json  { render json:  get_resource ,related: 'links' }
+          format.siren { render json:  get_resource ,related: 'links'}
+        end
       end
-
     end
 
 
@@ -177,7 +175,6 @@ class ApplicationController < ActionController::API
       permitted_fields = defined?(self.class::PERMITTED_PARAMETERS) ? self.class::PERMITTED_PARAMETERS : raw_fields_hash.keys
 
        permitted_fields.each do |attribute_name|
-
         #if self.class::PERMITTED_PARAMETERS.member?(attribute_name.to_sym)
           get_fields_for_actions[attribute_name]= Hash.new
           get_fields_for_actions[attribute_name][:name] = attribute_name
