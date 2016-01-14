@@ -19,7 +19,7 @@ class Siren < ActiveModel::Serializer::Adapter
 
   def fragment_cache(cached_hash, non_cached_hash)
     root = false if @options.include?(:include)
-    ActiveModel::Serializer::Adapter::JsonApi::FragmentCache.new.fragment_cache(root, cached_hash, non_cached_hash)
+    Siren::FragmentCache::FragmentCache.new.fragment_cache(root, cached_hash, non_cached_hash)
   end
 
   private
@@ -210,9 +210,9 @@ class Siren < ActiveModel::Serializer::Adapter
 
   def resource_object_for(serializer, options = {})
     return {} if serializer.nil?
+
     cache_check(serializer) do
       result = resource_identifier_for(serializer)
-      attributes = serializer.attributes(options).except(:id)
       attributes = serializer.attributes(options)
       result = attributes if attributes.any?
       result

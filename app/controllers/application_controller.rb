@@ -71,7 +71,11 @@ class ApplicationController < ActionController::API
     def index
       plural_resource_name = "@#{resource_name.pluralize}"
       ids = params[:id].split(',') if params[:id]
-      resources = resource_class.where(query_params).find(ids)
+      if ids
+        resources = resource_class.where(query_params).find(ids)
+      else
+        resources = resource_class.where(query_params).all
+      end
 
       #pagination with Kaminari
       resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
@@ -83,6 +87,7 @@ class ApplicationController < ActionController::API
         format.json  { render json:  resource_collection ,related: 'links' }
         format.siren { render json: resource_collection ,related: 'links'}
       end
+      fresh_when(resource_collection)
     end
 
 
@@ -92,6 +97,7 @@ class ApplicationController < ActionController::API
       respond_with(get_resource) do |format|
         format.json  { render json:  get_resource ,related: 'links' }
         format.siren { render json:  get_resource ,related: 'links'}
+        fresh_when(get_resource)
       end
 
     end
