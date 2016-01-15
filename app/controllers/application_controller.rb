@@ -67,6 +67,22 @@ class ApplicationController < ActionController::API
 
 
     public
+    #entry point for API navigation.
+    def root
+      menu = []
+      [:artists, :albums, :genres, :playlists, :users].each do |resource|
+       menu  << {
+                 title: resource.to_s.humanize,
+                 href: self.class.url_for(controller: resource, action: :index )
+                }
+      end
+      respond_with(menu) do |format|
+        format.json  { render json:  Siren.root(menu) }
+        format.siren { render json: Siren.root(menu)  }
+      end
+    end
+
+
     # GET /{plural_resource_name}
     def index
       plural_resource_name = "@#{resource_name.pluralize}"
@@ -108,8 +124,9 @@ class ApplicationController < ActionController::API
 
       if get_resource.save
          respond_with(get_resource) do |format|
-           format.json  { render json:  get_resource ,status: :created,location: get_resource.to_json}
-           format.siren { render  json: get_resource ,status: :created, location: get_resource.to_json}
+         # raise
+           format.json  { render json:  get_resource ,status: :created,location: self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
+           format.siren { render  json: get_resource ,status: :created, location:  self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
          end
       else
         respond_with(get_resource) do |format|

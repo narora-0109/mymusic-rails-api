@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   end
 
 
+  root 'application#root'
+
 
   resources :genres, concerns: :paginatable
   resources :playlists, concerns: :paginatable

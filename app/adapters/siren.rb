@@ -22,6 +22,23 @@ class Siren < ActiveModel::Serializer::Adapter
     Siren::FragmentCache::FragmentCache.new.fragment_cache(root, cached_hash, non_cached_hash)
   end
 
+  def self.root( menu = [])
+    root_hash={}
+    links = []
+    menu.each do |menu_item|
+     resource_link = {}
+     resource_link[:title] = menu_item[:title]
+     #http://tools.ietf.org/html/rfc6573
+     resource_link[:rel] = []
+     resource_link[:rel] << 'index'
+     resource_link[:href] = []
+     resource_link[:href] = menu_item[:href]
+     links << resource_link
+    end
+    root_hash[:links] = links
+    root_hash
+  end
+
   private
 
   def serializable_hash_for_single_resource(serializer, options)
