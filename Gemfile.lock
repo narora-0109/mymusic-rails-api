@@ -57,6 +57,7 @@ GEM
       rake (~> 10.4.2, >= 10.4.2)
     arel (7.0.0)
     awesome_print (1.6.1)
+    bcrypt (3.1.10)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -143,9 +144,14 @@ GEM
     hitimes (1.2.3)
     i18n (0.7.0)
     json (1.8.3)
+    jwt (1.5.2)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    knock (1.4.1)
+      bcrypt (~> 3.1)
+      jwt (~> 1.5)
+      rails (>= 4.2)
     launchy (2.4.3)
       addressable (~> 2.3)
     loofah (2.0.3)
@@ -293,6 +299,7 @@ DEPENDENCIES
   faker
   fakeweb
   kaminari
+  knock
   mocha
   mysql2 (>= 0.3.18, < 0.5)
   oat

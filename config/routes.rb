@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
 
   root 'application#root'
+  #mount Knock::Engine => "/knock"
 
 
   resources :genres, concerns: :paginatable

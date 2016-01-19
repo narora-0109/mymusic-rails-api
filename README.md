@@ -1,24 +1,14 @@
-## README
+# Rails 5 API Demo
+## Work in Progress
+----
+### Overview
+I am building a Demo API with rails 5 and adding features as I go.Planning to couple it with an Angular 2 SPA later.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Features
+* Custom adapters for Hypermedia types,currently only [Siren](https://github.com/kevinswiber/siren).(Plus JSON-API which comes bundled with Active Model Serializers
+* DRY Base Controller.
+* Authentication.I spent several days to explore options for this.I'll probably go with [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth). Or maybe a more simple solution with [JWT](https://github.com/jwt/ruby-jwt).
+* Authorization. Pundit.(Coming soon)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# References
+----

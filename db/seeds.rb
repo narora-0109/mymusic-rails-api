@@ -118,7 +118,7 @@ users_list= [
 
 
 users_list.each do |user|
-  instance_variable_set "@#{user[0].tableize.singularize.singularize.gsub(' ','_')}".to_sym, User.create( username: user[0], email: user[1], password: user[2], auth_token: user[3] )
+  instance_variable_set "@#{user[0].tableize.singularize.singularize.gsub(' ','_')}".to_sym, User.create( username: user[0], email: user[1], password_digest: nil )
 end
 
 

@@ -1,6 +1,7 @@
 #DRY approach, child controllers define only permitted attributes with a constant.
 require "application_responder"
 class ApplicationController < ActionController::API
+  #include Knock::Authenticable
 
   before_action :set_resource, only: [:destroy, :show, :update]
 
