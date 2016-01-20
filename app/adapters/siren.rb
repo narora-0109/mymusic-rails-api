@@ -35,8 +35,8 @@ class Siren < ActiveModel::Serializer::Adapter
      resource_link[:href] = menu_item[:href]
      links << resource_link
     end
-    root_hash[:links] = links
-    root_hash
+  root_hash[:links] = links
+  root_hash
   end
 
   private

@@ -1,4 +1,4 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :email, :auth_token, :created_at
+  attributes :id, :name, :email, :created_at, :updated_at
   has_many :playlists
 end

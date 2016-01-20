@@ -111,17 +111,21 @@ end
 
 users_list= [
 
-  ["drumaddict", 'kabasakalis@gmail.com', '123456', 'abc' ],
-  ["pitendo", 'pitendo@gmail.com', '123456', 'abc' ],
+  ["drumaddict", 'kabasakalis@gmail.com', '11111111', '11111111' ],
+  ["pitendo", 'pitendo@gmail.com', '22222222', '22222222' ]
 
 ]
 
 
 users_list.each do |user|
-  instance_variable_set "@#{user[0].tableize.singularize.singularize.gsub(' ','_')}".to_sym, User.create( username: user[0], email: user[1], password_digest: nil )
+
+  @user=User.new( name: user[0], email: user[1], password: user[2], password_confirmation: user[3])
+  @user.save
+
+  instance_variable_set("@#{user[0].tableize.singularize.singularize.gsub(' ','_')}".to_sym, @user )
 end
 
-
+#inding.pry
 #Create A Playlist For Drumaddict User
 drumaddict_playlist=@drumaddict.playlists.create(
   title: 'My weird mix'

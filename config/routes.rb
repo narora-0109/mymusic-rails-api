@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'application#root'
   #mount Knock::Engine => "/knock"
 
+  resources :auth, only: :create
 
   resources :genres, concerns: :paginatable
   resources :playlists, concerns: :paginatable

@@ -8,15 +8,11 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
- gem 'active_model_serializers', '~> 0.10.0.rc3'
- gem 'oat'
- gem "responders"
- gem  'kaminari'
-     #   create  lib/application_responder.rb
-     #  insert  config/application.rb
-     # prepend  app/controllers/application_controller.rb
-     #  insert  app/controllers/application_controller.rb
-     #  create  config/locales/responders.en.yml
+gem 'active_model_serializers', '~> 0.10.0.rc3'
+gem "responders"
+gem  'kaminari'
+
+
 
 # Use Puma as the app server
  gem 'puma'
@@ -25,7 +21,7 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
  #gem 'airbrake'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+ gem 'bcrypt', '~> 3.1.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
@@ -34,6 +30,8 @@ gem 'swagger-docs'
 
 #Authentication
 gem 'knock'
+gem 'devise'
+gem 'jwt'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -44,13 +42,13 @@ group :development do
   gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'faker'
-  gem 'fakeweb'
-  gem 'factory_girl'
+
   gem 'annotate'
   gem 'awesome_print', :require => 'ap'
   gem 'thin'
   gem 'seed_dump'
+  gem 'rspec_api_documentation'
+  #gem 'raddocs'
 
   #Capistrano
   gem 'capistrano', '~> 3.4.0'
@@ -75,9 +73,13 @@ group :test do
   gem 'capybara-screenshot'
   gem 'mocha'
   gem 'database_cleaner'
-  gem 'faker'
+  #gem 'faker'
+  gem 'ffaker'
+  #gem 'factory_girl'
+  gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'simplecov', require: false
+
 
 end
 
