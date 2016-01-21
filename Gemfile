@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.beta1', '< 5.1'
+#gem 'rails', '>= 5.0.0.beta1', '< 5.1'
+#gem 'rails', github: 'rails/rails'
+gem 'rails', :git => 'git://github.com/rails/rails.git'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -29,9 +31,10 @@ gem 'rack-cors'
 gem 'swagger-docs'
 
 #Authentication
-gem 'knock'
-gem 'devise'
 gem 'jwt'
+#gem 'devise_token_auth'
+#Authorization
+gem 'pundit'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

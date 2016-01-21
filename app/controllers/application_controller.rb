@@ -1,6 +1,7 @@
 #DRY approach, child controllers define only permitted attributes with a constant.
 require "application_responder"
 class ApplicationController < ActionController::API
+  include Pundit
   before_action :authenticate_request
   #include Knock::Authenticable
   before_action :set_resource, only: [:destroy, :show, :update]
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::API
 
   #rescue_from ActiveRecord::RecordNotFound, with: :not_found!
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  #rescue_from Pundit::NotAuthorizedError, with: :unauthorized!
+  rescue_from Pundit::NotAuthorizedError, with: :render_unauthorized
   protected
 
   #Authentication
@@ -21,9 +22,6 @@ class ApplicationController < ActionController::API
   def authenticate_request
     #raise
     auth_header = request.headers['Authorization']
-
-  #test token
-  #eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NTMzNzg4MTksImF1ZCI6Ik15IE11c2ljIFVzZXJzIiwiaWQiOjksImVtYWlsIjoibWFyaW9zQGdtYWlsLmNvbSJ9.PvsCGFzTlSZSCv4YG5940CT_S5dtM5o7p3DF2b_Nvus
     if auth_header
        token = auth_header.split(' ').last
        begin
@@ -37,8 +35,11 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def current_user
+    @current_user
+  end
 
-  def render_unauthorized(payload)
+  def render_unauthorized(payload={})
     render json: payload, status:  401
   end
 
@@ -51,7 +52,8 @@ class ApplicationController < ActionController::API
   # Returns the resource from the created instance variable
   # @return [Object]
   def get_resource
-    instance_variable_get("@#{resource_name}")
+    authorize record = instance_variable_get("@#{resource_name}")
+    record
   end
 
   # Returns the allowed parameters for searching
@@ -124,9 +126,9 @@ class ApplicationController < ActionController::API
     plural_resource_name = "@#{resource_name.pluralize}"
     ids = params[:id].split(',') if params[:id]
     if ids
-      resources = resource_class.find(ids)
+      resources = policy_scope(resource_class).where(id: ids)
     else
-      resources = resource_class.all
+      resources = policy_scope(resource_class)
     end
 
     if stale?(resources, last_modified: resources.maximum(:updated_at))

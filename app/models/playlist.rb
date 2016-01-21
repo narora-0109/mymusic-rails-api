@@ -1,5 +1,8 @@
 class Playlist < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
+  def self.policy_class
+    "ApplicationPolicy"
+  end
   belongs_to :user
   has_many :playlist_tracks
   has_many :tracks, through: :playlist_tracks
