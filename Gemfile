@@ -46,6 +46,8 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
+  gem 'rails-erd'
+
   gem 'annotate'
   gem 'awesome_print', :require => 'ap'
   gem 'thin'

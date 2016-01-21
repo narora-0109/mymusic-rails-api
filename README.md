@@ -1,4 +1,6 @@
 # Rails 5 API Demo
+![My music](https://github.com/drumaddict/mymusic-rails-api/blob/master/mymusic.png)
+
 ## Work in Progress
 ----
 ### Overview
