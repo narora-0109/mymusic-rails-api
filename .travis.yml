@@ -21,3 +21,5 @@ before_script:
 
 addons:
   postgresql: "9.3"
+  code_climate:
+    repo_token: e0c5c8579049a9f13fbb0e7972054eca3091ecf48f821f0d59cf25036671e28e
