@@ -1,0 +1,23 @@
+language: ruby
+cache: bundler
+sudo: false
+
+rvm:
+  - 1.9.3
+  - 2.2.4
+
+env:
+  - DB=sqlite
+  - DB=mysql
+  - DB=postgresql
+
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:migrate
+  - RAILS_ENV=test CODECLIMATE_REPO_TOKEN=e0c5c8579049a9f13fbb0e7972054eca3091ecf48f821f0d59cf25036671e28e bundle exec rake
+
+before_script:
+  - mysql -e 'create database mymusic_test'
+  - psql -c 'create database mymusic_test' -U postgres
+
+addons:
+  postgresql: "9.3"

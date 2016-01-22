@@ -78,12 +78,11 @@ group :test do
   gem 'capybara-screenshot'
   gem 'mocha'
   gem 'database_cleaner'
-  #gem 'faker'
   gem 'ffaker'
-  #gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'simplecov', require: false
+  gem "codeclimate-test-reporter", require: false
 
 
 end
