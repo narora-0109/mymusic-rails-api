@@ -1,6 +1,6 @@
 #DRY approach, child controllers define only permitted attributes with a constant.
 require "application_responder"
-class ApplicationController < ActionController::API
+class Api::V1::ApplicationController < ActionController::API
   include Pundit
   before_action :authenticate_request
   #include Knock::Authenticable

@@ -65,12 +65,14 @@ group :development do
 
 end
 
-
+group :development, :test do
+  gem 'rspec-rails'
+end
 group :test do
 
   #TEST WITH RSPEC
 
-  gem 'rspec-rails'
+  #gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', require: false
   gem 'capybara'
@@ -78,7 +80,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'mocha'
   gem 'database_cleaner'
-  gem 'ffaker'
+  gem 'faker'
   gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'simplecov', require: false
