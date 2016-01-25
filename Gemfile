@@ -48,7 +48,7 @@ group :development do
 
   gem 'rails-erd'
 
-  gem 'annotate', git: 'git@github.com:ctran/annotate_models.git', branch: 'develop'
+  #gem 'annotate', git: 'git@github.com:ctran/annotate_models.git', branch: 'develop'
   gem 'awesome_print', :require => 'ap'
   gem 'thin'
   gem 'seed_dump'
