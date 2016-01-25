@@ -48,7 +48,7 @@ group :development do
 
   gem 'rails-erd'
 
-  gem 'annotate'
+  gem 'annotate', git: 'git@github.com:ctran/annotate_models.git', branch: 'develop'
   gem 'awesome_print', :require => 'ap'
   gem 'thin'
   gem 'seed_dump'
@@ -67,6 +67,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'faker'
 end
 group :test do
 
@@ -80,8 +82,6 @@ group :test do
   gem 'capybara-screenshot'
   gem 'mocha'
   gem 'database_cleaner'
-  gem 'faker'
-  gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'simplecov', require: false
   gem "codeclimate-test-reporter", require: false

@@ -11,7 +11,8 @@
 #  updated_at      :datetime         not null
 #
 
-class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :created_at, :updated_at
-  has_many :playlists
+require 'rails_helper'
+
+RSpec.describe User, :type => :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

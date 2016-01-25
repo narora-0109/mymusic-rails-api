@@ -62,6 +62,15 @@ GIT
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
 
+GIT
+  remote: git@github.com:ctran/annotate_models.git
+  revision: 3e441d1410a5e7614ba5b59f27f4badb79011ca7
+  branch: develop
+  specs:
+    annotate (2.7.0)
+      activerecord (>= 3.2, < 6.0)
+      rake (~> 10.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -72,9 +81,6 @@ GEM
     addressable (2.4.0)
     airbrussh (0.8.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    annotate (2.7.0)
-      activerecord (>= 3.2, < 6.0)
-      rake (~> 10.4)
     arel (7.0.0)
     awesome_print (1.6.1)
     bcrypt (3.1.10)
@@ -276,7 +282,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.0.rc3)
   airbrussh
-  annotate
+  annotate!
   awesome_print
   bcrypt (~> 3.1.7)
   better_errors

@@ -2,7 +2,7 @@
 require "application_responder"
 class Api::V1::ApplicationController < ActionController::API
   include Pundit
-  before_action :authenticate_request
+  #before_action :authenticate_request
   #include Knock::Authenticable
   before_action :set_resource, only: [:destroy, :show, :update]
 

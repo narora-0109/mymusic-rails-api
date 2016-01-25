@@ -1,14 +1,19 @@
 # == Schema Information
 #
-# Table name: genres
+# Table name: artists
 #
 #  id         :integer          not null, primary key
 #  title      :string(255)
+#  country    :string(255)
+#  genre_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class GenreSerializer < ActiveModel::Serializer
-  attributes :id, :title, :created_at
-  has_many :artists
+FactoryGirl.define do
+  factory :artist do
+     title Faker::Name::name
+     country Faker::Address.country
+  end
+
 end

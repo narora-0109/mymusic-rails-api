@@ -8,7 +8,8 @@
 #  updated_at :datetime         not null
 #
 
-class GenreSerializer < ActiveModel::Serializer
-  attributes :id, :title, :created_at
-  has_many :artists
+require 'rails_helper'
+
+RSpec.describe Genre, :type => :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
