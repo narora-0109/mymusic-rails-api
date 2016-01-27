@@ -48,7 +48,7 @@ group :development do
 
   gem 'rails-erd'
 
-  #gem 'annotate', git: 'git@github.com:ctran/annotate_models.git', branch: 'develop'
+  gem 'annotate'
   gem 'awesome_print', :require => 'ap'
   gem 'thin'
   gem 'seed_dump'
@@ -69,6 +69,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
+    gem 'byebug'
+  gem 'pry-byebug'
 end
 group :test do
 
@@ -77,6 +79,7 @@ group :test do
   #gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', require: false
+  gem 'airborne'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'

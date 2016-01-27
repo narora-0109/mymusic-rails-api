@@ -10,17 +10,20 @@ class Siren::PaginationLinks
   end
 
   def serializable_hash(options = {})
-    pages_from.each_with_object({}) do |(key, value), hash|
+    links_arr = []
+    #raise
+    pages_from.each do |key, value|
        params=query_parameters.to_query
        controller_instance = context.env['action_controller.instance']
        #raise
        #controller_name = context.params['controller'].gsub('api/v1/','')
        #page_url=instance_eval("controller_instance.paged_v1_#{controller_name}_url(page: #{value},per:  #{controller_instance.get_per})")
        controller_name = context.params['controller']
-       page_url= url_for(domain: controller_instance.request.domain, subdomain: :api, controller: controller_name, action: :index ,  page: controller_instance.get_page ,per: controller_instance.get_per )
+       page_url= url_for(controller: controller_name, action: :index ,  page: value ,per: controller_instance.get_per )
        page_url += ("?" + query_parameters.to_query) if !query_parameters.empty?
-       hash[key] = page_url
+       links_arr <<  Hash[:rel,key,:href,page_url]
     end
+    links_arr
   end
 
   private

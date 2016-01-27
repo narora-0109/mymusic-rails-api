@@ -72,6 +72,9 @@ class Siren < ActiveModel::Serializer::Adapter
     hash = { }
     hash[:class]=[]
     hash[:rel]=[]
+    hash[:total_count] =serializer.object.total_count
+    hash[:total_pages] =serializer.object.total_pages
+    hash[:page_size] = options[:context].env['action_controller.instance'].get_per
     hash[:class] << resource_identifier_type_for(serializer.first).pluralize
     hash[:entities]=[]
     hash[:rel]=['collection']
@@ -82,10 +85,9 @@ class Siren < ActiveModel::Serializer::Adapter
     end
 
     if serializer.paginated?
-      hash[:links] ||= {}
+      #hash[:links] ||= {}
       hash[:links]=links_for(serializer, options)
     end
-
     hash
   end
 
@@ -126,9 +128,7 @@ class Siren < ActiveModel::Serializer::Adapter
 
     if association_info[:type] == :pluralize
         ids = parent_serializer.object.send(association_info[:association_name]).map(&:id).join(',')
-        #link_url = instance_eval("controller_instance.paged_#{association_info[:association_name].to_s}_url(id: '#{ids}', page: controller_instance.get_page ,per: controller_instance.get_per)")
-        #raise
-        link_url= url_for(domain: controller_instance.request.domain ,subdomain: :api, controller: association_info[:controller], action: :index ,id: ids,  page: controller_instance.get_page ,per: controller_instance.get_per )
+        link_url= url_for(controller: association_info[:controller], action: :index ,id: ids,  page: controller_instance.get_page ,per: controller_instance.get_per )
     else #if the association is singular we render  a representation.
       association=parent_serializer.associations.find{|a|a.name == association_info[:association_name] }
       related_resource_hash=related_resource_hash(association,serializer)
@@ -159,16 +159,11 @@ class Siren < ActiveModel::Serializer::Adapter
       type= [:belongs_to,:has_one].member?(name) ?  :singularize : :pluralize
       #{name: name, type: type, association_name: association.name, controller: reflection.class_name.underscore.pluralize }
       {name: name, type: type, association_name: association.name, controller: controller_name_for_serializer(serializer) }
-
   end
 
   def resource_identifier_type_for(serializer)
     serializer = serializer.first if serializer.class.to_s.demodulize == 'ArraySerializer'
     serializer.object.class.model_name.singular
-
-    # context = serializer.options[:context]
-    # controller_instance = context.env['action_controller.instance']
-    # controller_name = context.params['controller']
   end
 
   def controller_name_for_serializer serializer
@@ -178,8 +173,7 @@ class Siren < ActiveModel::Serializer::Adapter
     nesting =  controller_instance.class.superclass.name.split('::')
     nesting.pop
     suffix = nesting.map(&:underscore).join('/')
-
-    demodulized_controller_name= resource_identifier_type_for(serializer).underscore.tableize
+    demodulized_controller_name = resource_identifier_type_for(serializer).underscore.tableize
     controller_name =  (nesting.size < 1) ? demodulized_controller_name : ("#{suffix}/#{demodulized_controller_name}" )
   end
 
@@ -303,10 +297,7 @@ class Siren < ActiveModel::Serializer::Adapter
     related_resource_hash[:rel] = ['item']
     related_resource_hash[:properties]=resource_object_for(serializer, serializer.try(:options).to_h)
     related_resource_hash[:links]=[]
-
-    related_resource_hash[:links]<< Hash[:rel,[:self],:href,url_for(domain: 'app.me',subdomain: :api, controller: controller_name_for_serializer(serializer), action: :show ,id: serializer.object.id) ]
-    related_resource_hash[:links]<< Hash[:rel,[:collection],:href,url_for(domain: 'app.me',subdomain: :api, controller: controller_name_for_serializer(serializer), action: :index )]
-
+    related_resource_hash[:links]<< Hash[:rel,[:collection],:href,url_for(controller: controller_name_for_serializer(serializer), action: :index )]
     related_resource_hash
   end
 

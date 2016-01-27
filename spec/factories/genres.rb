@@ -1,20 +1,16 @@
 # == Schema Information
 #
-# Table name: artists
+# Table name: genres
 #
 #  id         :integer          not null, primary key
 #  title      :string(255)
-#  country    :string(255)
-#  genre_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 FactoryGirl.define do
-  factory :artist do
-    genre
-    title Faker::Name::name
-    country Faker::Address.country
+  factory :genre do
+    title Faker::Hipster.word
   end
 
 end

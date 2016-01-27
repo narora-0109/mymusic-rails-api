@@ -39,8 +39,20 @@ RSpec.configure do |config|
   #config.use_transactional_tests = true
   config.use_transactional_fixtures = false
 
+  # config.before(:suite) do
+  #   DatabaseCleaner.clean_with(:truncation)
+  # end
+
   config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+
+    # begin
+    #   DatabaseCleaner.start
+    #   FactoryGirl.lint
+    # ensure
+    #   DatabaseCleaner.clean_with(:truncation)
+    # end
   end
 
   config.before(:each) do
@@ -78,6 +90,12 @@ RSpec.configure do |config|
 
   RspecApiDocumentation.configure do |config|
     config.format = :json
-    config.post_body_formatter = :json
+  end
+
+
+  Airborne.configure do |config|
+   #config.post_body_formatter = :json
+   config.base_url = 'http://api.app.me/v1'
+   config.headers = { 'Authorization' => 'my_token' }
   end
 end
