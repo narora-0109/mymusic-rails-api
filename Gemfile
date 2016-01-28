@@ -68,8 +68,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'faker'
-    gem 'byebug'
+  gem 'byebug'
   gem 'pry-byebug'
 end
 group :test do
@@ -86,6 +85,7 @@ group :test do
   gem 'mocha'
   gem 'database_cleaner'
   gem 'fakeweb'
+  gem 'ffaker'
   gem 'simplecov', require: false
   gem "codeclimate-test-reporter", require: false
 

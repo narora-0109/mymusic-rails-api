@@ -10,7 +10,7 @@
 
 FactoryGirl.define do
   factory :genre do
-    title Faker::Hipster.word
+    title {FFaker::HipsterIpsum.word.titleize}
   end
 
 end

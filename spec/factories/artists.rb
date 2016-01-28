@@ -13,8 +13,8 @@
 FactoryGirl.define do
   factory :artist do
     genre
-    title Faker::Name::name
-    country Faker::Address.country
+    title {FFaker::Name::name}
+    country {FFaker::Address.country}
   end
 
 end
