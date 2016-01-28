@@ -166,7 +166,7 @@ class Api::V1::ApplicationController < ActionController::API
        respond_with(get_resource) do |format|
        # raise
          format.json  { render json:  get_resource ,status: :created,location: self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
-         format.siren { render  json: get_resource ,status: :created, location:  self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
+         format.siren { render  json: get_resource ,status: :created, location:  self.class.url_for(controller: self.class.to_s.underscore.gsub('_controller','') ,action: :show, id: get_resource.id)}
        end
     else
       respond_with(get_resource) do |format|
