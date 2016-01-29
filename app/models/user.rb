@@ -20,6 +20,10 @@ class User < ApplicationRecord
   has_secure_password
   enum role: [ :user, :admin, :superadmin ]
 
+  scope :role, -> role { where(:role => role) }
+  # scope :admins, -> { where(:role => 1) }
+  # scope :superadmins, -> { where(:role => 2) }
+
   has_many :playlists
 
 

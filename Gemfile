@@ -35,6 +35,8 @@ gem 'jwt'
 #gem 'devise_token_auth'
 #Authorization
 gem 'pundit'
+#Filtering
+gem 'has_scope'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

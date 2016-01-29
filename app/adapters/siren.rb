@@ -75,16 +75,16 @@ class Siren < ActiveModel::Serializer::Adapter
     hash[:total_count] =serializer.object.total_count
     hash[:total_pages] =serializer.object.total_pages
     hash[:page_size] = options[:context].env['action_controller.instance'].get_per
-    hash[:class] << resource_identifier_type_for(serializer.first).pluralize
+    hash[:class] << resource_identifier_type_for(serializer,options).pluralize
     hash[:entities]=[]
     hash[:rel]=['collection']
     hash[:actions]=[]
-    hash[:actions]<< action_hash(serializer,'POST')
+    hash[:actions]<< action_hash(serializer,'POST') if serializer.first
     serializer.each do |s|
       hash[:entities] << embedded_representation_for_collection(s, options)
     end
 
-    if serializer.paginated?
+    if serializer.paginated? && serializer.first
       #hash[:links] ||= {}
       hash[:links]=links_for(serializer, options)
     end
@@ -161,13 +161,18 @@ class Siren < ActiveModel::Serializer::Adapter
       {name: name, type: type, association_name: association.name, controller: controller_name_for_serializer(serializer) }
   end
 
-  def resource_identifier_type_for(serializer)
-    serializer = serializer.first if serializer.class.to_s.demodulize == 'ArraySerializer'
-    serializer.object.class.model_name.singular
+  def resource_identifier_type_for(serializer,options=nil)
+    #raise
+    serializer = serializer.class.to_s.demodulize =='ArraySerializer' ? serializer.first : serializer
+    if serializer
+       serializer.object.class.model_name.singular
+    else
+      options[:context].env['action_controller.instance'].class.to_s.demodulize.gsub('Controller','').downcase
+    end
   end
 
   def controller_name_for_serializer serializer
-    context = serializer.options[:context]
+    context =  serializer.options[:context]
     controller_instance = context.env['action_controller.instance']
     #asssumes all controllers inherit from a base with the same nesting,(in api/{version} folder
     nesting =  controller_instance.class.superclass.name.split('::')

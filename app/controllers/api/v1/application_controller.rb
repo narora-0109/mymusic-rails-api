@@ -2,7 +2,7 @@
 require "application_responder"
 class Api::V1::ApplicationController < ActionController::API
   include Pundit
-  before_action :authenticate_request
+  #before_action :authenticate_request
   #include Knock::Authenticable
   before_action :set_resource, only: [:destroy, :show, :update]
 
@@ -126,12 +126,15 @@ class Api::V1::ApplicationController < ActionController::API
   # GET /{plural_resource_name}
   def index
     plural_resource_name = "@#{resource_name.pluralize}"
-    ids = params[:id].split(',') if params[:id]
-    if ids
-      resources = policy_scope(resource_class).where(id: ids)
-    else
-      resources = policy_scope(resource_class)
-    end
+    # ids = params[:id].split(',') if params[:id]
+    # if ids
+    #   resources = policy_scope(resource_class).where(id: ids)
+    # else
+    #   resources = policy_scope(resource_class)
+    # end
+    resources=apply_scopes(resource_class).all
+    #@graduations = apply_scopes(Graduation).all
+
 
     if stale?(resources, last_modified: resources.maximum(:updated_at))
       resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
