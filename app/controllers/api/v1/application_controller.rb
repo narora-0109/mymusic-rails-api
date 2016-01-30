@@ -36,9 +36,7 @@ class Api::V1::ApplicationController < ActionController::API
     end
   end
 
-  def current_user
-    @current_user
-  end
+
 
   def render_unauthorized(payload={})
     render json: payload, status:  401
@@ -106,6 +104,9 @@ class Api::V1::ApplicationController < ActionController::API
 
 
   public
+  def current_user
+    @current_user
+  end
   #entry point for API navigation.
   def root
     menu = []
@@ -127,7 +128,7 @@ class Api::V1::ApplicationController < ActionController::API
     plural_resource_name = "@#{resource_name.pluralize}"
     ids = params[:id].split(',') if params[:id]
     if ids
-      resources = policy_scope(resource_class).where(id: ids)
+      resources = policy_scope(apply_scopes(resource_class)).where(id: ids)
     else
       resources = policy_scope(apply_scopes(resource_class))
     end

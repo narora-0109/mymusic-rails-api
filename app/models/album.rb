@@ -24,5 +24,8 @@ class Album < ApplicationRecord
   has_many :playlists, through: :playlist_albums
 
 
+  scope :year, -> year { where(:year => year) }
+
+
 
 end

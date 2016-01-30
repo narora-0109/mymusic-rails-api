@@ -111,15 +111,15 @@ end
 
 users_list= [
 
-  ["drumaddict", 'kabasakalis@gmail.com', '11111111', '11111111' ],
-  ["pitendo", 'pitendo@gmail.com', '22222222', '22222222' ]
+  ["drumaddict", 'kabasakalis@gmail.com', '11111111', '11111111',2 ],
+  ["pitendo", 'pitendo@gmail.com', '22222222', '22222222',0 ]
 
 ]
 
 
 users_list.each do |user|
 
-  @user=User.new( name: user[0], email: user[1], password: user[2], password_confirmation: user[3])
+  @user=User.new( name: user[0], email: user[1], password: user[2], password_confirmation: user[3], role:  user[4])
   @user.save
 
   instance_variable_set("@#{user[0].tableize.singularize.singularize.gsub(' ','_')}".to_sym, @user )
@@ -135,3 +135,12 @@ drumaddict_playlist.tracks = [@roar,@this_is_how_we_do,@ghost,@this_moment,@oman
 
 drumaddict_playlist.albums =[@love_sax_and_flashback,@furious_7,@teenage_dream,@we_like_it_here,@them,@conspiracy]
 drumaddict_playlist.save
+
+#Create A Playlist For Pitendo
+pitendo_playlist=@pitendo.playlists.create(
+  title: 'Pitendo list'
+)
+pitendo_playlist.tracks = [@roar,@this_is_how_we_do]
+
+pitendo_playlist.albums =[@love_sax_and_flashback,@furious_7,@conspiracy]
+pitendo_playlist.save

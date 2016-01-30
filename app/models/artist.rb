@@ -19,6 +19,8 @@ class Artist < ApplicationRecord
   has_many :albums
   belongs_to :genre
 
+  scope :country, -> country { where(:country => country) }
+
   def to_siren
     send(:to_json)
   end

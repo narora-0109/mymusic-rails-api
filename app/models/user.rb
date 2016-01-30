@@ -21,8 +21,6 @@ class User < ApplicationRecord
   enum role: [ :user, :admin, :superadmin ]
 
   scope :role, -> role { where(:role => role) }
-  #scope :by_ids, -> ids { where(:id => ids) }
-
 
   has_many :playlists
 
