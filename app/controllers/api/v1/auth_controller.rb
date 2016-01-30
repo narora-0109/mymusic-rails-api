@@ -1,5 +1,5 @@
 class Api::V1::AuthController <  Api::V1::ApplicationController
-  #skip_before_filter :authenticate_request
+  skip_before_filter :authenticate_request
   before_filter :ensure_params_exist
 
   def create
