@@ -64,7 +64,6 @@ group :development do
   gem "capistrano-db-tasks",  require: false
   gem "airbrussh", :require => false
   gem 'capistrano3-puma'
-
 end
 
 group :development, :test do
@@ -91,6 +90,8 @@ group :test do
   gem 'simplecov', require: false
   gem "codeclimate-test-reporter", require: false
   gem 'pundit-matchers','~> 1.0.0'
+  gem 'rubocop', '~> 0.34.0', require: false
+  gem "json-schema"
 
 
 end

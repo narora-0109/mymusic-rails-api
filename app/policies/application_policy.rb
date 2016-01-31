@@ -21,7 +21,7 @@ class ApplicationPolicy
 
   def create?
     if @user.user?
-      true if Playlist === record and record.user_id == user.id
+      true if Playlist === record && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
       true
     else
@@ -32,7 +32,7 @@ class ApplicationPolicy
   def update?
     true
     if @user.user?
-      true if Playlist === record and record.user_id == user.id
+      true if Playlist === record && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
       true
     else
@@ -43,7 +43,7 @@ class ApplicationPolicy
   def destroy?
     true
     if @user.user?
-      true if Playlist === record and record.user_id == user.id
+      true if Playlist === record && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
       true
     else
