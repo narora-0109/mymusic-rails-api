@@ -2,7 +2,7 @@
 require "application_responder"
 class Api::V1::ApplicationController < ActionController::API
   include Pundit
-  #before_action :authenticate_request
+  before_action :authenticate_request
   before_action :set_resource, only: [:destroy, :show, :update]
 
   respond_to :siren, :json, :html
@@ -96,7 +96,6 @@ class Api::V1::ApplicationController < ActionController::API
 
   # Use callbacks to share common setup or constraints between actions.
   def set_resource(resource = nil)
-     puts params
     resource ||= resource_class.find(params[:id])
     instance_variable_set("@#{resource_name}", resource)
   end
@@ -140,8 +139,8 @@ class Api::V1::ApplicationController < ActionController::API
       instance_variable_set(plural_resource_name, resources)
       resource_collection = instance_variable_get(plural_resource_name)
         respond_with(resource_collection ) do |format|
-          format.json  { render json:  resource_collection ,related: 'links' }
-          format.siren { render json: resource_collection ,related: 'links'}
+          format.json  { render json:  resource_collection ,related: 'links',controller: self, namespace: 'api/v1/' }
+          format.siren { render json: resource_collection ,related: 'links', controller: self, namespace: 'api/v1/'}
         end
     end
 
@@ -152,8 +151,8 @@ class Api::V1::ApplicationController < ActionController::API
   def show
     if stale?(get_resource)
       respond_with(get_resource) do |format|
-        format.json  { render json:  get_resource ,related: 'links' }
-        format.siren { render json:  get_resource ,related: 'links'}
+        format.json  { render json:  get_resource ,related: 'links',controller: self ,namespace: 'api/v1/' }
+        format.siren { render json:  get_resource ,related: 'links',controller: self ,namespace: 'api/v1/' }
       end
     end
   end
@@ -163,11 +162,12 @@ class Api::V1::ApplicationController < ActionController::API
   def create
 
     set_resource(resource_class.new(permitted_resource_params))
+
     if get_resource.save
        respond_with(get_resource) do |format|
        # raise
-         format.json  { render json:  get_resource ,status: :created,location: self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
-         format.siren { render  json: get_resource ,status: :created, location:  self.class.url_for(controller: self.class.to_s.underscore.gsub('_controller','') ,action: :show, id: get_resource.id)}
+         format.json  { render json:  get_resource ,controller: self ,namespace: 'api/v1/',status: :created,location: self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
+         format.siren { render  json: get_resource ,namespace: 'api/v1/', controller: self ,status: :created, location:  self.class.url_for(controller: self.class.to_s.underscore.gsub('_controller','') ,action: :show, id: get_resource.id)}
        end
     else
       respond_with(get_resource) do |format|
@@ -179,23 +179,23 @@ class Api::V1::ApplicationController < ActionController::API
 
 
   # PATCH/PUT /api/{plural_resource_name}/1
-  def update
-    if get_resource.update(permitted_resource_params)
-      render :show
-    else
-      render json: get_resource.errors, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   if get_resource.update(permitted_resource_params)
+  #     render :show
+  #   else
+  #     render json: get_resource.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /api/{plural_resource_name}/{resource.id}
   def update
     if get_resource.update(permitted_resource_params)
       respond_with(get_resource) do |format|
-        format.json  { render json:  get_resource  }
-        format.siren { render json: get_resource  }
+        format.json  { render json:  get_resource ,controller: self ,namespace: 'api/v1/' }
+        format.siren { render json: get_resource ,controller: self ,namespace: 'api/v1/'}
       end
     else
-      respond_with(@album) do |format|
+      respond_with(get_resource) do |format|
         format.json  { render json: get_resource.errors, status: :unprocessable_entity }
         format.siren { render json: get_resource.errors, status: :unprocessable_entity }
       end

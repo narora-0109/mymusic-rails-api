@@ -5,7 +5,7 @@ module ApiHelper
   end
 
   def jwt_token(user=nil)
-    user = user || create(:user)
+    user = user || create(:admin)
     #binding.pry
     jwt= JsonWebToken.new payload: { id: user.id, email: user.email }
     #token = JsonWebToken.encode('user' => user.email)

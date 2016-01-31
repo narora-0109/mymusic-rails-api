@@ -3,13 +3,14 @@ class Siren < ActiveModel::Serializer::Adapter::Base
   extend ActiveSupport::Autoload
   #autoload PaginationLinks
   #autoload FragmentCache
-
+  attr_accessor :serializer_options, :namespace
   def initialize(serializer, options = {})
     super
   end
 
   def serializable_hash(options = nil)
     options ||= {}
+    @serializer_options = options
     if serializer.respond_to?(:each)
       serializable_hash_for_collection(serializer, options)
     else
@@ -74,8 +75,9 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     hash[:rel]=[]
     hash[:total_count] =serializer.object.total_count
     hash[:total_pages] =serializer.object.total_pages
-    raise
-    hash[:page_size] = options[:context].env['action_controller.instance'].get_per
+    #raise
+    #hash[:page_size] = options[:context].env['action_controller.instance'].get_per
+    hash[:page_size] = options[:controller].get_per
     hash[:class] << resource_identifier_type_for(serializer,options).pluralize
     hash[:entities]=[]
     hash[:rel]=['collection']
@@ -92,8 +94,8 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     hash
   end
 
-  def links_for(serializer, options)
-    Siren::PaginationLinks.new(serializer.object, options[:context]).serializable_hash(options)
+  def links_for(serializer, serializer_options)
+    Siren::PaginationLinks.new(serializer.object, serializer_options).serializable_hash(serializer_options)
   end
 
   def embedded_representation_for_collection(serializer, options)
@@ -123,9 +125,9 @@ class Siren < ActiveModel::Serializer::Adapter::Base
 
     return {} if serializer.nil?
 
-    context = serializer.options[:context]
-    controller_instance= context.env['action_controller.instance']
-    controller_name = context.params['controller']
+
+    controller_instance = @serializer_options[:controller]
+    controller_name = controller_instance.request.env['action_dispatch.request.path_parameters'][:controller]
 
     if association_info[:type] == :pluralize
         ids = parent_serializer.object.send(association_info[:association_name]).map(&:id).join(',')
@@ -155,7 +157,6 @@ class Siren < ActiveModel::Serializer::Adapter::Base
       return {} if serializer.nil?
       reflections=parent_serializer.object.class.reflect_on_all_associations
       reflection=reflections.detect{|r| r.name == association.name }
-      #raise
       name=reflection.class.to_s.demodulize.gsub('Reflection','').underscore.to_sym
       type= [:belongs_to,:has_one].member?(name) ?  :singularize : :pluralize
       #{name: name, type: type, association_name: association.name, controller: reflection.class_name.underscore.pluralize }
@@ -164,23 +165,18 @@ class Siren < ActiveModel::Serializer::Adapter::Base
 
   def resource_identifier_type_for(serializer,options=nil)
     #raise
-    serializer = serializer.class.to_s.demodulize =='ArraySerializer' ? serializer.first : serializer
+    serializer = serializer.class.to_s.demodulize =='CollectionSerializer' ? serializer.first : serializer
     if serializer
        serializer.object.class.model_name.singular
     else
-      options[:context].env['action_controller.instance'].class.to_s.demodulize.gsub('Controller','').downcase
+      #options[:context].env['action_controller.instance'].class.to_s.demodulize.gsub('Controller','').downcase
+      options[:controller].class.to_s.demodulize.gsub('Controller','').downcase
     end
   end
 
   def controller_name_for_serializer serializer
-    context =  serializer.options[:context]
-    controller_instance = context.env['action_controller.instance']
-    #asssumes all controllers inherit from a base with the same nesting,(in api/{version} folder
-    nesting =  controller_instance.class.superclass.name.split('::')
-    nesting.pop
-    suffix = nesting.map(&:underscore).join('/')
-    demodulized_controller_name = resource_identifier_type_for(serializer).underscore.tableize
-    controller_name =  (nesting.size < 1) ? demodulized_controller_name : ("#{suffix}/#{demodulized_controller_name}" )
+    demodulized_controller_name = serializer.json_key.pluralize
+    controller_name =  "#{@serializer_options[:namespace]}#{demodulized_controller_name}"
   end
 
 
@@ -200,12 +196,12 @@ class Siren < ActiveModel::Serializer::Adapter::Base
   def action_hash(serializer, action = nil)
 
     serializer=serializer.first if serializer.respond_to?(:each)
-
-    context = serializer.options[:context]
-    controller_instance = context.env['action_controller.instance']
-    controller_name = context.params['controller']
     resource_id = resource_identifier_type_for(serializer)
-    human_resource_id = resource_id.humanize
+    human_resource_id= serializer.json_key.humanize
+
+    controller_instance = @serializer_options[:controller]
+
+    controller_name  = controller_name_for_serializer serializer
 
     case action
       when  'POST'
@@ -213,6 +209,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
         title = "Add #{human_resource_id}"
         method = action
         href = url_for(controller: controller_name, action: :index)
+        #href =  url_for @serializer_options[:controller].env['action_dispatch.request.path_parameters']
       when  'PATCH'
         name = "update-#{resource_id}"
         title = "Update #{human_resource_id}"
@@ -243,17 +240,18 @@ class Siren < ActiveModel::Serializer::Adapter::Base
       end
     end
 
-
     action_hash
 
   end
 
   def resource_object_for(serializer, options = {})
+    #raise
     return {} if serializer.nil?
 
     cache_check(serializer) do
       result = resource_identifier_for(serializer)
-      attributes = serializer.attributes(options)
+      #attributes = serializer.attributes(options)
+      attributes = serializer.object.attributes
       result = attributes if attributes.any?
       result
     end
@@ -269,7 +267,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
 
 
   def relationships_for(serializer)
-    return {} if serializer.class.to_s.demodulize=='ArraySerializer'
+    return {} if serializer.class.to_s.demodulize=='CollectionSerializer'
     entities_array=[]
     serializer.associations.each do |association|
       if association.serializer.respond_to?(:each)
@@ -287,7 +285,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     return {} if serializer.nil?
     entities_array=[]
     serializer.associations.each do |association|
-      related_serializer = association.serializer.class.to_s.demodulize=='ArraySerializer' ?
+      related_serializer = association.serializer.class.to_s.demodulize=='CollectionSerializer' ?
       association.serializer.first :
       association.serializer
       association_info = get_relation_for_serializers(serializer,related_serializer,association)

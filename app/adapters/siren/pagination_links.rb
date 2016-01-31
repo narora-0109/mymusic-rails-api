@@ -2,11 +2,13 @@ include Rails.application.routes.url_helpers
 class Siren::PaginationLinks
   FIRST_PAGE = 1
 
-  attr_reader :collection, :context
+  attr_reader :collection, :serializer_options, :controller, :env
 
-  def initialize(collection, context)
+  def initialize(collection, serializer_options)
     @collection = collection
-    @context = context
+    @serializer_options = serializer_options
+    @controller= serializer_options[:controller]
+    @env = @controller.request.env
   end
 
   def serializable_hash(options = {})
@@ -14,11 +16,8 @@ class Siren::PaginationLinks
     #raise
     pages_from.each do |key, value|
        params=query_parameters.to_query
-       controller_instance = context.env['action_controller.instance']
-       #raise
-       #controller_name = context.params['controller'].gsub('api/v1/','')
-       #page_url=instance_eval("controller_instance.paged_v1_#{controller_name}_url(page: #{value},per:  #{controller_instance.get_per})")
-       controller_name = context.params['controller']
+       controller_instance = @controller
+       controller_name = @env['action_dispatch.request.path_parameters'][:controller]
        page_url= url_for(controller: controller_name, action: :index ,  page: value ,per: controller_instance.get_per )
        page_url += ("?" + query_parameters.to_query) if !query_parameters.empty?
        links_arr <<  Hash[:rel,key,:href,page_url]
@@ -52,14 +51,14 @@ class Siren::PaginationLinks
   end
 
   def original_url
-    @original_url ||= context.original_url[/\A[^?]+/]
+    @original_url ||= serializer_options.original_url[/\A[^?]+/]
   end
 
   def base_url
-    @base_url ||= context.base_url
+    @base_url ||= serializer_options.base_url
   end
 
   def query_parameters
-    @query_parameters ||= context.query_parameters
+    @query_parameters ||= @env['action_dispatch.request.query_parameters']
   end
 end

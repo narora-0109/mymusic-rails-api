@@ -1,7 +1,8 @@
 require 'rails_helper'
 RSpec.describe Api::V1::ArtistsController, :type => :request do
      before :all do
-      @token = jwt_token.token #authentication
+      @user = create(:superadmin)
+      @token = jwt_token(@user).token #authentication
      end
 
    describe "GET #index" do
@@ -49,7 +50,9 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
       before do
          #artist=create(:artist)
          #get "http://api.app.me:3000/v1/artists/#{artist.id}", format: :siren
-         artist_attrs = attributes_for(:artist)
+         genre= create(:genre)
+         artist_attrs = attributes_for(:artist).merge(genre_id: genre.id )
+         #binding.pry
          post v1_artists_url(artist_attrs),
                            params:{ format: :siren, artist: artist_attrs},
                            xhr: true,
@@ -58,7 +61,7 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
 
       it "creates and returns artist in siren format" do
         json = JSON.parse response.body
-        expect_status 200
+        expect_status 201
         expect(json['properties']).to be_present
         expect(json['links']).to be_kind_of(Array)
       end
