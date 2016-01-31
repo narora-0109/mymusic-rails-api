@@ -2,7 +2,7 @@
 require "application_responder"
 class Api::V1::ApplicationController < ActionController::API
   include Pundit
-  before_action :authenticate_request
+  #before_action :authenticate_request
   before_action :set_resource, only: [:destroy, :show, :update]
 
   respond_to :siren, :json, :html
@@ -133,7 +133,7 @@ class Api::V1::ApplicationController < ActionController::API
       resources = policy_scope(apply_scopes(resource_class))
     end
 
-    authorize resources
+    #authorize resources
 
     if stale?(resources, last_modified: resources.maximum(:updated_at))
       resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
@@ -163,7 +163,6 @@ class Api::V1::ApplicationController < ActionController::API
   def create
 
     set_resource(resource_class.new(permitted_resource_params))
-
     if get_resource.save
        respond_with(get_resource) do |format|
        # raise

@@ -1,5 +1,5 @@
 require 'active_model/serializer/adapter'
-class Siren < ActiveModel::Serializer::Adapter
+class Siren < ActiveModel::Serializer::Adapter::Base
   extend ActiveSupport::Autoload
   #autoload PaginationLinks
   #autoload FragmentCache
@@ -74,6 +74,7 @@ class Siren < ActiveModel::Serializer::Adapter
     hash[:rel]=[]
     hash[:total_count] =serializer.object.total_count
     hash[:total_pages] =serializer.object.total_pages
+    raise
     hash[:page_size] = options[:context].env['action_controller.instance'].get_per
     hash[:class] << resource_identifier_type_for(serializer,options).pluralize
     hash[:entities]=[]

@@ -37,7 +37,7 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
                           headers: {'Authorization' => "Bearer #{@token}" }
      end
 
-     it "creates and returns artist in siren format" do
+     it "returns artist in siren format" do
        json = JSON.parse response.body
        expect_status 200
        expect(json['properties']).to be_present
@@ -45,22 +45,24 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
      end
    end
 
-   describe "DELETE #destroy" do
+   describe "POST #create" do
       before do
-         artist=create(:artist)
-         delete v1_artist_url(id: artist.id),
-             params: {format: :siren },
-             xhr: true,
-             headers: {'Authorization' => "Bearer #{@token}" }
-         #delete "http://api.app.me:3000/v1/artists/#{artist.id}", format: :siren
+         #artist=create(:artist)
+         #get "http://api.app.me:3000/v1/artists/#{artist.id}", format: :siren
+         artist_attrs = attributes_for(:artist)
+         post v1_artists_url(artist_attrs),
+                           params:{ format: :siren, artist: artist_attrs},
+                           xhr: true,
+                           headers: {'Authorization' => "Bearer #{@token}" }
       end
 
-      it "deletes artist" do
-        #json = JSON.parse response.body
-        expect_status 204
+      it "creates and returns artist in siren format" do
+        json = JSON.parse response.body
+        expect_status 200
+        expect(json['properties']).to be_present
+        expect(json['links']).to be_kind_of(Array)
       end
     end
-
 
    describe "PATCH,PUT #update" do
       before do
@@ -79,5 +81,22 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
         expect_status 200
       end
     end
+   describe "DELETE #destroy" do
+      before do
+         artist=create(:artist)
+         delete v1_artist_url(id: artist.id),
+             params: {format: :siren },
+             xhr: true,
+             headers: {'Authorization' => "Bearer #{@token}" }
+         #delete "http://api.app.me:3000/v1/artists/#{artist.id}", format: :siren
+      end
+
+      it "deletes artist" do
+        #json = JSON.parse response.body
+        expect_status 204
+      end
+    end
+
+
 
 end

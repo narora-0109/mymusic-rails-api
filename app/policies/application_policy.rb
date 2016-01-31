@@ -30,6 +30,7 @@ class ApplicationPolicy
   end
 
   def update?
+    true
     if @user.user?
       true if Playlist === record and record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
@@ -40,6 +41,7 @@ class ApplicationPolicy
   end
 
   def destroy?
+    true
     if @user.user?
       true if Playlist === record and record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
