@@ -4,10 +4,10 @@
    "title":"Artist",
    "description":"Artist schema",
    "stability":"prototype",
-   //"strictProperties":true,
-   // "required":[
-   //    "links"
-   // ],
+   "strictProperties":true,
+   "required":[
+      "links"
+   ],
    "type":[
       "object"
    ],
@@ -215,9 +215,10 @@
       "entities":{
         "type": "array",
          "minItems": 0,
-         "anyOf":[
+         "items":[ {
+            "anyOf": [
             {
-               "type":"array",
+               "type":"object",
                "properties":{
                   "class":{
                      "type":"array",
@@ -302,6 +303,8 @@
                   }
                }
             }
+            ]
+          }
          ]
       },
       "links":{
