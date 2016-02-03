@@ -135,7 +135,8 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     else #if the association is singular we render  a representation.
       association=parent_serializer.associations.find{|a|a.name == association_info[:association_name] }
       related_resource_hash=related_resource_hash(association,serializer)
-      related_resource_hash['rel'] = 'related'
+      related_resource_hash['rel'] = []
+       related_resource_hash['rel'] << 'related'
       return related_resource_hash
       # or an embedded link, optionally.Representation is fine,as it's only one.
       # id=parent_serializer.object.send(association_info[:association_name]).id

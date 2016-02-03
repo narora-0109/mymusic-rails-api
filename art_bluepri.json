@@ -1,0 +1,88 @@
+{
+  "class": [
+    "artist"
+  ],
+  "properties": {
+    "id": 1,
+    "title": "King Diamond",
+    "country": "Denmark",
+    "genre_id": 2,
+    "created_at": "2016-01-30T10:19:27.000Z",
+    "updated_at": "2016-01-30T10:19:27.000Z"
+  },
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "http://api.app.me:3000/v1/artists/1"
+    },
+    {
+      "rel": [
+        "collection"
+      ],
+      "href": "http://api.app.me:3000/v1/artists"
+    }
+  ],
+  "actions": [
+    {
+      "name": "update-artist",
+      "title": "Update Artist",
+      "method": "PATCH",
+      "type": "application/x-www-form-urlencoded",
+      "href": "http://api.app.me:3000/v1/artists/1",
+      "fields": [
+        {
+          "name": "artist[title]",
+          "type": "text"
+        },
+        {
+          "name": "artist[country]",
+          "type": "text"
+        },
+        {
+          "name": "artist[genre_id]",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "delete-artist",
+      "title": "Delete Artist",
+      "method": "DELETE",
+      "type": "application/x-www-form-urlencoded",
+      "href": "http://api.app.me:3000/v1/artists/1"
+    }
+  ],
+  "entities": [
+    {
+      "class": [
+        "albums"
+      ],
+      "href": "http://api.app.me:3000/v1/albums/id/1,2,3,4/page/1/per/10",
+      "rel": [
+        "related"
+      ]
+    },
+    {
+      "class": [
+        "genre"
+      ],
+      "rel": "related",
+      "properties": {
+        "id": 2,
+        "title": "Metal",
+        "created_at": "2016-01-30T10:19:26.000Z",
+        "updated_at": "2016-01-30T10:19:26.000Z"
+      },
+      "links": [
+        {
+          "rel": [
+            "collection"
+          ],
+          "href": "http://api.app.me:3000/v1/genres"
+        }
+      ]
+    }
+  ]
+}

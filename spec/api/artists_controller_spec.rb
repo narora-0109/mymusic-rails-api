@@ -41,6 +41,7 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
      it "returns artist in siren format" do
        json = JSON.parse response.body
        expect_status 200
+       expect(json).to match_response_schema("artist")
        expect(json['properties']).to be_present
        expect(json['links']).to be_kind_of(Array)
      end
