@@ -1,0 +1,29 @@
+{
+   "id":"file:spec/support/api/schemas/partials/artist_properties.json#",
+   "description":"Properties of artist",
+   "type":[
+      "object"
+   ],
+   "properties":{
+      "id":{
+         "type":"integer"
+      },
+      "title":{
+         "type":"string"
+      },
+      "country":{
+         "type":"string"
+      },
+      "genre_id":{
+         "type":"integer"
+      },
+      "created_at":{
+         "type":"string",
+         "format":"date-time"
+      },
+      "updated_at":{
+         "type":"string",
+         "format":"date-time"
+      }
+   }
+}

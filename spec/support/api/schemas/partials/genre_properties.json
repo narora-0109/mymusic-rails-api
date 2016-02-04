@@ -1,0 +1,23 @@
+{
+   "id":"file:spec/support/api/schemas/partials/genre_properties.json#",
+   "description":"Properties of genre",
+   "type":[
+      "object"
+   ],
+   "properties":{
+      "id":{
+         "type":"integer"
+      },
+      "title":{
+         "type":"string"
+      },
+      "created_at":{
+         "type":"string",
+         "format":"date-time"
+      },
+      "updated_at":{
+         "type":"string",
+         "format":"date-time"
+      }
+   }
+}
