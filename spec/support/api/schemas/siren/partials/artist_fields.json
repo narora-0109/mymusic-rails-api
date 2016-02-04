@@ -1,0 +1,56 @@
+{
+   "id":"file:spec/support/api/schemas/siren/partials/artist_fields.json#",
+   "description":"Artist Fields",
+   "type":"array",
+   "items":[
+      {
+         "properties":{
+            "name":{
+               "type":"string",
+               "enum":[
+                  "artist[title]"
+               ]
+            },
+            "type":{
+               "type":"string",
+               "enum":[
+                  "text"
+               ]
+            }
+         }
+      },
+      {
+         "properties":{
+            "name":{
+               "type":"string",
+               "enum":[
+                  "artist[country]"
+               ]
+            },
+            "type":{
+               "type":"string",
+               "enum":[
+                  "text"
+               ]
+            }
+         }
+      },
+      {
+         "properties":{
+            "name":{
+               "type":"string",
+               "enum":[
+                  "artist[genre_id]"
+               ]
+            },
+            "type":{
+               "type":"string",
+               "enum":[
+                  "number"
+               ]
+            }
+         }
+      }
+   ]
+
+}

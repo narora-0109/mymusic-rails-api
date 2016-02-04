@@ -33,39 +33,35 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "albums"
-            ],
-            "href": "http://api.app.me:3000/v1/albums/id/1,2,3,4/page/1/per/10",
-            "rel": [
-              "related"
-            ]
+        {
+          "class": [
+            "albums"
+          ],
+          "href": "http://api.app.me:3000/v1/albums/id/1,2,3,4/page/1/per/10",
+          "rel": [
+            "related"
+          ]
+        },
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 2,
+            "title": "Metal",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
           },
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 2,
-              "title": "Metal",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -92,30 +88,26 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 2,
-              "title": "Metal",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 2,
+            "title": "Metal",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
+          },
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -142,30 +134,26 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 1,
-              "title": "Rock",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 1,
+            "title": "Rock",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
+          },
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -192,39 +180,35 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "albums"
-            ],
-            "href": "http://api.app.me:3000/v1/albums/id/5,6,7/page/1/per/10",
-            "rel": [
-              "related"
-            ]
+        {
+          "class": [
+            "albums"
+          ],
+          "href": "http://api.app.me:3000/v1/albums/id/5,6,7/page/1/per/10",
+          "rel": [
+            "related"
+          ]
+        },
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 3,
+            "title": "Pop",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
           },
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 3,
-              "title": "Pop",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -251,39 +235,35 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "albums"
-            ],
-            "href": "http://api.app.me:3000/v1/albums/id/12/page/1/per/10",
-            "rel": [
-              "related"
-            ]
+        {
+          "class": [
+            "albums"
+          ],
+          "href": "http://api.app.me:3000/v1/albums/id/12/page/1/per/10",
+          "rel": [
+            "related"
+          ]
+        },
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 3,
+            "title": "Pop",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
           },
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 3,
-              "title": "Pop",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -310,30 +290,26 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 6,
-              "title": "Fusion",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 6,
+            "title": "Fusion",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
+          },
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -360,39 +336,35 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "albums"
-            ],
-            "href": "http://api.app.me:3000/v1/albums/id/8,9,10,11/page/1/per/10",
-            "rel": [
-              "related"
-            ]
+        {
+          "class": [
+            "albums"
+          ],
+          "href": "http://api.app.me:3000/v1/albums/id/8,9,10,11/page/1/per/10",
+          "rel": [
+            "related"
+          ]
+        },
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 7,
+            "title": "Soundtrack",
+            "created_at": "2016-01-30T10:19:27.000Z",
+            "updated_at": "2016-01-30T10:19:27.000Z"
           },
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 7,
-              "title": "Soundtrack",
-              "created_at": "2016-01-30T10:19:27.000Z",
-              "updated_at": "2016-01-30T10:19:27.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -419,30 +391,26 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 7,
-              "title": "Soundtrack",
-              "created_at": "2016-01-30T10:19:27.000Z",
-              "updated_at": "2016-01-30T10:19:27.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 7,
+            "title": "Soundtrack",
+            "created_at": "2016-01-30T10:19:27.000Z",
+            "updated_at": "2016-01-30T10:19:27.000Z"
+          },
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -469,30 +437,26 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 5,
-              "title": "Jazz",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 5,
+            "title": "Jazz",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
+          },
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     },
     {
@@ -519,39 +483,35 @@
         }
       ],
       "entities": [
-        [
-          {
-            "class": [
-              "albums"
-            ],
-            "href": "http://api.app.me:3000/v1/albums/id/13,14,15,16/page/1/per/10",
-            "rel": [
-              "related"
-            ]
+        {
+          "class": [
+            "albums"
+          ],
+          "href": "http://api.app.me:3000/v1/albums/id/13,14,15,16/page/1/per/10",
+          "rel": [
+            "related"
+          ]
+        },
+        {
+          "class": [
+            "genre"
+          ],
+          "rel": "related",
+          "properties": {
+            "id": 6,
+            "title": "Fusion",
+            "created_at": "2016-01-30T10:19:26.000Z",
+            "updated_at": "2016-01-30T10:19:26.000Z"
           },
-          {
-            "class": [
-              "genre"
-            ],
-            "rel": [
-              "related"
-            ],
-            "properties": {
-              "id": 6,
-              "title": "Fusion",
-              "created_at": "2016-01-30T10:19:26.000Z",
-              "updated_at": "2016-01-30T10:19:26.000Z"
-            },
-            "links": [
-              {
-                "rel": [
-                  "collection"
-                ],
-                "href": "http://api.app.me:3000/v1/genres"
-              }
-            ]
-          }
-        ]
+          "links": [
+            {
+              "rel": [
+                "collection"
+              ],
+              "href": "http://api.app.me:3000/v1/genres"
+            }
+          ]
+        }
       ]
     }
   ],

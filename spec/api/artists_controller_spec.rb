@@ -19,8 +19,10 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
 
       it "returns collection of artists in siren format" do
         #binding.pry
-        json = JSON.parse response.body
         expect_status 200
+        json = JSON.parse response.body
+        #binding.pry
+        expect(json).to match_response_schema("siren/artists")
         expect(json['total_count']).to be 10
         expect(json['entities']).to be_present
         expect(json['entities']).to be_kind_of(Array)
@@ -39,9 +41,9 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
      end
 
      it "returns artist in siren format" do
-       json = JSON.parse response.body
        expect_status 200
-       expect(json).to match_response_schema("artist")
+       json = JSON.parse response.body
+       expect(json).to match_response_schema("siren/artist")
        expect(json['properties']).to be_present
        expect(json['links']).to be_kind_of(Array)
      end

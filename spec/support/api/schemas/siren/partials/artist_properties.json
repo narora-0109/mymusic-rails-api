@@ -1,6 +1,6 @@
 {
-   "id":"file:spec/support/api/schemas/partials/genre_properties.json#",
-   "description":"Properties of genre",
+   "id":"file:spec/support/api/schemas/siren/partials/artist_properties.json#",
+   "description":"Properties of artist",
    "type":[
       "object"
    ],
@@ -10,6 +10,12 @@
       },
       "title":{
          "type":"string"
+      },
+      "country":{
+         "type":"string"
+      },
+      "genre_id":{
+         "type":"integer"
       },
       "created_at":{
          "type":"string",
