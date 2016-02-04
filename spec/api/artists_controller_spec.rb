@@ -24,8 +24,6 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
         #binding.pry
         expect(json).to match_response_schema("siren/artists")
         expect(json['total_count']).to be 10
-        expect(json['entities']).to be_present
-        expect(json['entities']).to be_kind_of(Array)
     end
    end
 
@@ -41,11 +39,9 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
      end
 
      it "returns artist in siren format" do
-       expect_status 200
        json = JSON.parse response.body
+       expect_status 200
        expect(json).to match_response_schema("siren/artist")
-       expect(json['properties']).to be_present
-       expect(json['links']).to be_kind_of(Array)
      end
    end
 
@@ -64,9 +60,9 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
 
       it "creates and returns artist in siren format" do
         json = JSON.parse response.body
+        #binding.pry
         expect_status 201
-        expect(json['properties']).to be_present
-        expect(json['links']).to be_kind_of(Array)
+        expect(json).to match_response_schema("siren/artist")
       end
     end
 
@@ -85,6 +81,8 @@ RSpec.describe Api::V1::ArtistsController, :type => :request do
         json = JSON.parse response.body
         #binding.pry
         expect_status 200
+        expect(json).to match_response_schema("siren/artist")
+
       end
     end
    describe "DELETE #destroy" do

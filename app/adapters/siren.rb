@@ -63,7 +63,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     else
       #gets representations for related subentities
       hash[:entities]=[]
-      hash[:entities] << relationships_for(serializer) if relationships_for(serializer).present?
+      hash[:entities] = relationships_for(serializer) if relationships_for(serializer).present?
     end
     hash.delete(:entities) if hash[:entities].nil?
     hash
@@ -268,7 +268,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
 
 
   def relationships_for(serializer)
-    return {} if serializer.class.to_s.demodulize=='CollectionSerializer'
+    return [] if serializer.class.to_s.demodulize=='CollectionSerializer'
     entities_array=[]
     serializer.associations.each do |association|
       if association.serializer.respond_to?(:each)
@@ -276,7 +276,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
         entities_array << related_resource_hash(association,serializer) if serializer
         end
       else
-        entities_array << related_resource_hash(association, association.serializer) if association.serializer
+        entities_array <<  related_resource_hash(association, association.serializer) if association.serializer
       end
     end
      entities_array

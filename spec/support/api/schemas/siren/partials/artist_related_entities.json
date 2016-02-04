@@ -23,7 +23,7 @@
                      "items":{
                         "type":"string",
                         "enum":[
-                           "related"
+                           "related","item"
                         ]
                      }
                   },
@@ -73,7 +73,7 @@
                      "items":{
                         "type":"string",
                         "enum":[
-                           "related"
+                           "related", "collection"
                         ]
                      }
                   }
