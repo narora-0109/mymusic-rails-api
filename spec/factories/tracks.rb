@@ -1,23 +1,20 @@
 # == Schema Information
 #
-# Table name: albums
+# Table name: tracks
 #
 #  id         :integer          not null, primary key
 #  title      :string(255)
-#  year       :integer
-#  artist_id  :integer
+#  time       :string(255)
+#  album_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 FactoryGirl.define do
-  factory :album do
-    artist
-    title { FFaker::HipsterIpsum.phrase }
-    year { FFaker::Vehicle.year }
+  factory :track do
+    album
+    title  { FFaker::HipsterIpsum.phrase.titleize }
+    time   { FFaker::PhoneNumber.area_code  }
   end
 
 end
-
-
-

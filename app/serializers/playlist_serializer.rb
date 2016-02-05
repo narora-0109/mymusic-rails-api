@@ -8,7 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
+include Rails.application.routes.url_helpers
 class PlaylistSerializer < ActiveModel::Serializer
   attributes :id,:title, :created_at
 

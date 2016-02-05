@@ -9,7 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
+include Rails.application.routes.url_helpers
 class TrackSerializer < ActiveModel::Serializer
   attributes :id, :title, :time, :created_at
   belongs_to :album
