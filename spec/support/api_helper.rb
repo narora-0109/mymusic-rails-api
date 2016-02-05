@@ -31,8 +31,9 @@ def index_test model, context
         expect_status 200
         #schema validation currently only for artist.Maybe I could use a generic format for all models.
         expect(json).to match_response_schema("siren/#{model.to_s.pluralize}") if model == :artist
-        expect(json['total_count']).to be 16 if model == :user #Extra 6 users are created in each spec for authentication
+        #expect(json['total_count']).to be 16 if model == :user #Extra 6 users are created in each spec for authentication
         expect(json['total_count']).to be 10 unless model == :user
+        expect(json['total_count']).to be 11 if model == :user
     end
    end
 end

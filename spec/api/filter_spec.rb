@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::AuthController, :type => :request do
+RSpec.describe 'Filtering', :type => :request do
   before :all do
    @simple_user = create(:simple_user)
    @simple_user_token = jwt_token(@simple_user).token #authentication

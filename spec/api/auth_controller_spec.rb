@@ -81,8 +81,8 @@ RSpec.describe Api::V1::AuthController, :type => :request do
     end
 
     it "cannot delete playlists of other users" do
-      #playlist_attrs = FactoryGirl.build(:playlist).attributes.merge!(user_id: @simple_user.id )
-      playlist = create(:playlist,user_id: 3) #user with id is superadmin
+      another_user=create(:simple_user)
+      playlist = create(:playlist,user_id: another_user.id)
       delete  v1_playlist_url(id: playlist.id ),
             params:{ playlist: playlist.attributes, format: :siren },
             xhr: true,
