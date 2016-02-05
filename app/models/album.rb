@@ -25,6 +25,7 @@ class Album < ApplicationRecord
 
 
   scope :year, -> year { where(:year => year) }
+  scope :artist_id, -> artist_id { where(:artist_id => artist_id) }
 
 
 
