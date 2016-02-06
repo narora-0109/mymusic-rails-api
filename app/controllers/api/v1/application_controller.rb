@@ -66,7 +66,7 @@ class Api::V1::ApplicationController < ActionController::API
   # Returns the allowed parameters for pagination
   # @return [Hash]
   def page_params
-    params.permit(:page, :per, :format)
+    params.permit(:page, :per, :format, :subdomain, :id)
   end
 
   # The resource class based on the controller
@@ -87,10 +87,9 @@ class Api::V1::ApplicationController < ActionController::API
   # define the PERMITTED_PARAMETERS constant array in each resource
   # controller.
   def permitted_resource_params
+     #binding.pry
     if self.class::PERMITTED_PARAMETERS
       params.require(resource_name.to_sym).permit(*self.class::PERMITTED_PARAMETERS)
-    else
-      params[resource_name].present? ? params.require(resource_name.to_sym).permit! : ActionController::Parameters.new
     end
   end
 
@@ -124,6 +123,9 @@ class Api::V1::ApplicationController < ActionController::API
 
   # GET /{plural_resource_name}
   def index
+
+
+
     plural_resource_name = "@#{resource_name.pluralize}"
     ids = params[:id].split(',') if params[:id]
     if ids

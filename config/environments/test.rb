@@ -44,7 +44,7 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options= {
    host: 'app.me',
-   subdomain:'api',
+   #subdomain:'api',
    port: '3000'
   }
 end

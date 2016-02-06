@@ -13,9 +13,10 @@
 include Rails.application.routes.url_helpers
 class AlbumSerializer < ActiveModel::Serializer
 
-  cache key: 'album', expires_in: 2.hours
+  #cache key: 'album', expires_in: 2.hours
 
-  attributes :id, :title, :year, :created_at
+  attributes :id, :artist_id, :title, :year, :created_at
+
 
   belongs_to :artist
   has_many :tracks
