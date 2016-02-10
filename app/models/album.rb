@@ -18,14 +18,16 @@ class Album < ApplicationRecord
     "ApplicationPolicy"
   end
 
-  belongs_to :artist
-  has_many :tracks
-  has_many :playlist_albums
-  has_many :playlists, through: :playlist_albums
 
+  belongs_to :artist, required: false
+  has_many :tracks, dependent: :destroy
+  has_many :playlist_albums
+  has_many :playlists, through: :playlist_albums, dependent: :destroy
+
+  accepts_nested_attributes_for :artist, :tracks
 
   scope :year, -> year { where(:year => year) }
-  scope :artist_id, -> artist_id { where(:artist_id => artist_id) }
+  scope :artist, -> artist_title { joins(:artist).where('artists.title = ?', artist_title) }
 
 
 

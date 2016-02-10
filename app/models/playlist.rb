@@ -15,11 +15,17 @@ class Playlist < ApplicationRecord
     "ApplicationPolicy"
   end
 
-  belongs_to :user
+  belongs_to :user, required: false
   has_many :playlist_tracks
-  has_many :tracks, through: :playlist_tracks
+  has_many :tracks, through: :playlist_tracks, dependent: :destroy
   has_many :playlist_albums
-  has_many :albums, through: :playlist_albums
+  has_many :albums, through: :playlist_albums, dependent: :destroy
+
+
+  accepts_nested_attributes_for :tracks, :albums, :user
+
+
+  scope :user, -> user_id { where(:user_id => user_id) }
 
 
 

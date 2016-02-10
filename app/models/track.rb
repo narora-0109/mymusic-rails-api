@@ -15,8 +15,19 @@ class Track < ApplicationRecord
   def self.policy_class
     "ApplicationPolicy"
   end
-  belongs_to :album
+  belongs_to :album, required: false
   has_many :playlist_tracks
-  has_many :playlists, through: :playlist_tracks
+  has_many :playlists, through: :playlist_tracks, dependent: :destroy
+
+  accepts_nested_attributes_for :album
+
+  scope :artist, -> artist_title { joins(album:[:artist]).where('artists.title = ?', artist_title) }
+  scope :album, -> album_title { joins(:album).where('albums.title = ?', album_title) }
+
+  #Track.joins(album:[:artist]).where(albums: {artist_id: 1})
+  # Track.joins(album:[:artist]).where(artists: {title: "Katy Perry"})
+
+
+
 
 end

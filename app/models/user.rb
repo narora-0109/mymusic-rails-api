@@ -22,7 +22,9 @@ class User < ApplicationRecord
 
   scope :role, -> role { where(:role => role) }
 
-  has_many :playlists
+  has_many :playlists, dependent: :destroy
+
+  accepts_nested_attributes_for :playlists
 
 
 end

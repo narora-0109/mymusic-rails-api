@@ -16,10 +16,13 @@ class Artist < ApplicationRecord
   def self.policy_class
     "ApplicationPolicy"
   end
-  has_many :albums
-  belongs_to :genre
+  has_many :albums, dependent: :destroy
+  belongs_to :genre, required: false
+
+  accepts_nested_attributes_for :genre, :albums
 
   scope :country, -> country { where(:country => country) }
+  scope :genre, -> genre_title { joins(:genre).where('genres.title = ?', genre_title) }
 
   def to_siren
     send(:to_json)

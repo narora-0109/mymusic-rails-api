@@ -11,7 +11,6 @@ class Api::V1::ApplicationController < ActionController::API
   #default ,can be overridden in child controllers
   KAMINARI_RECORDS_PER_PAGE = 10
 
-  #rescue_from ActiveRecord::RecordNotFound, with: :not_found!
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from Pundit::NotAuthorizedError, with: :render_unauthorized
 
@@ -135,7 +134,7 @@ class Api::V1::ApplicationController < ActionController::API
     end
 
     #authorize resources
-
+    #binding.pry
     if stale?(resources, last_modified: resources.maximum(:updated_at))
       resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
       instance_variable_set(plural_resource_name, resources)
@@ -163,12 +162,14 @@ class Api::V1::ApplicationController < ActionController::API
   # POST /{plural_resource_name}
   def create
 
+
     set_resource(resource_class.new(permitted_resource_params))
 
     if get_resource.save
        respond_with(get_resource) do |format|
        # raise
-         format.json  { render json:  get_resource ,controller: self ,namespace: 'api/v1/',status: :created,location: self.class.url_for(controller: self.controller_name ,action: :show, id: get_resource.id)}
+         #binding.pry
+         format.json  { render json:  get_resource ,controller: self ,namespace: 'api/v1/',status: :created,location: self.class.url_for( controller:self.class.to_s.underscore.gsub('_controller',''),action: :show, id: get_resource.id)}
          format.siren { render  json: get_resource ,namespace: 'api/v1/', controller: self ,status: :created, location:  self.class.url_for(controller: self.class.to_s.underscore.gsub('_controller','') ,action: :show, id: get_resource.id)}
        end
     else

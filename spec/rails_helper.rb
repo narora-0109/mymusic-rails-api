@@ -7,6 +7,7 @@ require 'rspec/rails'
 require 'rspec_api_documentation'
 require 'factory_girl_rails'
 require 'database_cleaner'
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -42,15 +43,12 @@ RSpec.configure do |config|
 
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-
-    # begin
-    #   DatabaseCleaner.start
-    #   FactoryGirl.lint
-    # ensure
-    #   DatabaseCleaner.clean_with(:truncation)
-    # end
+    begin
+      FactoryGirl.lint
+    ensure
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
+    end
   end
 
   config.before(:each) do
@@ -87,7 +85,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   RspecApiDocumentation.configure do |config|
-    config.format = :json
+    config.format = :html
   end
 
 
