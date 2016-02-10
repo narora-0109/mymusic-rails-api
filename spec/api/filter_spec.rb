@@ -28,7 +28,7 @@ RSpec.describe 'Filtering', :type => :request do
 
       it "filtering by King Diamond returns 3 albums" do
       get   v1_albums_url,
-        params: { artist_id: @king_diamond.id, format: :siren  },
+        params: { artist: @king_diamond.title, format: :siren  },
         xhr: true,
         headers: {'Authorization' => @simple_user_token }
       expect_status 200
@@ -38,7 +38,7 @@ RSpec.describe 'Filtering', :type => :request do
 
       it "filtering by Myrath returns 4 albums" do
       get   v1_albums_url,
-        params: { artist_id: @myrath.id, format: :siren  },
+        params: { artist: @myrath.title, format: :siren  },
         xhr: true,
         headers: {'Authorization' => @simple_user_token }
       expect_status 200
