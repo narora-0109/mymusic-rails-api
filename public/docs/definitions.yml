@@ -1,9 +1,8 @@
 securityDefinitions:
-  json_token:
+  Authorization:
     type: apiKey
     name: Authorization
     in: header
-
 definitions:
   Auth:
     type: object
@@ -41,7 +40,10 @@ definitions:
             description: playlists that this track belongs to
             type: array
             items:
-              $ref: "#/definitions/PlaylistNested"
+              type: object
+              properties:
+                title:
+                  type: string
 
   UserNested:
     type: object
