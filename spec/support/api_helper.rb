@@ -23,7 +23,7 @@ def index_test model, context
         get instance_eval("v1_#{model.to_s.pluralize}_url"),
             params: { format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@token}" }
+            headers: {'Authorization' => @token }
      end
 
       it "returns collection of #{model.to_s.pluralize} in siren format" do
@@ -46,7 +46,7 @@ def show_test model, context
         get instance_eval("v1_#{model.to_s}_url(id: #{record.id})"),
                           params:{ format: :siren},
                           xhr: true,
-                          headers: {'Authorization' => "Bearer #{@token}" }
+                          headers: {'Authorization' => @token }
      end
 
      it "returns #{model.to_s} in siren format" do
@@ -70,7 +70,7 @@ def create_test model, context
         post instance_eval("v1_#{model.to_s.pluralize}_url"),
                           params:{ model.to_s => model_attrs, format: :siren },
                           xhr: true,
-                          headers: {'Authorization' => "Bearer #{@token}" }
+                          headers: {'Authorization' => @token }
      end
 
      it "creates and returns #{model.to_s} in siren format" do
@@ -91,7 +91,7 @@ def update_test model, context
         put instance_eval("v1_#{model.to_s}_url(id: #{record.id})"),
           params: { model.to_s => updated_attrs , format: :siren },
           xhr: true,
-          headers: {'Authorization' => "Bearer #{@token}" }
+          headers: {'Authorization' => @token }
      end
      it "updates and returns #{model.to_s} in siren format" do
        json = JSON.parse response.body
@@ -111,7 +111,7 @@ def destroy_test model, context
         delete instance_eval("v1_#{model.to_s}_url(id: #{record.id})"),
             params: {format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@token}" }
+            headers: {'Authorization' => @token }
      end
      it "deletes #{model.to_s}" do
        expect_status 204

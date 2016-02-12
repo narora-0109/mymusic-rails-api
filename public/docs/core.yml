@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: |
     This is MyMusic API.
-    Please get an Authorization Token and include it in authentication field before you make any requests.
+    To try operations you have to obtain a JSON Web Token, fill the api_key field and press explore.
   version: "1.0.0"
   title: MyMusic
   termsOfService: http://helloreverb.com/terms/
@@ -19,6 +19,5 @@ schemes:
 consumes:
   - application/json
 produces:
-  - application/json
   - application/vnd.siren+json
 paths:

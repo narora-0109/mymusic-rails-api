@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is MyMusic API.\nPlease get an Authorization Token and include it in authentication field before you make any requests.\n",
+        "description": "This is MyMusic API.\nTo try operations you have to obtain a JSON Web Token, fill the api_key field and press explore.\n",
         "version": "1.0.0",
         "title": "MyMusic",
         "termsOfService": "http://helloreverb.com/terms/",
@@ -29,10 +29,10 @@
         "/auth": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Obtain JSON Web Token (JWT)"
                 ],
-                "summary": "Authentication",
-                "description": "If you get 401 Unauthorized server response in some response you are either unauthenticated or not authorized.In former case you have to provide an authentication token in Security section  (Change Authentication). You get a new token by executing this operation with valid credentials. You will get a JSON Web Token (JWT) in return which you provide in Change Authentication field in this format \"Bearer [token]\",for example Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NTUwOTgzNzksImF1ZCI6Ik15IE11c2ljIFVzZXJzIiwiaWQiOjEsImVtYWlsIjoia2FiYXNha2FsaXNAZ21haWwuY29tIn0.M4HHm_JU1xJUZozcpdtur7INqLVPVcWUlxLCcj-e95U",
+                "summary": "Obtain JSON Web Token (JWT)",
+                "description": "If you get a 401 Unauthorized server response you are either unauthenticated or not authorized.In former case you have to provide an authentication token (JWT) in the header for every request.Swagger UI will take care of this if you fill the api_key field (upper right of the window) with the JWT and press explore. You get a new JWT by executing this operation with valid user credentials.",
                 "operationId": "getToken",
                 "parameters": [
                     {

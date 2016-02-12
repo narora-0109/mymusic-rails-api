@@ -88,7 +88,6 @@ class Api::V1::ApplicationController < ActionController::API
   # define the PERMITTED_PARAMETERS constant array in each resource
   # controller.
   def permitted_resource_params
-     #binding.pry
     if self.class::PERMITTED_PARAMETERS
       params.require(resource_name.to_sym).permit(*self.class::PERMITTED_PARAMETERS)
     end

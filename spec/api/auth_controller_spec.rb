@@ -46,7 +46,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
       post  v1_artists_url,
             params:{ artist: artist_attrs, format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@simple_user_token}" }
+            headers: {'Authorization' => @simple_user_token }
       expect_status 401
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
       post  v1_albums_url,
             params:{ album: album_attrs, format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@simple_user_token}" }
+            headers: {'Authorization' => @simple_user_token }
       expect_status 401
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
       post  v1_playlists_url,
             params:{ playlist: playlist_attrs, format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@simple_user_token}" }
+            headers: {'Authorization' => @simple_user_token }
       expect_status 201
     end
 
@@ -76,7 +76,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
       post  v1_playlists_url,
             params:{ playlist: playlist_attrs, format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@simple_user_token}" }
+            headers: {'Authorization' => @simple_user_token }
       expect_status 401
     end
 
@@ -86,7 +86,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
       delete  v1_playlist_url(id: playlist.id ),
             params:{ playlist: playlist.attributes, format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@simple_user_token}" }
+            headers: {'Authorization' => @simple_user_token }
       expect_status 401
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
       delete  v1_playlist_url(id: playlist.id ),
             params:{ playlist: playlist.attributes, format: :siren },
             xhr: true,
-            headers: {'Authorization' => "Bearer #{@simple_user_token}" }
+            headers: {'Authorization' => @simple_user_token }
       expect_status 204
     end
 
