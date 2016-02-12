@@ -24,7 +24,6 @@ class Artist < ApplicationRecord
   scope :country, -> country { where(:country => country) }
   scope :genre, -> genre_title { joins(:genre).where('genres.title = ?', genre_title) }
 
-  def to_siren
-    send(:to_json)
-  end
+  validates_presence_of :title
+
 end

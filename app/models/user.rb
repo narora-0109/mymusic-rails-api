@@ -17,6 +17,8 @@ class User < ApplicationRecord
   def self.policy_class
     "ApplicationPolicy"
   end
+
+
   has_secure_password
   enum role: [ :user, :admin, :superadmin ]
 
@@ -25,6 +27,8 @@ class User < ApplicationRecord
   has_many :playlists, dependent: :destroy
 
   accepts_nested_attributes_for :playlists
+
+  validates_presence_of :email
 
 
 end

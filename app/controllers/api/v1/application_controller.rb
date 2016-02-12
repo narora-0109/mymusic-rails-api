@@ -23,9 +23,7 @@ class Api::V1::ApplicationController < ActionController::API
     #raise
     auth_header = request.headers['Authorization']
     if auth_header
-       #binding.pry
-       #token = auth_header.split(' ').last
-       token = auth_header
+       token = auth_header.split(' ').last
        begin
          jwt_token= JsonWebToken.new token: token
          @current_user = jwt_token.current_user

@@ -14,4 +14,6 @@ class Genre < ApplicationRecord
     "ApplicationPolicy"
   end
   has_many :artists
+
+  validates_presence_of :title
 end

@@ -29,6 +29,6 @@ class Album < ApplicationRecord
   scope :year, -> year { where(:year => year) }
   scope :artist, -> artist_title { joins(:artist).where('artists.title = ?', artist_title) }
 
-
+  validates_presence_of :title
 
 end

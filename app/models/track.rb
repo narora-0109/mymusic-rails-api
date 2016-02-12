@@ -24,10 +24,6 @@ class Track < ApplicationRecord
   scope :artist, -> artist_title { joins(album:[:artist]).where('artists.title = ?', artist_title) }
   scope :album, -> album_title { joins(:album).where('albums.title = ?', album_title) }
 
-  #Track.joins(album:[:artist]).where(albums: {artist_id: 1})
-  # Track.joins(album:[:artist]).where(artists: {title: "Katy Perry"})
-
-
-
+  validates_presence_of :title
 
 end
