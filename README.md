@@ -15,7 +15,7 @@ I am building a Demo API with rails 5 and adding features as I go.Planning to co
 * Custom adapters for Hypermedia types,currently only [Siren](https://github.com/kevinswiber/siren).(Plus JSON-API which comes bundled with Active Model Serializers)
 * DRY Base ApplicationController.
 * Authentication.
- 1)Simple solution with [JWT gem](https://github.com/jwt/ruby-jwt).[Commit](https://github.com/drumaddict/mymusic-rails-api/commit/cf68bf36fd740bf38453d9cffc0d046d3f9be1d4)
+ 1)Simple solution with  [JWT gem](https://github.com/jwt/ruby-jwt).[Commit](https://github.com/drumaddict/mymusic-rails-api/commit/cf68bf36fd740bf38453d9cffc0d046d3f9be1d4)
  2)Feature rich option with [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth). (Coming soon)
 * Authorization with Pundit
 
