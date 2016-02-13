@@ -106,9 +106,9 @@ class Api::V1::ApplicationController < ActionController::API
   #entry point for API navigation.
   def root
     menu = []
-    [:artists, :albums, :genres, :playlists, :users].each do |resource|
+    ['api/v1/artists', 'api/v1/albums', 'api/v1/genres', 'api/v1/playlists', 'api/v1/users'].each do |resource|
      menu  << {
-               title: resource.to_s.humanize,
+               title: resource.to_s.gsub('api/v1/','').humanize,
                href: self.class.url_for(controller: resource, action: :index )
               }
     end
@@ -160,14 +160,9 @@ class Api::V1::ApplicationController < ActionController::API
 
   # POST /{plural_resource_name}
   def create
-
-
     set_resource(resource_class.new(permitted_resource_params))
-
     if get_resource.save
        respond_with(get_resource) do |format|
-       # raise
-         #binding.pry
          format.json  { render json:  get_resource ,controller: self ,namespace: 'api/v1/',status: :created,location: self.class.url_for( controller:self.class.to_s.underscore.gsub('_controller',''),action: :show, id: get_resource.id)}
          format.siren { render  json: get_resource ,namespace: 'api/v1/', controller: self ,status: :created, location:  self.class.url_for(controller: self.class.to_s.underscore.gsub('_controller','') ,action: :show, id: get_resource.id)}
        end
@@ -234,7 +229,7 @@ class Api::V1::ApplicationController < ActionController::API
 
     permitted_fields = defined?(self.class::PERMITTED_PARAMETERS) ? self.class::PERMITTED_PARAMETERS : raw_fields_hash.keys
 
-     permitted_fields.each do |attribute_name|
+    permitted_fields.each do |attribute_name|
       #if self.class::PERMITTED_PARAMETERS.member?(attribute_name.to_sym)
         get_fields_for_actions[attribute_name]= Hash.new
         get_fields_for_actions[attribute_name][:name] = attribute_name
@@ -243,7 +238,7 @@ class Api::V1::ApplicationController < ActionController::API
         else
           get_fields_for_actions[attribute_name][:type] = :string
         end
-      #end
+        #end
     end
     get_fields_for_actions
   end

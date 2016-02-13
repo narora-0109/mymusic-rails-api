@@ -17,7 +17,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
           params: { format: :siren },
           xhr: true,
           headers: {'Authorization' => nil }
-   end
+    end
 
     it "cannot access resources" do
       expect_status 401
@@ -32,7 +32,7 @@ RSpec.describe Api::V1::AuthController, :type => :request do
           params: { format: :siren },
           xhr: true,
           headers: {'Authorization' => "Bearer #{@simple_user_token}" }
-   end
+    end
 
     it "can list resources" do
       expect_status 200

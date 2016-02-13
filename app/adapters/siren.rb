@@ -46,8 +46,7 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     primary_data = primary_data_for(serializer, options)
     relationships = relationships_for(serializer)
     hash={}
-    hash[:class]=[]
-    hash[:class] << resource_identifier_type_for(serializer).singularize
+    hash[:class] =[] << resource_identifier_type_for(serializer).singularize
     hash[:properties] =primary_data
     hash[:links] = []
     hash[:actions] = []
@@ -210,7 +209,6 @@ class Siren < ActiveModel::Serializer::Adapter::Base
         title = "Add #{human_resource_id}"
         method = action
         href = url_for(controller: controller_name, action: :index)
-        #href =  url_for @serializer_options[:controller].env['action_dispatch.request.path_parameters']
       when  'PATCH'
         name = "update-#{resource_id}"
         title = "Update #{human_resource_id}"
@@ -224,7 +222,6 @@ class Siren < ActiveModel::Serializer::Adapter::Base
     end
 
     action_hash={}
-
     action_hash['name'] = name
     action_hash['title'] = title
     action_hash['method'] = method

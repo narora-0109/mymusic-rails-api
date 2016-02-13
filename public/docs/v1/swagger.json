@@ -26,6 +26,23 @@
         "application/vnd.siren+json"
     ],
     "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "home"
+                ],
+                "summary": "Home,API Point of Entry",
+                "operationId": "home",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
         "/auth": {
             "post": {
                 "tags": [

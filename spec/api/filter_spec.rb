@@ -27,26 +27,26 @@ RSpec.describe 'Filtering', :type => :request do
       end
 
       it "filtering by King Diamond returns 3 albums" do
-      get   v1_albums_url,
-        params: { artist: @king_diamond.title, format: :siren  },
-        xhr: true,
-        headers: {'Authorization' => @simple_user_token }
-      expect_status 200
-      json = JSON.parse response.body
-      expect(json['total_count']).to be 3
+        get   v1_albums_url,
+          params: { artist: @king_diamond.title, format: :siren  },
+          xhr: true,
+          headers: {'Authorization' => @simple_user_token }
+        expect_status 200
+        json = JSON.parse response.body
+        expect(json['total_count']).to be 3
       end
 
       it "filtering by Myrath returns 4 albums" do
-      get   v1_albums_url,
-        params: { artist: @myrath.title, format: :siren  },
-        xhr: true,
-        headers: {'Authorization' => @simple_user_token }
-      expect_status 200
-      json = JSON.parse response.body
-      expect(json['total_count']).to be 4
+        get   v1_albums_url,
+          params: { artist: @myrath.title, format: :siren  },
+          xhr: true,
+          headers: {'Authorization' => @simple_user_token }
+        expect_status 200
+        json = JSON.parse response.body
+        expect(json['total_count']).to be 4
       end
-   end
-end
+    end
+  end
 
   describe "Filter artists by genre" do
     context "Given we have 6 Pop artists and 4 Metal artists" do

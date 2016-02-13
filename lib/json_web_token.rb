@@ -3,7 +3,7 @@ require 'jwt'
 class JsonWebToken
   attr_reader :token
   attr_reader :payload
-  TOKEN_SIGNATURE_ALGORITHM = 'HS256'
+  TOKEN_SIGNATURE_ALGORITHM = 'HS256'.freeze
   EXPIRES_IN = 24.hours.from_now.to_i
 
   def initialize payload: {}, token: nil
@@ -19,9 +19,11 @@ class JsonWebToken
   def encode(payload, expiration = EXPIRES_IN)
     payload = payload.dup
     claims['exp'] = expiration
-    JWT.encode(claims.merge(payload),
-               json_web_token_secret,
-               TOKEN_SIGNATURE_ALGORITHM)
+    JWT.encode(
+      claims.merge(payload),
+      json_web_token_secret,
+      TOKEN_SIGNATURE_ALGORITHM
+    )
   end
 
   def decode(token)

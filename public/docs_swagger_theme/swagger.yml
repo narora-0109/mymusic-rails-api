@@ -21,10 +21,20 @@ consumes:
 produces:
   - application/vnd.siren+json
 paths:
-paths:
-  /auth:
+  /:
     post:
       tags:
+        - home
+      summary: Home,API Point of Entry
+      operationId: home
+      responses:
+        "200":
+          description: ""
+        "401":
+          description: Invalid credentials
+  /auth:
+    post:
+      tags: JWT_Token
         - Obtain JSON Web Token (JWT)
       summary: Obtain JSON Web Token (JWT)
       description: If you get a 401 Unauthorized server response you are either

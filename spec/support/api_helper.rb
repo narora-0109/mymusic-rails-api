@@ -34,7 +34,7 @@ def index_test model, context
         #expect(json['total_count']).to be 16 if model == :user #Extra 6 users are created in each spec for authentication
         expect(json['total_count']).to be 10 unless model == :user
         expect(json['total_count']).to be 11 if model == :user
-    end
+      end
    end
 end
 
@@ -43,19 +43,19 @@ def show_test model, context
   context.describe "GET #show" do
      before do
         record = create(model)
-        get instance_eval("v1_#{model.to_s}_url(id: #{record.id})"),
+        get instance_eval("v1_#{model}_url(id: #{record.id})"),
                           params:{ format: :siren},
                           xhr: true,
                           headers: {'Authorization' => @token }
      end
 
-     it "returns #{model.to_s} in siren format" do
+     it "returns #{model} in siren format" do
        json = JSON.parse response.body
        expect_status 200
        #schema validation currently only for artist.Maybe I could use a generic format for all models.
        expect(json).to match_response_schema("siren/#{model.to_s}") if model == :artist
      end
-   end
+  end
 end
 
 
@@ -73,13 +73,13 @@ def create_test model, context
                           headers: {'Authorization' => @token }
      end
 
-     it "creates and returns #{model.to_s} in siren format" do
+     it "creates and returns #{model} in siren format" do
        json = JSON.parse response.body
        expect_status 201
        #schema validation currently only for artist.Maybe I could use a generic format for all models.
-       expect(json).to match_response_schema("siren/#{model.to_s}") if model == :artist
+       expect(json).to match_response_schema("siren/#{model}") if model == :artist
      end
-   end
+  end
 end
 
 
@@ -88,19 +88,19 @@ def update_test model, context
      before do
         record = create(model)
         updated_attrs = FactoryGirl.build(model).attributes
-        put instance_eval("v1_#{model.to_s}_url(id: #{record.id})"),
+        put instance_eval("v1_#{model}_url(id: #{record.id})"),
           params: { model.to_s => updated_attrs , format: :siren },
           xhr: true,
           headers: {'Authorization' => @token }
      end
-     it "updates and returns #{model.to_s} in siren format" do
+     it "updates and returns #{model} in siren format" do
        json = JSON.parse response.body
        #binding.pry
        expect_status 200
        #schema validation currently only for artist.Maybe I could use a generic format for all models.
-       expect(json).to match_response_schema("siren/#{model.to_s}") if model == :artist
+       expect(json).to match_response_schema("siren/#{model}") if model == :artist
      end
-   end
+  end
 end
 
 
@@ -108,13 +108,13 @@ def destroy_test model, context
   context.describe "DELETE #destroy" do
      before do
         record = create(model)
-        delete instance_eval("v1_#{model.to_s}_url(id: #{record.id})"),
+        delete instance_eval("v1_#{model}_url(id: #{record.id})"),
             params: {format: :siren },
             xhr: true,
             headers: {'Authorization' => @token }
      end
-     it "deletes #{model.to_s}" do
+     it "deletes #{model}" do
        expect_status 204
      end
-   end
+  end
 end
