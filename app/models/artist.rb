@@ -11,19 +11,17 @@
 #
 
 class Artist < ApplicationRecord
-
   KAMINARI_RECORDS_PER_PAGE = 10
   def self.policy_class
-    "ApplicationPolicy"
+    'ApplicationPolicy'
   end
   has_many :albums, dependent: :destroy
   belongs_to :genre, required: false
 
   accepts_nested_attributes_for :genre, :albums
 
-  scope :country, -> country { where(:country => country) }
-  scope :genre, -> genre_title { joins(:genre).where('genres.title = ?', genre_title) }
+  scope :country, ->(country) { where(country: country) }
+  scope :genre, ->(genre_title) { joins(:genre).where('genres.title = ?', genre_title) }
 
-  validates_presence_of :title
-
+  validates :title, presence: :true
 end

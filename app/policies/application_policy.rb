@@ -2,7 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    #raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    # raise Pundit::NotAuthorizedError, "must be logged in" unless user
     @user = user
     @record = record
   end
@@ -12,7 +12,7 @@ class ApplicationPolicy
   end
 
   def index?
-     true
+    true
   end
 
   def show?
@@ -21,7 +21,7 @@ class ApplicationPolicy
 
   def create?
     if @user.user?
-      true if Playlist === record && record.user_id == user.id
+      true if record.is_a?(Playlist) && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
       true
     else
@@ -32,7 +32,7 @@ class ApplicationPolicy
   def update?
     true
     if @user.user?
-      true if Playlist === record && record.user_id == user.id
+      true if record.is_a?(Playlist) && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
       true
     else
@@ -43,7 +43,7 @@ class ApplicationPolicy
   def destroy?
     true
     if @user.user?
-      true if Playlist === record && record.user_id == user.id
+      true if record.is_a?(Playlist) && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
       true
     else
@@ -62,14 +62,9 @@ class ApplicationPolicy
       @user = user
       @scope = scope
     end
+
     def resolve
       scope.all
     end
   end
 end
-
-
-
-
-
-

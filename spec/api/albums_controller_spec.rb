@@ -1,10 +1,10 @@
 require 'rails_helper'
 require 'rspec_api_documentation/dsl'
 
-RSpec.describe Api::V1::AlbumsController, :type => :request do
+RSpec.describe Api::V1::AlbumsController, type: :request do
   before :all do
     @user = create(:superadmin)
-    @token = jwt_token(@user).token #authentication
+    @token = jwt_token(@user).token # authentication
   end
   index_test   :album, self
   show_test    :album, self

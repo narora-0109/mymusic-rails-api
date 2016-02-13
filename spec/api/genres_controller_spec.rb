@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::GenresController, :type => :request do
+RSpec.describe Api::V1::GenresController, type: :request do
   before :all do
-   @user = create(:superadmin)
-   @token = jwt_token(@user).token #authentication
+    @user = create(:superadmin)
+    @token = jwt_token(@user).token # authentication
   end
   index_test   :genre, self
   show_test    :genre, self

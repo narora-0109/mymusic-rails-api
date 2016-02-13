@@ -13,7 +13,7 @@
 class Track < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
   def self.policy_class
-    "ApplicationPolicy"
+    'ApplicationPolicy'
   end
   belongs_to :album, required: false
   has_many :playlist_tracks
@@ -21,9 +21,8 @@ class Track < ApplicationRecord
 
   accepts_nested_attributes_for :album
 
-  scope :artist, -> artist_title { joins(album:[:artist]).where('artists.title = ?', artist_title) }
-  scope :album, -> album_title { joins(:album).where('albums.title = ?', album_title) }
+  scope :artist, -> (artist_title) { joins(album: [:artist]).where('artists.title = ?', artist_title) }
+  scope :album, -> (album_title) { joins(:album).where('albums.title = ?', album_title) }
 
-  validates_presence_of :title
-
+  validates :title, presence: :true
 end

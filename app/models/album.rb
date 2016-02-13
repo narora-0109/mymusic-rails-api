@@ -11,13 +11,11 @@
 #
 
 class Album < ApplicationRecord
-
   KAMINARI_RECORDS_PER_PAGE = 10
   # Set default ApplicationPolicy for all models
   def self.policy_class
-    "ApplicationPolicy"
+    'ApplicationPolicy'
   end
-
 
   belongs_to :artist, required: false
   has_many :tracks, dependent: :destroy
@@ -26,9 +24,8 @@ class Album < ApplicationRecord
 
   accepts_nested_attributes_for :artist, :tracks
 
-  scope :year, -> year { where(:year => year) }
-  scope :artist, -> artist_title { joins(:artist).where('artists.title = ?', artist_title) }
+  scope :year, -> (year) { where(year: year) }
+  scope :artist, -> (artist_title) { joins(:artist).where('artists.title = ?', artist_title) }
 
-  validates_presence_of :title
-
+  validates :title, presence: :true
 end

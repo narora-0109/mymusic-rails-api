@@ -4,7 +4,7 @@
 # Mime::Type.register "text/richtext", :rtf
 Mime::Type.register 'application/vnd.siren+json', :siren
 
-ActionController::Renderers.add :siren do |resource, options|
+ActionController::Renderers.add :siren do |resource|
   self.content_type ||= Mime[:siren]
   resource.to_siren
 end

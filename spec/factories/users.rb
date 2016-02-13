@@ -12,12 +12,11 @@
 #
 
 FactoryGirl.define do
-
   factory :user do
-    name {FFaker::Internet.user_name }
-    email {FFaker::Internet.email}
-    password {FFaker::Internet.password}
-    role {0}
+    name { FFaker::Internet.user_name }
+    email { FFaker::Internet.email }
+    password { FFaker::Internet.password }
+    role { 0 }
 
     trait :simple_user do
       name 'Joe'
@@ -34,12 +33,8 @@ FactoryGirl.define do
       role 2
     end
 
-    factory :simple_user,    traits: [:simple_user]
-    factory :admin,    traits: [:admin]
-    factory :superadmin,    traits: [:superadmin]
-
+    factory :simple_user, traits: [:simple_user]
+    factory :admin, traits: [:admin]
+    factory :superadmin, traits: [:superadmin]
   end
-
-
-
 end

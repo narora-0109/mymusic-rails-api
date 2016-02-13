@@ -12,7 +12,7 @@
 class Playlist < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
   def self.policy_class
-    "ApplicationPolicy"
+    'ApplicationPolicy'
   end
 
   belongs_to :user, required: false
@@ -21,15 +21,9 @@ class Playlist < ApplicationRecord
   has_many :playlist_albums
   has_many :albums, through: :playlist_albums, dependent: :destroy
 
-
   accepts_nested_attributes_for :tracks, :albums, :user
 
+  scope :user, -> (user_id) { where(user_id: user_id) }
 
-  scope :user, -> user_id { where(:user_id => user_id) }
-
-  validates_presence_of :title
-
-
-
-
+  validates :title, presence: :true
 end

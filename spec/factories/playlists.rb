@@ -12,7 +12,6 @@
 FactoryGirl.define do
   factory :playlist do
     user
-    title {FFaker::HipsterIpsum.word.titleize}
+    title { FFaker::HipsterIpsum.word.titleize }
   end
-
 end

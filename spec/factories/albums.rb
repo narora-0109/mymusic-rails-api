@@ -16,8 +16,4 @@ FactoryGirl.define do
     title { FFaker::HipsterIpsum.phrase }
     year { FFaker::Vehicle.year }
   end
-
 end
-
-
-

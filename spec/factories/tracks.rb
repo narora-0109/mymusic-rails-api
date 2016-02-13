@@ -13,8 +13,7 @@
 FactoryGirl.define do
   factory :track do
     album
-    title  { FFaker::HipsterIpsum.phrase.titleize }
-    time   { FFaker::PhoneNumber.area_code  }
+    title { FFaker::HipsterIpsum.phrase.titleize }
+    time { FFaker::PhoneNumber.area_code }
   end
-
 end

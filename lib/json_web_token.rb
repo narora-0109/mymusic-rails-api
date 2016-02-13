@@ -8,11 +8,11 @@ class JsonWebToken
 
   def initialize payload: {}, token: nil
     if token.present?
-      @payload, _ = self.decode(token)
+      @payload, _ = decode(token)
       @token = token
     else
       @payload = payload
-      @token= encode(payload)
+      @token = encode(payload)
     end
   end
 
@@ -27,7 +27,7 @@ class JsonWebToken
   end
 
   def decode(token)
-    JWT.decode(token,json_web_token_secret,true,options)
+    JWT.decode(token, json_web_token_secret, true, options)
   end
 
   def current_user
@@ -41,7 +41,8 @@ class JsonWebToken
     }
   end
 
-private
+  private
+
   def json_web_token_secret
     Rails.application.secrets.json_web_token_secret
   end
@@ -53,7 +54,4 @@ private
       verify_aud: false
     }
   end
-
 end
-
-

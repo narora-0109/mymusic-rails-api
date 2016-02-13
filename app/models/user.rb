@@ -15,20 +15,17 @@ class User < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
   # Set default ApplicationPolicy for all models
   def self.policy_class
-    "ApplicationPolicy"
+    'ApplicationPolicy'
   end
 
-
   has_secure_password
-  enum role: [ :user, :admin, :superadmin ]
+  enum role: [:user, :admin, :superadmin]
 
-  scope :role, -> role { where(:role => role) }
+  scope :role, -> (role) { where(role: role) }
 
   has_many :playlists, dependent: :destroy
 
   accepts_nested_attributes_for :playlists
 
-  validates_presence_of :email
-
-
+  validates :email, presence: :true
 end

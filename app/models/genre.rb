@@ -11,9 +11,9 @@
 class Genre < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
   def self.policy_class
-    "ApplicationPolicy"
+    'ApplicationPolicy'
   end
   has_many :artists
 
-  validates_presence_of :title
+  validates :title, presence: :true
 end

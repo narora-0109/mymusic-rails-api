@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-
   concern :filtered do
-    get '(/id/:id)(/page/:page)(/per/:per)', :action => :index, :on => :collection, :as => 'filtered'
+    get '(/id/:id)(/page/:page)(/per/:per)', action: :index, on: :collection, as: 'filtered'
   end
 
   constraints subdomain: 'api' do
@@ -11,7 +10,7 @@ Rails.application.routes.draw do
         resources :auth, only: :create
         resources :genres, concerns: :filtered
         resources :playlists, concerns: :filtered
-        resources :tracks , concerns: :filtered
+        resources :tracks, concerns: :filtered
         resources :users, concerns: :filtered
         resources :albums, concerns: :filtered
         resources :artists, concerns: :filtered

@@ -16,7 +16,6 @@
 #     #   props.created_at item.created_at
 #     # end
 
-
 #     # user entities
 #     entities :artists, item do |artist, artist_serializer|
 #       artist_serializer.properties do |props|
@@ -26,8 +25,6 @@
 #       props.created_at item.created_at
 #       end
 #     end
-
-
 
 #   end
 

@@ -18,11 +18,13 @@
 
 # Offense count: 1
 Lint/LiteralInCondition:
+  Enabled: false
   Exclude:
     - 'config/environments/development.rb'
 
 # Offense count: 3
 Lint/ShadowingOuterLocalVariable:
+  Enabled: false
   Exclude:
     - 'app/adapters/siren.rb'
     - 'spec/rails_helper.rb'
@@ -37,6 +39,7 @@ Lint/ShadowingOuterLocalVariable:
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoreEmptyBlocks.
 Lint/UnusedBlockArgument:
+  Enabled: false
   Exclude:
     - 'app/adapters/siren/fragment_cache.rb'
     - 'config/initializers/mime_types.rb'
@@ -45,12 +48,14 @@ Lint/UnusedBlockArgument:
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
 Lint/UnusedMethodArgument:
+  Enabled: false
   Exclude:
     - 'app/adapters/siren.rb'
     - 'app/adapters/siren/pagination_links.rb'
 
 # Offense count: 6
 Lint/UselessAssignment:
+  Enabled: false
   Exclude:
     - 'app/adapters/siren.rb'
     - 'app/adapters/siren/fragment_cache.rb'
@@ -59,50 +64,53 @@ Lint/UselessAssignment:
 
 # Offense count: 2
 Lint/Void:
+  Enabled: false
   Exclude:
     - 'app/policies/application_policy.rb'
 
 # Offense count: 3
 Metrics/AbcSize:
+  Enabled: false
   Max: 41
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Performance/RedundantMerge:
-  Exclude:
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/support/api_helper.rb'
+# Performance/RedundantMerge:
+#   Exclude:
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, Include.
 # SupportedStyles: action, filter
 # Include: app/controllers/**/*.rb
-Rails/ActionFilter:
-  Exclude:
-    - 'app/controllers/api/v1/auth_controller.rb'
+# Rails/ActionFilter:
+#   Exclude:
+#     - 'app/controllers/api/v1/auth_controller.rb'
 
 # Offense count: 6
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
-Rails/Validation:
-  Exclude:
-    - 'app/models/album.rb'
-    - 'app/models/artist.rb'
-    - 'app/models/genre.rb'
-    - 'app/models/playlist.rb'
-    - 'app/models/track.rb'
-    - 'app/models/user.rb'
+# Rails/Validation:
+#   Exclude:
+#     - 'app/models/album.rb'
+#     - 'app/models/artist.rb'
+#     - 'app/models/genre.rb'
+#     - 'app/models/playlist.rb'
+#     - 'app/models/track.rb'
+#     - 'app/models/user.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: outdent, indent
-Style/AccessModifierIndentation:
-  Enabled: false
+# Style/AccessModifierIndentation:
+#   Enabled: false
 
 # Offense count: 4
 Style/AccessorMethodName:
+  Enabled: false
   Exclude:
     - 'app/controllers/api/v1/application_controller.rb'
 
@@ -110,43 +118,44 @@ Style/AccessorMethodName:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: with_first_parameter, with_fixed_indentation
-Style/AlignParameters:
-  Exclude:
-    - 'lib/json_web_token.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/support/api_helper.rb'
+# Style/AlignParameters:
+#   Exclude:
+#     - 'lib/json_web_token.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/BlockComments:
-  Exclude:
-    - 'spec/spec_helper.rb'
+# Style/BlockComments:
+#   Exclude:
+#     - 'spec/spec_helper.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'spec/support/api_helper.rb'
+# Style/BracesAroundHashParameters:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 3
-Style/CaseEquality:
-  Exclude:
-    - 'app/policies/application_policy.rb'
+# Style/CaseEquality:
+#   Exclude:
+#     - 'app/policies/application_policy.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep, IndentationWidth.
 # SupportedStyles: case, end
-Style/CaseIndentation:
-  Enabled: false
+# Style/CaseIndentation:
+#   Enabled: false
 
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
+  Enabled: false
   Exclude:
     - 'app/channels/application_cable/channel.rb'
     - 'app/channels/application_cable/connection.rb'
@@ -154,139 +163,140 @@ Style/ClassAndModuleChildren:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'spec/factories/artists.rb'
+# Style/ColonMethodCall:
+#   Exclude:
+#     - 'spec/factories/artists.rb'
 
 # Offense count: 11
 # Cop supports --auto-correct.
-Style/CommentIndentation:
-  Exclude:
-    - 'Gemfile'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'config/initializers/kaminari_config.rb'
-    - 'config/initializers/knock.rb'
-    - 'spec/models/album_spec.rb'
-    - 'spec/rails_helper.rb'
+# Style/CommentIndentation:
+#   Exclude:
+#     - 'Gemfile'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'config/initializers/kaminari_config.rb'
+#     - 'config/initializers/knock.rb'
+#     - 'spec/models/album_spec.rb'
+#     - 'spec/rails_helper.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: SingleLineConditionsOnly.
 Style/ConditionalAssignment:
+  Enabled: false
   Exclude:
     - 'app/controllers/api/v1/application_controller.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs.
-Style/EmptyLineBetweenDefs:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/policies/application_policy.rb'
+# Style/EmptyLineBetweenDefs:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/policies/application_policy.rb'
 
 # Offense count: 76
 # Cop supports --auto-correct.
 Style/EmptyLines:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 3
 # Cop supports --auto-correct.
-Style/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'lib/json_web_token.rb'
+# Style/EmptyLinesAroundAccessModifier:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'lib/json_web_token.rb'
 
 # Offense count: 17
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'Gemfile'
-    - 'config/routes.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/filter_spec.rb'
-    - 'spec/factories/albums.rb'
-    - 'spec/factories/artists.rb'
-    - 'spec/factories/genres.rb'
-    - 'spec/factories/playlists.rb'
-    - 'spec/factories/tracks.rb'
-    - 'spec/factories/users.rb'
-    - 'spec/models/album_spec.rb'
-    - 'spec/support/api_helper.rb'
+# Style/EmptyLinesAroundBlockBody:
+#   Exclude:
+#     - 'Gemfile'
+#     - 'config/routes.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/filter_spec.rb'
+#     - 'spec/factories/albums.rb'
+#     - 'spec/factories/artists.rb'
+#     - 'spec/factories/genres.rb'
+#     - 'spec/factories/playlists.rb'
+#     - 'spec/factories/tracks.rb'
+#     - 'spec/factories/users.rb'
+#     - 'spec/models/album_spec.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 17
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/controllers/api/v1/albums_controller.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
-    - 'app/models/album.rb'
-    - 'app/models/artist.rb'
-    - 'app/models/playlist.rb'
-    - 'app/models/playlist_album.rb'
-    - 'app/models/track.rb'
-    - 'app/models/user.rb'
-    - 'app/serializers/album_serializer.rb'
-    - 'app/serializers/artist_serializer.rb'
-    - 'lib/json_web_token.rb'
+# Style/EmptyLinesAroundClassBody:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/controllers/api/v1/albums_controller.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/users_controller.rb'
+#     - 'app/models/album.rb'
+#     - 'app/models/artist.rb'
+#     - 'app/models/playlist.rb'
+#     - 'app/models/playlist_album.rb'
+#     - 'app/models/track.rb'
+#     - 'app/models/user.rb'
+#     - 'app/serializers/album_serializer.rb'
+#     - 'app/serializers/artist_serializer.rb'
+#     - 'lib/json_web_token.rb'
 
 # Offense count: 7
 # Cop supports --auto-correct.
-Style/EmptyLinesAroundMethodBody:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
+# Style/EmptyLinesAroundMethodBody:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/EmptyLiteral:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
+# Style/EmptyLiteral:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
 
 # Offense count: 36
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Style/ExtraSpacing:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/adapters/siren/pagination_links.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/artists_controller.rb'
-    - 'app/controllers/api/v1/auth_controller.rb'
-    - 'app/controllers/api/v1/genres_controller.rb'
-    - 'app/controllers/api/v1/playlists_controller.rb'
-    - 'app/controllers/api/v1/tracks_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
-    - 'config/application.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/filter_spec.rb'
-    - 'spec/factories/tracks.rb'
-    - 'spec/factories/users.rb'
-    - 'spec/policies/application_policy_spec.rb'
+# Style/ExtraSpacing:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/adapters/siren/pagination_links.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/artists_controller.rb'
+#     - 'app/controllers/api/v1/auth_controller.rb'
+#     - 'app/controllers/api/v1/genres_controller.rb'
+#     - 'app/controllers/api/v1/playlists_controller.rb'
+#     - 'app/controllers/api/v1/tracks_controller.rb'
+#     - 'app/controllers/api/v1/users_controller.rb'
+#     - 'config/application.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/filter_spec.rb'
+#     - 'spec/factories/tracks.rb'
+#     - 'spec/factories/users.rb'
+#     - 'spec/policies/application_policy_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/auth_controller.rb'
+# Style/GuardClause:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/auth_controller.rb'
 
 # Offense count: 26
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues.
 # SupportedStyles: ruby19, ruby19_no_mixed_keys, hash_rockets
 Style/HashSyntax:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 2
-Style/IfInsideElse:
-  Exclude:
-    - 'app/adapters/siren.rb'
+# Style/IfInsideElse:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
 
 # Offense count: 5
 # Cop supports --auto-correct.
@@ -299,47 +309,47 @@ Style/IndentHash:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: normal, rails
-Style/IndentationConsistency:
-  Exclude:
-    - 'Gemfile'
-    - 'app/adapters/siren.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/genres_controller.rb'
-    - 'app/controllers/api/v1/tracks_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
-    - 'app/serializers/artist_serializer.rb'
-    - 'config/environments/development.rb'
-    - 'config/environments/production.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/users_controller_spec.rb'
-    - 'spec/rails_helper.rb'
-    - 'spec/support/api_helper.rb'
+# Style/IndentationConsistency:
+#   Exclude:
+#     - 'Gemfile'
+#     - 'app/adapters/siren.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/genres_controller.rb'
+#     - 'app/controllers/api/v1/tracks_controller.rb'
+#     - 'app/controllers/api/v1/users_controller.rb'
+#     - 'app/serializers/artist_serializer.rb'
+#     - 'config/environments/development.rb'
+#     - 'config/environments/production.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/users_controller_spec.rb'
+#     - 'spec/rails_helper.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 39
 # Cop supports --auto-correct.
 # Configuration parameters: Width.
-Style/IndentationWidth:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/adapters/siren/pagination_links.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
-    - 'app/policies/application_policy.rb'
-    - 'config/routes.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/filter_spec.rb'
-    - 'spec/api/genres_controller_spec.rb'
-    - 'spec/api/playlists_controller_spec.rb'
-    - 'spec/api/tracks_controller_spec.rb'
-    - 'spec/api/users_controller_spec.rb'
-    - 'spec/policies/application_policy_spec.rb'
-    - 'spec/rails_helper.rb'
-    - 'spec/support/api_helper.rb'
+# Style/IndentationWidth:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/adapters/siren/pagination_links.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/users_controller.rb'
+#     - 'app/policies/application_policy.rb'
+#     - 'config/routes.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/filter_spec.rb'
+#     - 'spec/api/genres_controller_spec.rb'
+#     - 'spec/api/playlists_controller_spec.rb'
+#     - 'spec/api/tracks_controller_spec.rb'
+#     - 'spec/api/users_controller_spec.rb'
+#     - 'spec/policies/application_policy_spec.rb'
+#     - 'spec/rails_helper.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 90
 # Cop supports --auto-correct.
-Style/LeadingCommentSpace:
-  Enabled: false
+# Style/LeadingCommentSpace:
+#   Enabled: false
 
 # Offense count: 7
 # Cop supports --auto-correct.
@@ -351,222 +361,227 @@ Style/MethodDefParentheses:
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: if, case, both
-Style/MissingElse:
-  Exclude:
-    - 'app/adapters/siren.rb'
+# Style/MissingElse:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
 
 # Offense count: 1
+
 Style/MultilineTernaryOperator:
+  Enabled: false
   Exclude:
     - 'app/adapters/siren.rb'
 
 # Offense count: 7
 # Cop supports --auto-correct.
-Style/MutableConstant:
-  Exclude:
-    - 'app/controllers/api/v1/albums_controller.rb'
-    - 'app/controllers/api/v1/artists_controller.rb'
-    - 'app/controllers/api/v1/genres_controller.rb'
-    - 'app/controllers/api/v1/playlists_controller.rb'
-    - 'app/controllers/api/v1/tracks_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
-    - 'lib/json_web_token.rb'
+# Style/MutableConstant:
+#   Exclude:
+#     - 'app/controllers/api/v1/albums_controller.rb'
+#     - 'app/controllers/api/v1/artists_controller.rb'
+#     - 'app/controllers/api/v1/genres_controller.rb'
+#     - 'app/controllers/api/v1/playlists_controller.rb'
+#     - 'app/controllers/api/v1/tracks_controller.rb'
+#     - 'app/controllers/api/v1/users_controller.rb'
+#     - 'lib/json_web_token.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/NegatedIf:
+  Enabled: false
   Exclude:
     - 'app/adapters/siren/pagination_links.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/NumericLiterals:
-  MinDigits: 9
+# Style/NumericLiterals:
+#   MinDigits: 9
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowSafeAssignment.
-Style/ParenthesesAroundCondition:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/controllers/api/v1/playlists_controller.rb'
+# Style/ParenthesesAroundCondition:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/controllers/api/v1/playlists_controller.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'app/adapters/siren/fragment_cache.rb'
+# Style/RedundantParentheses:
+#   Exclude:
+#     - 'app/adapters/siren/fragment_cache.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'lib/json_web_token.rb'
+# Style/RedundantSelf:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'lib/json_web_token.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/SelfAssignment:
-  Exclude:
-    - 'spec/support/api_helper.rb'
+# Style/SelfAssignment:
+#   Exclude:
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: only_raise, only_fail, semantic
 Style/SignalException:
+  Enabled: false
   Exclude:
     - 'spec/api/auth_controller_spec.rb'
     - 'spec/api/filter_spec.rb'
 
 # Offense count: 13
 # Cop supports --auto-correct.
-Style/SpaceAfterColon:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/playlists_controller.rb'
-    - 'app/models/track.rb'
-    - 'config/environments/development.rb'
-    - 'config/environments/production.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/support/api_helper.rb'
+# Style/SpaceAfterColon:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/playlists_controller.rb'
+#     - 'app/models/track.rb'
+#     - 'config/environments/development.rb'
+#     - 'config/environments/production.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 93
 # Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Exclude:
-    - 'Gemfile'
-    - 'app/adapters/siren.rb'
-    - 'app/adapters/siren/pagination_links.rb'
-    - 'app/controllers/api/v1/albums_controller.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/artists_controller.rb'
-    - 'app/controllers/api/v1/playlists_controller.rb'
-    - 'app/controllers/api/v1/tracks_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
-    - 'app/serializers/playlist_serializer.rb'
-    - 'lib/json_web_token.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/filter_spec.rb'
+# Style/SpaceAfterComma:
+#   Exclude:
+#     - 'Gemfile'
+#     - 'app/adapters/siren.rb'
+#     - 'app/adapters/siren/pagination_links.rb'
+#     - 'app/controllers/api/v1/albums_controller.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/artists_controller.rb'
+#     - 'app/controllers/api/v1/playlists_controller.rb'
+#     - 'app/controllers/api/v1/tracks_controller.rb'
+#     - 'app/controllers/api/v1/users_controller.rb'
+#     - 'app/serializers/playlist_serializer.rb'
+#     - 'lib/json_web_token.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/filter_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleInsidePipes, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceAroundBlockParameters:
-  Exclude:
-    - 'app/adapters/siren.rb'
+# Style/SpaceAroundBlockParameters:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: space, no_space
 Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 75
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
 Style/SpaceAroundOperators:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: space, no_space
 Style/SpaceBeforeBlockBraces:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 24
 # Cop supports --auto-correct.
-Style/SpaceBeforeComma:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/adapters/siren/pagination_links.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/playlists_controller.rb'
-    - 'config/routes.rb'
-    - 'spec/support/api_helper.rb'
+# Style/SpaceBeforeComma:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/adapters/siren/pagination_links.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'app/controllers/api/v1/playlists_controller.rb'
+#     - 'config/routes.rb'
+#     - 'spec/support/api_helper.rb'
 
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
-Style/SpaceBeforeFirstArg:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'config/application.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/filter_spec.rb'
+# Style/SpaceBeforeFirstArg:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'config/application.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/filter_spec.rb'
 
 # Offense count: 30
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
 # SupportedStyles: space, no_space
-Style/SpaceInsideBlockBraces:
-  Enabled: false
+# Style/SpaceInsideBlockBraces:
+#   Enabled: true
 
 # Offense count: 5
 # Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/models/user.rb'
+# Style/SpaceInsideBrackets:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/models/user.rb'
 
 # Offense count: 28
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
+# Style/SpaceInsideHashLiteralBraces:
+#   Enabled: true
 
 # Offense count: 15
 # Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Exclude:
-    - 'app/adapters/siren.rb'
-    - 'app/adapters/siren/pagination_links.rb'
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'spec/api/auth_controller_spec.rb'
-    - 'spec/api/filter_spec.rb'
+# Style/SpaceInsideParens:
+#   Exclude:
+#     - 'app/adapters/siren.rb'
+#     - 'app/adapters/siren/pagination_links.rb'
+#     - 'app/controllers/api/v1/application_controller.rb'
+#     - 'spec/api/auth_controller_spec.rb'
+#     - 'spec/api/filter_spec.rb'
 
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.
 # SupportedStyles: require_parentheses, require_no_parentheses
-Style/StabbyLambdaParentheses:
-  EnforcedStyle: require_no_parentheses
+# Style/StabbyLambdaParentheses:
+#   EnforcedStyle: require_no_parentheses
 
 # Offense count: 67
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
 # SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Enabled: false
+# Style/StringLiterals:
+#   Enabled: true
 
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: final_newline, final_blank_line
-Style/TrailingBlankLines:
-  Enabled: false
+# Style/TrailingBlankLines:
+#   Enabled: true
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowNamedUnderscoreVariables.
 Style/TrailingUnderscoreVariable:
+  Enabled: false
   Exclude:
     - 'lib/json_web_token.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Exclude:
-    - 'config/initializers/callback_terminator.rb'
+# Style/TrailingWhitespace:
+#   Exclude:
+#     - 'config/initializers/callback_terminator.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, Whitelist.
 # Whitelist: to_ary, to_a, to_c, to_enum, to_h, to_hash, to_i, to_int, to_io, to_open, to_path, to_proc, to_r, to_regexp, to_str, to_s, to_sym
-Style/TrivialAccessors:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
+# Style/TrivialAccessors:
+#   Exclude:
+#     - 'app/controllers/api/v1/application_controller.rb'
