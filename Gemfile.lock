@@ -311,9 +311,6 @@ GEM
     sshkit (1.8.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    swagger-docs (0.2.8)
-      activesupport (>= 3, < 5)
-      rails (>= 3, < 5)
     thin (1.6.2)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -337,7 +334,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.10.0.rc3)
+  active_model_serializers (= 0.10.0.rc4)
   airborne
   airbrussh
   annotate
@@ -381,7 +378,6 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
-  swagger-docs
   thin
   tzinfo-data
 

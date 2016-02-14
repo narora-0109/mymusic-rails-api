@@ -5,21 +5,27 @@
 
 # Rails 5 API Demo
 ![My music](https://github.com/drumaddict/mymusic-rails-api/blob/master/mymusic.png)
-
-## Work in Progress
+![My music](https://github.com/drumaddict/mymusic-rails-api/blob/master/docs_screenshot.png)
 ----
 ### Overview
-I am building a Demo API with rails 5 and adding features as I go.Planning to couple it with an Angular 2 SPA later.
+This is a Rails 5 API demo exploring best practices.The database schema emulates a very simple Spotify-like Music Service.
 
 ## Features
-* Custom adapters for Hypermedia types,currently only [Siren](https://github.com/kevinswiber/siren).(Plus JSON-API which comes bundled with Active Model Serializers)
-* DRY Base ApplicationController.
-* Authentication.
- 1)Simple solution with  [JWT gem](https://github.com/jwt/ruby-jwt).[Commit](https://github.com/drumaddict/mymusic-rails-api/commit/cf68bf36fd740bf38453d9cffc0d046d3f9be1d4)
- 2)Feature rich option with [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth). (Coming soon)
-* Authorization with Pundit
+* Custom Active Model Serializers Adapter for [Siren](https://github.com/kevinswiber/siren) Hypermedia type
+* Caching
+* Filters with [has_scope gem](https://github.com/plataformatec/has_scope)
+* Authentication with [JSON Web Tokens](https://jwt.io/)
+* Authorization with [Pundit](https://github.com/elabs/pundit)
+* DRY controllers
+* Pagination with [Kaminari](https://github.com/amatsuda/kaminari)
+* Documentation with [Swagger UI](http://swagger.io/swagger-ui/), gorgeous responsive [theme](https://github.com/MartinSahlen/swagger-ui). The files are in `/public/docs`
+* Rspec Tests, DRY helpers
+* Response type validations with [JSON Schema gem](https://github.com/ruby-json-schema/json-schema)
+* MySQl database
 
 # References
 ----
-* [JSON WEB TOKEN ](https://jwt.io/)
-* [Pundit](https://github.com/elabs/pundit)
+ * [Using Rails for API-only Applications](http://edgeguides.rubyonrails.org/api_app.html).
+ * [APIs on Ruby](http://slides.com/filipposvasilakis/apis-on-ruby-and-rails#/)
+ * [JSON Schema](http://json-schema.org/)
+ * [Hypermedia Definitions](http://hyperschema.org/)

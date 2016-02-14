@@ -159,14 +159,7 @@ class Api::V1::ApplicationController < ActionController::API
     end
   end
 
-  # PATCH/PUT /api/{plural_resource_name}/1
-  # def update
-  #   if resource.update(permitted_resource_params)
-  #     render :show
-  #   else
-  #     render json: resource.errors, status: :unprocessable_entity
-  #   end
-  # end
+
 
   # PATCH/PUT /api/{plural_resource_name}/{resource.id}
   def update

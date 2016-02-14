@@ -9,7 +9,7 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
-gem 'active_model_serializers', '~> 0.10.0.rc3'
+gem 'active_model_serializers', '0.10.0.rc4'
 gem 'responders'
 gem 'kaminari'
 
@@ -24,8 +24,6 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
-gem 'swagger-docs'
-
 # Authentication
 gem 'jwt'
 # gem 'devise_token_auth'
@@ -38,9 +36,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
 
