@@ -6,7 +6,7 @@ class Api::V1::ApplicationController < ActionController::API
   before_action :set_resource, only: [:destroy, :show, :update]
 
   attr_reader :current_user
-  respond_to :siren, :json
+  respond_to :siren, :json, :html
   self.responder = ApplicationResponder
 
   # default ,can be overridden in child controllers
@@ -179,11 +179,11 @@ class Api::V1::ApplicationController < ActionController::API
   # DELETE /api/{plural_resource_name}/{resource.id}
   def destroy
     resource.destroy
-    #head :no_content
-     respond_with(resource) do |format|
-      format.json  { render json: {id: resource.id}, status: :ok }
-      format.siren { render json: {id: resource.id}, status: :ok }
-    end
+    head :no_content
+    #  respond_with(resource) do |format|
+    #   format.json  { render json: {id: resource.id}, status: :ok }
+    #   format.siren { render json: {id: resource.id}, status: :ok }
+    # end
   end
 
   def get_per
