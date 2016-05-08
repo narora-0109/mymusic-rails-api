@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'editor.swagger.io'
+    origins ['editor.swagger.io','localhost:1111','eplanetarium.herokuapp.com']
 
     resource '*',
       headers: :any,
