@@ -70,7 +70,6 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options = {
    host: 'eplanetarium.herokuapp.com',
-   subdomain: 'api',
-   port: '40666'
+   subdomain: 'api'
   }
 end
