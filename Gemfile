@@ -65,9 +65,9 @@ group :development, :test do
   gem 'pry-byebug'
 
   #jupyter
-  gem 'iruby'
-  gem 'nyaplot'
-  gem 'rbczmq' # or 'ffi-rzmq'
+  # gem 'iruby'
+  # gem 'nyaplot'
+  # gem 'rbczmq' # or 'ffi-rzmq'
 end
 group :test do
   # TEST WITH RSPEC
