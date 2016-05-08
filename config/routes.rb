@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     get '(/id/:id)(/page/:page)(/per/:per)', action: :index, on: :collection, as: 'filtered'
   end
 
-  constraints subdomain: 'api' do
+  #constraints subdomain: 'api' do
+  constraints subdomain: 'eplanetarium' do
     scope module: 'api' do
       namespace :v1 do
         root 'application#root'
