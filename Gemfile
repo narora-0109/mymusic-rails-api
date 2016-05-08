@@ -6,6 +6,7 @@ gem 'rails', '>= 5.0.0.beta1.1', '< 5.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'pg'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
@@ -62,6 +63,11 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'byebug'
   gem 'pry-byebug'
+
+  #jupyter
+  gem 'iruby'
+  gem 'nyaplot'
+  gem 'rbczmq' # or 'ffi-rzmq'
 end
 group :test do
   # TEST WITH RSPEC
