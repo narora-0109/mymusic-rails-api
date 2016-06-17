@@ -14,7 +14,7 @@
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
-    "host": mymusic-api.herokuapp.com,
+    "host": "mymusic-api.herokuapp.com",
     "basePath": "/v1",
     "schemes": [
         "http"
