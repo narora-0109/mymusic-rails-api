@@ -17,7 +17,7 @@
     "host": "mymusic-api.herokuapp.com",
     "basePath": "/v1",
     "schemes": [
-        "http"
+        "https"
     ],
     "consumes": [
         "application/json"
