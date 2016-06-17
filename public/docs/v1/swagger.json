@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is MyMusic API,a demo for exploring API design best practices in Rails 5.\nTo be able to try operations you have to obtain a JSON Web Token.Click JWT_Token in the API Reference Menu, click the body sample on the right, fill in the login credentials: email: kabasakalis@gmail.com, password: 11111111 and click TRY in Test this Endpoint.Copy the token from the response and paste it in the TOKEN field in the upper left corner  and press the arrow button next to it.\n .You can now explore the API."
+        "description": "This is MyMusic API,a demo for exploring API design best practices in Rails 5.\nTo be able to try operations you have to obtain a JSON Web Token.Click JWT_Token in the API Reference Menu, click the body sample on the right, fill in the login credentials email kabasakalis@gmail.com, password 11111111 and click TRY in Test this Endpoint.Copy the token from the response, paste it in the TOKEN field in the upper left corner and press the arrow button next to it.\n .You can now explore the API." ,
         "version": "1.0.0",
         "title": "MyMusic",
         "termsOfService": "",
