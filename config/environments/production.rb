@@ -67,7 +67,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   Rails.application.routes.default_url_options = {
-    host: 'mymusic-api.herokuapp.com',
-    subdomain: 'api'
+    host: 'herokuapp.com',
+    subdomain: 'mymusic-api'
   }
 end
