@@ -6,7 +6,6 @@ gem 'rails', '>= 5.0.0.beta1.1', '< 5.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
-gem 'pg'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
@@ -39,11 +38,15 @@ group :development do
 
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'pry-byebug'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
+  gem 'awesome_print', require: 'ap'
+  gem 'pry-rails'
 
   gem 'rails-erd'
 
   gem 'annotate'
-  gem 'awesome_print', require: 'ap'
   gem 'thin'
   gem 'seed_dump'
   gem 'rspec_api_documentation'
@@ -51,6 +54,7 @@ group :development do
 
   # Capistrano
   gem 'capistrano', '~> 3.4.0'
+
   gem 'capistrano-rails', '~> 1.1.2'
   gem 'capistrano-bundler',   require: false
   gem 'capistrano-db-tasks',  require: false
@@ -63,11 +67,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'byebug'
   gem 'pry-byebug'
-
-  #jupyter
-  # gem 'iruby'
-  # gem 'nyaplot'
-  # gem 'rbczmq' # or 'ffi-rzmq'
 end
 group :test do
   # TEST WITH RSPEC

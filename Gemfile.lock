@@ -164,6 +164,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
+    interception (0.5)
     json (1.8.3)
     json-schema (2.5.0)
       addressable (~> 2.3)
@@ -194,7 +195,6 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     parser (2.3.0.2)
       ast (~> 2.2)
-    pg (0.18.4)
     powerpack (0.1.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -203,6 +203,14 @@ GEM
     pry-byebug (3.3.0)
       byebug (~> 8.0)
       pry (~> 0.10)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
+    pry-rescue (1.4.2)
+      interception (>= 0.5)
+      pry
+    pry-stack_explorer (0.4.9.2)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     puma (2.16.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -363,8 +371,10 @@ DEPENDENCIES
   kaminari
   mocha
   mysql2 (>= 0.3.18, < 0.5)
-  pg
   pry-byebug
+  pry-rails
+  pry-rescue
+  pry-stack_explorer
   puma
   pundit
   pundit-matchers (~> 1.0.0)

@@ -180,10 +180,6 @@ class Api::V1::ApplicationController < ActionController::API
   def destroy
     resource.destroy
     head :no_content
-    #  respond_with(resource) do |format|
-    #   format.json  { render json: {id: resource.id}, status: :ok }
-    #   format.siren { render json: {id: resource.id}, status: :ok }
-    # end
   end
 
   def get_per
