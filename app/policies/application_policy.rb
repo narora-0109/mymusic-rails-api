@@ -45,7 +45,8 @@ class ApplicationPolicy
     if @user.user?
       true if record.is_a?(Playlist) && record.user_id == user.id
     elsif @user.admin? || @user.superadmin?
-      true
+      #Don't delete superadmin
+      true unless (record.is_a?(User) && record.id == 1)
     else
       false
     end
