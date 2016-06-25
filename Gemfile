@@ -8,10 +8,15 @@ gem 'rails', '>= 5.0.0.beta1.1', '< 5.1'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
-gem 'pg'
+# gem 'pg'
 gem 'active_model_serializers', '0.10.0.rc4'
 gem 'responders'
 gem 'kaminari'
+
+# group :production do
+#   gem 'pg'
+# end
+
 
 # Use Puma as the app server
 gem 'puma'

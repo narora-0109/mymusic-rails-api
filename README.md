@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/drumaddict/mymusic-rails-api.svg?branch=master)](https://travis-ci.org/drumaddict/mymusic-rails-api)
-
 [![Code Climate](https://codeclimate.com/github/drumaddict/mymusic-rails-api/badges/gpa.svg)](https://codeclimate.com/github/drumaddict/mymusic-rails-api)
 [![Test Coverage](https://codeclimate.com/github/drumaddict/mymusic-rails-api/badges/coverage.svg)](https://codeclimate.com/github/drumaddict/mymusic-rails-api/coverage)
 [![Issue Count](https://codeclimate.com/github/drumaddict/mymusic-rails-api/badges/issue_count.svg)](https://codeclimate.com/github/drumaddict/mymusic-rails-api)
