@@ -12,6 +12,13 @@
 
 class Track < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
+
+  include Searchable
+  index_name "#{Rails.application.class.parent_name.underscore}"
+  document_type self.name.downcase
+  def as_indexed_json(options={})
+    self.as_json(ElasticSearch::Mappings::TrackMapping::AS_INDEXED_JSON)
+  end
   def self.policy_class
     'ApplicationPolicy'
   end
