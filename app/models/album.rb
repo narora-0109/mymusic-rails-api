@@ -12,6 +12,33 @@
 
 class Album < ApplicationRecord
   KAMINARI_RECORDS_PER_PAGE = 10
+  include Searchable
+
+  index_name "#{Rails.application.class.parent_name.underscore}_#{Rails.env}"
+  document_type self.name.downcase
+  ELASTIC_SEARCH_MAPPINGS = [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
+                             {property: :title, options:{ type: 'string' }},
+                             {property: :year, options:{ type: 'integer' }},
+                             {property: :artist_id, options:{ type: 'integer', index: 'not_analyzed'}},
+                             {property: :created_at, options: { type: 'date', index: 'not_analyzed'}},
+                             {property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}]
+
+  ELASTIC_SEARCH_NESTED_MAPPINGS = { artist: [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
+                                             { property: :title, options:{ type: 'string' }},
+                                             { property: :country, options:{ type: 'string' }},
+                                             { property: :created_at, options: { type: 'date', index: 'not_analyzed'}},
+                                             { property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}
+                                         ],
+                                     tracks: [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
+                                              { property: :title, options:{ type: 'string' }},
+                                              { property: :time, options:{ type: 'integer' ,index: 'not_analyzed'}},
+                                              { property: :created_at, options: { type: 'date', index: 'not_analyzed'}},
+                                              { property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}
+                                         ]
+                                }
+
+
+
   # Set default ApplicationPolicy for all models
   def self.policy_class
     'ApplicationPolicy'

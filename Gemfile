@@ -2,12 +2,13 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0.beta1.1', '< 5.1'
-# gem 'rails', github: 'rails/rails'
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
+
 
 gem 'active_model_serializers', '0.10.0.rc4'
 gem 'responders'
@@ -60,8 +61,13 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'byebug'
-  gem 'pry-byebug'
+
+  gem  'pry-byebug'
+  gem  'pry-rescue'
+  gem  'pry-stack_explorer'
+  gem  'awesome_print'
+  gem 'pry-rails'
+
 end
 group :test do
   # TEST WITH RSPEC
