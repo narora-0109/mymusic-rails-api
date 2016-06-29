@@ -2,7 +2,7 @@ module ElasticSearch
   module Mappings
    class ArtistMapping
   ELASTIC_SEARCH_MAPPINGS = [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
-                             {property: :title, options:{ type: 'string' }},
+                             {property: :title, options:{ type: 'string' , analyzer: 'ngram'}},
 
                              {property: :country, options:{ type: 'string'}},
                              {property: :genre_id, options:{ type: 'integer', index: 'not_analyzed'}},
@@ -10,12 +10,12 @@ module ElasticSearch
                              {property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}]
 
   ELASTIC_SEARCH_NESTED_MAPPINGS = { genre: [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
-                                             { property: :title, options:{ type: 'string' }},
+                                             { property: :title, options:{ type: 'string' , analyzer: 'ngram'}},
                                              { property: :created_at, options: { type: 'date', index: 'not_analyzed'}},
                                              { property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}
                                          ],
                                      albums: [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
-                                              { property: :title, options:{ type: 'string' }},
+                                              { property: :title, options:{ type: 'string' , analyzer: 'ngram'}},
                                               { property: :year, options:{ type: 'integer' }},
                                               { property: :created_at, options: { type: 'date', index: 'not_analyzed'}},
                                               { property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}

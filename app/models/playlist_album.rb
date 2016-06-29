@@ -13,5 +13,5 @@ class PlaylistAlbum < ApplicationRecord
     'ApplicationPolicy'
   end
   belongs_to :playlist
-  belongs_to :album
+  belongs_to :album,  touch: true
 end

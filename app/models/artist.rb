@@ -25,7 +25,7 @@ class Artist < ApplicationRecord
     'ApplicationPolicy'
   end
   has_many :albums, dependent: :destroy
-  belongs_to :genre, required: false
+  belongs_to :genre, required: false, touch: true
 
   accepts_nested_attributes_for :genre, :albums
 

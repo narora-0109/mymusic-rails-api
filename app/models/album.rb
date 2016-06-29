@@ -25,7 +25,7 @@ class Album < ApplicationRecord
     'ApplicationPolicy'
   end
 
-  belongs_to :artist, required: false
+  belongs_to :artist, required: false, touch: true
   has_many :tracks, dependent: :destroy
   has_many :playlist_albums
   has_many :playlists, through: :playlist_albums, dependent: :destroy

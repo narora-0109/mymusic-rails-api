@@ -2,6 +2,41 @@ require 'open-uri'
 require 'elasticsearch/rails/tasks/import'
 module ElasticSearch
   class IndexManager
+
+    INDEX_SETTINGS =
+      { 'mymusic':  {
+                      index: {
+                        number_of_shards: 1,
+                        number_of_replicas: 0,
+                      },
+                      analysis: {
+                        filter: {
+                          ngram: {
+                            type: 'nGram',
+                            min_gram: 3,
+                            max_gram: 25
+                          }
+                        },
+                        analyzer: {
+                          ngram: {
+                            tokenizer: 'whitespace',
+                            filter: ['lowercase', 'stop', 'ngram'],
+                            type: 'custom'
+                          },
+                          ngram_search: {
+                            tokenizer: 'whitespace',
+                            filter: ['lowercase', 'stop'],
+                            type: 'custom'
+                          }
+                        }
+                      }
+                    },
+      'other_index':  {
+
+
+                    }
+
+    }
     # def self.create_index(options={})
     #   client     = Artist.gateway.client
     #   index_name = Artist.index_name
@@ -26,14 +61,15 @@ module ElasticSearch
         puts "[IMPORT] Processing mappings for: #{klass}..."
 
         es_indices = klass.__elasticsearch__.client.indices
-        options = {index: klass.index_name}
-
+        options = {index: klass.index_name, body:{settings: INDEX_SETTINGS[klass.index_name.to_sym]}}
+        # binding.pry
         # Find or create index
         es_indices.create(options) unless es_indices.exists(options)
+        # binding.pry
         es_indices.put_mapping(options.merge({
           type: klass.document_type,
-          body: klass.mappings.to_hash,
-          ignore_conflicts:true
+          body:   klass.mappings.to_hash
+          # ignore_conflicts:true
         }))
 
       end
@@ -61,13 +97,6 @@ module ElasticSearch
               end
             end
           end
-
-
-         # def as_indexed_json(options={})
-          #   self.as_json( mapping_klass.const_get("AS_INDEXED_JSON") )
-          # end
-
-
         end
       end
     end
@@ -93,7 +122,5 @@ module ElasticSearch
     end
 
 
-  end
-
-
+end
 end

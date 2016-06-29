@@ -22,7 +22,7 @@ class Track < ApplicationRecord
   def self.policy_class
     'ApplicationPolicy'
   end
-  belongs_to :album, required: false
+  belongs_to :album, required: false, touch: true
   has_many :playlist_tracks
   has_many :playlists, through: :playlist_tracks, dependent: :destroy
 

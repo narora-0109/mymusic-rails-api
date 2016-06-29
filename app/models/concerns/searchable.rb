@@ -5,10 +5,8 @@ module Searchable
   included do
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
+    after_touch() { __elasticsearch__.index_document }
 
-
-    index_name "#{Rails.application.class.parent_name.underscore}_#{Rails.env}"
-    document_type self.name.downcase
 
    # mapping  dynamic: 'false' do
     #   self.ELASTIC_SEARCH_MAPPINGS.each do |mapping|
@@ -55,4 +53,6 @@ module Searchable
     #
     # end
   end
+
+
 end
