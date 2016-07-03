@@ -16,12 +16,23 @@ module Searchable
 
 
 
-    # Search in title and content fields for `query`, include highlights in response
-    #
-    # @param query [String] The user query
-    # @return [Elasticsearch::Model::Response::Response]
-    #
     def self.search(query, options={})
+
+      s = ElasticSearch::MusicSearch.new({ query: query,
+                                           # country: 'USA'
+                                            artist: 'King Diamond'
+
+                                        })
+      @search_definition=JSON.parse(s.__query)
+      ap @search_definition
+      __elasticsearch__.search(@search_definition)
+
+    end
+
+
+
+
+    def self.search_old(query, options={})
 
       # Prefill and set the filters (top-level `post_filter` and aggregation `filter` elements)
       #
@@ -153,7 +164,12 @@ module Searchable
         }
       end
 
+      # __elasticsearch__.search(@search_definition)
+      ms=ElasticSearch::MusicSearch.new({query: 'King'})
+      @search_definition=JSON.parse(ms.__query)
+      ap @search_definition
       __elasticsearch__.search(@search_definition)
+
     end
 
 
