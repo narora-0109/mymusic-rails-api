@@ -1,35 +1,39 @@
 module ElasticSearch
   class MusicSearch
-attr_reader :options
-    def initialize(options= {})
+    attr_reader :options
+    def initialize(query  , options= {})
+      @query = query
       @options = options
+
       @options[:page]              ||= 1
       @options[:per]               ||= 10
-      @options[:offset]            ||= 0
     end
 
     def self.search
-       im= ElasticSearch::IndexManager
- client=im.es_client
-# ms=ElasticSearch::MusicSearch.new(genre:'Rock')
-#  ms=ElasticSearch::MusicSearch.new({'genre'=> 'Rock','query'=>'King'})
- ms=ElasticSearch::MusicSearch.new({'query'=>'King'})
-# client.search index: 'myindex', body: { query: { match: { title: 'King' } }}
-client.search(__query).per(@options[:per]).offset(offset)
-# client.search index: 'mymusic', body:  ms.__query
+      # if @options[:load]
+      # ::ProductCatalogItem.__elasticsearch__.search(query).per(@options[:per]).offset(offset)
+
+      # else
+      #   SearcherResult.new(__search.response)
+      # end
+      im= ElasticSearch::IndexManager
+      client=im.es_client
+      # ms=ElasticSearch::MusicSearch.new(genre:'Rock')
+      #  ms=ElasticSearch::MusicSearch.new({'genre'=> 'Rock','query'=>'King'})
+      ms=ElasticSearch::MusicSearch.new({'query'=>'King'})
+      # client.search index: 'myindex', body: { query: { match: { title: 'King' } }}
+      client.search(__query).per(@options[:per]).offset(offset)
+      # client.search index: 'mymusic', body:  ms.__query
     end
 
 
-    def offset
-      (@options[:per].to_i * (@options[:page].to_i - 1)) + @options[:offset].to_i
-    end
 
 
     def __query
       Jbuilder.encode do |json|
         # binding.pry
-        if @options[:query].present?
-          squery = sanitize_string_for_elasticsearch_string_query(@options[:query].strip)
+        if @query.present?
+          squery = sanitize_string_for_elasticsearch_string_query(@query.strip)
 
           json.query do
             json.bool do
@@ -45,43 +49,37 @@ client.search(__query).per(@options[:per]).offset(offset)
                 end
                 json.child! do
                   json.nested path: "genre", query:  { match: { "genre.title" => { query: squery} } }
+                end
               end
             end
           end
-        end
 
-         json.sort { json.set! :title, "desc" }
-
-        # filters
-         json.filter filters
-
-        # Aggs
-        # json.aggs aggs
-      else
-
+        else
           json.query do
             json.match_all {}
           end
-
-         json.filter filters
         end
 
+        # filters
+        json.filter filters
+        # Aggs
+        # json.aggs aggs
 
+        json.size @options[:per]
+        json.from (@options[:page].to_i - 1) * @options[:per]
+        json.sort { json.set! :title, "asc" }
       end
-      end
-
+    end
     def filters()
       Jbuilder.new do |json|
         json.bool do
           json.must do
-             # json.child! { json.term country: @options[:country]} if @options[:country].present?
-
             json.child! { json.query   bool: { must: [ {match:{ "country": @options[:country]} } ]}}  if @options[:country].present?
-             json.child! { json.nested path: "genre", query: { bool: { must: [ {match:{ "genre.title": @options[:genre]} } ]}}} if @options[:genre].present?
-             json.child! { json.nested path: "artist", query: { bool: { must: [ {match:{ "artist.title": @options[:artist]} } ]}}} if @options[:artist].present?
-            end
+            json.child! { json.nested path: "genre", query: { bool: { must: [ {match:{ "genre.title": @options[:genre]} } ]}}} if @options[:genre].present?
+            json.child! { json.nested path: "artist", query: { bool: { must: [ {match:{ "artist.title": @options[:artist]} } ]}}} if @options[:artist].present?
           end
         end
+      end
     end
 
 

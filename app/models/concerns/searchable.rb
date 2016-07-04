@@ -17,19 +17,11 @@ module Searchable
 
 
     def self.search(query, options={})
-
-      s = ElasticSearch::MusicSearch.new({ query: query,
-                                           # country: 'USA'
-                                            artist: 'King Diamond'
-
-                                        })
-      @search_definition=JSON.parse(s.__query)
+      music_search = ElasticSearch::MusicSearch.new( query, options)
+      @search_definition=JSON.parse(music_search.__query)
       ap @search_definition
       __elasticsearch__.search(@search_definition)
-
     end
-
-
 
 
     def self.search_old(query, options={})

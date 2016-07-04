@@ -8,3 +8,5 @@ Kaminari.configure do |config|
   # config.page_method_name = :page
   # config.param_name = 'q[page]'
 end
+Kaminari::Hooks.init
+Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari
