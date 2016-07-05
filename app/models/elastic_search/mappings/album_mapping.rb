@@ -15,7 +15,7 @@ module ElasticSearch
                                                { property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}
                                            ],
                                        tracks: [{ property: :id, options:{ type: 'integer', index: 'not_analyzed'}},
-                                                { property: :title, options:{ type: 'string' },
+                                                { property: :title, options:{ type: 'string' }},
                                                 { property: :time, options:{ type: 'string' ,index: 'not_analyzed'}},
                                                 { property: :created_at, options: { type: 'date', index: 'not_analyzed'}},
                                                 { property: :updated_at, options: { type: 'date', index: 'not_analyzed'}}

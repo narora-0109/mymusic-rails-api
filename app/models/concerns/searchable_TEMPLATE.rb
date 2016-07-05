@@ -1,4 +1,4 @@
-module Searchablesdfsdf
+module SearchableTEMPLATE
   extend ActiveSupport::Concern
 
   included do

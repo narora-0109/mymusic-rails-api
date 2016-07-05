@@ -501,6 +501,95 @@
                 ]
             }
         },
+        "/artists/q/{q}/country/{country}/genre/{genre}/per/{per}/page/{page}": {
+              "get": {
+                "tags": [
+                    "artist"
+                ],
+                "summary": "Search all Artists",
+                "description": "Searches artists with ElasticSearch, paginated result.",
+                "operationId": "searchAllArtists",
+                "parameters": [
+                  {
+                    "in": "path",
+                    "name": "q",
+                    "description": "Query Search",
+                    "required": false,
+                    "type": "string",
+                    "default": "",
+                    "allowEmptyValue": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "country",
+                        "description": "Filter by country",
+                        "required": false,
+                        "type": "string",
+                        "default": "",
+                        "allowEmptyValue": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "genre",
+                        "description": "Filter by genre",
+                        "required": false,
+                        "type": "string",
+                        "default": "",
+                        "allowEmptyValue": true
+                    },
+
+                    {
+                        "in": "path",
+                        "name": "per",
+                        "description": "Results Per Page",
+                        "required": false,
+                        "type": "string",
+                        "default": "",
+                        "allowEmptyValue": true
+
+                    },
+
+                    {
+                        "in": "path",
+                        "name": "page",
+                        "description": "Page",
+                        "required": false,
+                        "type": "string",
+                        "default": "",
+                        "allowEmptyValue": true
+
+                    }
+                ],
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Artist"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                }
+              }
+            },
         "/artists": {
             "get": {
                 "tags": [

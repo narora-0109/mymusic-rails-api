@@ -9,26 +9,6 @@ module ElasticSearch
       @options[:per]               ||= 10
     end
 
-    def self.search
-      # if @options[:load]
-      # ::ProductCatalogItem.__elasticsearch__.search(query).per(@options[:per]).offset(offset)
-
-      # else
-      #   SearcherResult.new(__search.response)
-      # end
-      im= ElasticSearch::IndexManager
-      client=im.es_client
-      # ms=ElasticSearch::MusicSearch.new(genre:'Rock')
-      #  ms=ElasticSearch::MusicSearch.new({'genre'=> 'Rock','query'=>'King'})
-      ms=ElasticSearch::MusicSearch.new({'query'=>'King'})
-      # client.search index: 'myindex', body: { query: { match: { title: 'King' } }}
-      client.search(__query).per(@options[:per]).offset(offset)
-      # client.search index: 'mymusic', body:  ms.__query
-    end
-
-
-
-
     def __query
       Jbuilder.encode do |json|
         # binding.pry
@@ -62,14 +42,15 @@ module ElasticSearch
 
         # filters
         json.filter filters
-        # Aggs
-        # json.aggs aggs
 
-        json.size @options[:per]
-        json.from (@options[:page].to_i - 1) * @options[:per]
+        json.size @options[:per].to_i
+        json.from (@options[:page].to_i - 1) * @options[:per].to_i
         json.sort { json.set! :title, "asc" }
       end
+
+
     end
+
     def filters()
       Jbuilder.new do |json|
         json.bool do
@@ -81,7 +62,6 @@ module ElasticSearch
         end
       end
     end
-
 
 
     # http://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     get '(/id/:id)(/page/:page)(/per/:per)', action: :index, on: :collection, as: 'filtered'
   end
 
+
+  concern :search do
+    get '(/q/:q)(/country/:country)(/genre/:genre)(/per/:per)(/page/:page)', action: :search, on: :collection, as: 'search'
+  end
   constraints subdomain: 'api' do
     scope module: 'api' do
       namespace :v1 do
@@ -12,8 +16,8 @@ Rails.application.routes.draw do
         resources :playlists, concerns: :filtered
         resources :tracks, concerns: :filtered
         resources :users, concerns: :filtered
-        resources :albums, concerns: :filtered
-        resources :artists, concerns: :filtered
+        resources :albums, concerns: [:filtered, :search]
+        resources :artists, concerns: [:filtered, :search]
         resources 'search', only: :search
       end
     end

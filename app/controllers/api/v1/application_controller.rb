@@ -121,9 +121,32 @@ class Api::V1::ApplicationController < ActionController::API
     end
 
     # authorize resources
-    # binding.pry
     if stale?(resources, last_modified: resources.maximum(:updated_at))
       resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
+      instance_variable_set(plural_resource_name, resources)
+      resource_collection = instance_variable_get(plural_resource_name)
+      respond_with(resource_collection) do |format|
+        format.json  { render json:  resource_collection, related: 'links', controller: self, namespace: 'api/v1/' }
+        format.siren { render json: resource_collection, related: 'links', controller: self, namespace: 'api/v1/' }
+      end
+    end
+  end
+
+
+
+
+  # GET /{plural_resource_name}
+  # Search with ElasticSearch
+  def search
+    plural_resource_name = "@#{resource_name.pluralize}"
+      # resources = policy_scope(apply_scopes(resource_class))
+      resources = resource_class.search(params[:q],{country: params[:country],
+                                                    genre: params[:genre],
+                                                    per: params[:per],
+                                                    page: params[:page],
+                                                    }).records
+    if stale?(resources, last_modified: resources.maximum(:updated_at))
+      # resources = Kaminari.paginate_array(resources).page(get_page).per(get_per)
       instance_variable_set(plural_resource_name, resources)
       resource_collection = instance_variable_get(plural_resource_name)
       respond_with(resource_collection) do |format|
