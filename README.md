@@ -10,6 +10,9 @@
 ### Overview
 This is a Rails 5 API demo exploring best practices.The database schema emulates a very simple Spotify-like Music Service.
 
+### [Live Demo in Heroku](https://mymusic-api.herokuapp.com/docs/v1#!/JWT_Token/getToken)
+Please read the instructions in the lower left on how to authenticate.
+
 ## Features
 * Custom Active Model Serializers Adapter for [Siren](https://github.com/kevinswiber/siren) Hypermedia type
 * Caching
