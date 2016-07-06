@@ -29,7 +29,7 @@ This is a Rails 5 API demo exploring best practices.The database schema emulates
 ![Elastic Search](https://github.com/drumaddict/mymusic-rails-api/blob/elastic-search/es.png)
 
 * Simple integration with multiple models per index supported.
-`app/models/elastic_search/index_manager.rb' : several helper functions to manage indices and import records.
+`app/models/elastic_search/index_manager.rb` : several helper functions to manage indices and import records.
 `app/models/elastic_search/mappings` : Define mappings for model fields
 `app/models/elastic_search/music_search.rb` : Defines the query function, specific to index.
 `app/models/concerns/searchable.rb` : Defines the search function, specific to index.
